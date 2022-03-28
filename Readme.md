@@ -26,10 +26,10 @@
 ## GIỚI THIỆU CÁC THÀNH VIÊN TRONG NHÓM
 | HỌ TÊN | MSSV | FB | SĐT | NHIỆM VỤ | HOÀN THÀNH |
 | ------ | ---- | -- | --- | -------- | ---------- |
-| Trần Thu Thảo (Nhóm trưởng) | 20520769 | Thảo Thu Trần | 0962298125 | Xây dựng các giao diện phần mềm, code các chức năng chính | XXX% |
-| Võ Thị Hà Trang | 20522043 | Võ Hà Trang | 0363466904 | Code các chức năng chính của phần mềm | XXX% |
-| Võ Nữ Diễm Trang | 20521013 | Diễm Trang | 0913941345 | Code các chức năng chính của phần mềm | XXX% |
-| Võ Phạm Thùy Nhung | 20520679 | Võ Phạm Thùy Nhung | 0783276098 | Tester kiểm tra các test case, lọc bug, hỗ trợ code thêm | XXX% |
+| Trần Thu Thảo (Nhóm trưởng) | 20520769 | [Thảo Thu Trần](https://www.facebook.com/thaoktk0508) | 0962298125 | Xây dựng các giao diện phần mềm, code các chức năng chính | XXX% |
+| Võ Thị Hà Trang | 20522043 | [Võ Hà Trang](https://www.facebook.com/h4ch4n) | 0363466904 | Code các chức năng chính của phần mềm | XXX% |
+| Võ Nữ Diễm Trang | 20521013 | [Diễm Trang](https://www.facebook.com/vo.nu.diem.trang.ltd) | 0913941345 | Code các chức năng chính của phần mềm | XXX% |
+| Võ Phạm Thùy Nhung | 20520679 | [Võ Phạm Thùy Nhung](https://www.facebook.com/linh.phong.1829405) | 0783276098 | Tester kiểm tra các test case, lọc bug, hỗ trợ code thêm | XXX% |
 
 ## CÀI ĐẶT CHƯƠNG TRÌNH PHẦN MỀM
 
