@@ -39,7 +39,10 @@
     * Apache NetBeans 13.
 
 ## CÁC BƯỚC CHẠY PHẦN MỀM
+
 B1: Clone project về máy.
+
 B2: Cài đặt hệ quản trị cơ sở dữ liệu Oracle 19C
     + https://www.oracle.com/database/technologies/oracle19c-windows-downloads.html
+    
 B3: ......
