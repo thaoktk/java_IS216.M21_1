@@ -1,6 +1,6 @@
 # GIỚI THIỆU ĐỒ ÁN
 
-**TIỆM HOA BÌNH YÊN** là 1 app hệ thống quản lý kinh doanh về mặt hàng hoa tươi dành cho admin. Phần mềm được xây dựng với ngôn ngữ chính là Java, thư viện đồ họa GUI Java Swing. Hệ quản trị cơ sở dữ liệu sử dụng là Oracle 19C. Phần mềm tích hợp các tính năng cơ bản của 1 phần mềm quản lý hệ thống và 1 số tích năng nâng cao khác. Giao diện phần mềm được tối ưu cho trải nghiệm người dùng tốt nhất cho trang quản trị admin.
+*TIỆM HOA BÌNH YÊN* là 1 app hệ thống quản lý kinh doanh về mặt hàng hoa tươi dành cho admin. Phần mềm được xây dựng với ngôn ngữ chính là Java, thư viện đồ họa GUI Java Swing. Hệ quản trị cơ sở dữ liệu sử dụng là Oracle 19C. Phần mềm tích hợp các tính năng cơ bản của 1 phần mềm quản lý hệ thống và 1 số tích năng nâng cao khác. Giao diện phần mềm được tối ưu cho trải nghiệm người dùng tốt nhất cho trang quản trị admin.
 
 ## CÁC CHỨC NĂNG ĐÃ LÀM
 
