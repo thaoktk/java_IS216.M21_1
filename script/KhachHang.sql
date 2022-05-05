@@ -1,34 +1,15 @@
 CREATE TABLE KHACHHANG (
-    MAKH VARCHAR2(8) PRIMARY KEY,
+    MAKH NUMBER NOT NULL,
     HOTEN NVARCHAR2(50) NOT NULL,
-    SDT VARCHAR2(20) NOT NULL,
+    SDT VARCHAR2(20) NOT NULL UNIQUE,
     DIACHI NVARCHAR2(255) NOT NULL,
     NGAYSINH DATE NOT NULL,
-    LOAIKH VARCHAR2(20) NOT NULL,
-    TICHLUY NUMBER NOT NULL,
-    GHICHU NVARCHAR2(255)
+    NGAYDK DATE NOT NULL,
+    LOAIKH NVARCHAR2(20) DEFAULT N'B√¨nh th∆∞·ªùng',
+    TICHLUY NUMBER DEFAULT 0,
+    GHICHU NVARCHAR2(255),
+    GIOITINH NVARCHAR2(10) NOT NULL,
+    CONSTRAINT PK_KH PRIMARY KEY(MAKH)
 )
-
---INSERT DATA
-SELECT * FROM KHACHHANG;
-ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY HH24:MI:SS';
-INSERT INTO KHACHHANG VALUES('NO000001', N'Tr?n Th? BÌch Di?p', '0363721908', N'2 H?i Tri?u, B?n NghÈ, H? ChÌ Minh', '20/07/1999', 'Norm', 500000, N'KhÙng cÛ');
-INSERT INTO KHACHHANG VALUES('CA000002', N'LÍ Qu?c CÙng Th‡nh', '0982311942', N'02-04, ???ng s? 9, KDC Himlam, Ph??ng T‚n H?ng, Qu?n 7, TP HCM', '13/11/1995', 'Care', 70000, N'KhÙng thÌch hoa m‡u tr?ng');
-INSERT INTO KHACHHANG VALUES('CA000003', N'Nguy?n Qu?c Ti?n', '0968026077', N'76/36/2F ???ng 19 Ph??ng Linh Chi?u TP Th? ??c', '22/03/2000', 'Care', 100000, N'KhÙng cÛ');
-INSERT INTO KHACHHANG VALUES('VIP00004', N'LÍ Th? Kim Anh', '0327899327', N'378 ???ng D??ng Qu?ng H‡m, ph??ng 5, GÚ V?p, Th‡nh ph? H? ChÌ Minh', '07/04/1990', 'VIP', 2000000, N'Hoa ph?i t??i');
-INSERT INTO KHACHHANG VALUES('CA000005', N'Tr?n Di?m My', '0911092336', N'3 HÚa BÏnh, Ph??ng 3, Qu?n 11, H? ChÌ Minh', '29/11/1989', 'Care', 120000, N'KhÙng cÛ');
-INSERT INTO KHACHHANG VALUES('NO000006', N'LÍ CÙng Tr??ng', '0363487902', N'85 C·ch M?ng Th·ng 8, Ph??ng 15, Qu?n 10, H? ChÌ Minh', '15/02/1999', 'Norm', 650000, N'KhÙng x?t m˘i h??ng lÍn hoa');
-INSERT INTO KHACHHANG VALUES('CA000007', N'Nguy?n Tu?n Minh', '0384789857', N'206/19, 30 Long Thu?n, Long Ph??c, Qu?n 9, H? ChÌ Minh', '30/09/2001', 'Care', 80000, N'KhÙng cÛ');
-INSERT INTO KHACHHANG VALUES('NO000008', N'Vı Qu?c Anh', '0368850883', N'26 Thanh ?a, ph??ng 27, BÏnh Th?nh, Th‡nh ph? H? ChÌ Minh', '17/12/1994', 'Norm', 520000, N'KhÙng cÛ');
-INSERT INTO KHACHHANG VALUES('CA000009', N'Mai Ng?c BÌch', '0971235847', N'71 Ho‡ng Hoa Th·m, ph??ng 13, T‚n BÏnh, Th‡nh ph? H? ChÌ Minh', '20/05/1998', 'Care', 55000, N'Vi?t thi?p cÛ thÍm ch? k˝');
-INSERT INTO KHACHHANG VALUES('CA000010', N'Tr?n Quang Kh·nh', '0962335479', N'123 PhÛ ??c ChÌnh, Qu?n 1, Th‡nh ph? H? ChÌ Minh', '09/01/1995', 'Care', 150000, N'BÛ hoa khÙng ch?n hoa h?ng');
-INSERT INTO KHACHHANG VALUES('VIP00011', N'Nguy?n Ng?c C?m Th?', '0913777803', N'1111 ???ng Phan V?n Tr?, P7, Q. GÚ V?p', '20/04/1997', 'VIP', 3750000, N'?u tiÍn hoa m?i nh?p v?');
-INSERT INTO KHACHHANG VALUES('LUX00012', N'H‡ Th? Di?u Linh', '0345680016', N'99 ???ng T‚y HÚa, P. Ph??c Long A, TP Th? ??c', '13/05/1992', 'Luxury', 12000000, N'Hoa v‡ ?? trang trÌ luÙn ph?i t?t nh?t');
-INSERT INTO KHACHHANG VALUES('CA000013', N'LÍ Vı H‡ My', '0965784914', N'273 ???ng KÍnh T‚n HÛa, ph??ng 3, Qu?n 11, Th‡nh ph? H? ChÌ Minh', '22/08/1987', 'Care', 250000, N'KhÙng cÛ');
-INSERT INTO KHACHHANG VALUES('CA000014', N'Phan Th? BÌch H?u', '0783902134', N'42 Nguy?n Minh Ho‡ng, Ph??ng 12, T‚n BÏnh, Th‡nh ph? H? ChÌ Minh', '11/11/2001', 'Care', 175000, N'KhÙng cÛ');
-INSERT INTO KHACHHANG VALUES('CA000015', N'Tr?n Th? L? Thanh', '0947537680', N'1106 Vı V?n Ki?t, Ph??ng 6, Qu?n 5, H? ChÌ Minh', '12/10/1995', 'Care', 350000, N'KhÙng ch?n hoa ly');
-INSERT INTO KHACHHANG VALUES('NO000016', N'H? Th˘y Trang', '0853351790', N'41 Ho‡ng D? Kh??ng, Ph??ng 12, Qu?n 10, H? ChÌ Minh', '19/11/1996', 'Norm', 850000, N'KhÙng d˘ng gi?y gÛi hoa m‡u ?en');
-INSERT INTO KHACHHANG VALUES('CA000017', N'Nguy?n Th? L?a', '0382279474', N'47 L˝ T? Tr?ng, qu?n 1, Th‡nh ph? H? ChÌ Minh', '27/07/1999', 'Care', 125000, N'KhÙng cÛ');
-INSERT INTO KHACHHANG VALUES('CA000018', N'Tr?n Th? Thu Nh?t', '0369948576', N'128 ???ng Kha V?n C‚n, Ph??ng Linh T‚y, TP. Th? ??c', '10/06/1991', 'Care', 85000, N'Hoa ph?i t??i');
-INSERT INTO KHACHHANG VALUES('VIP00019', N'Vı Th? Oanh', '0357119198', N'5 Nguy?n B?nh KhiÍm, Ph??ng B?n NghÈ, Qu?n 1, Tp. H? ChÌ Minh, Vi?t Nam', '20/06/2000', 'VIP', 2500000, N'KhÙng cÛ');
-INSERT INTO KHACHHANG VALUES('LUX00020', N'Nguy?n Th? H‚n', '0967270091', N'26 ???ng Vı V?n T?n, qu?n 3, T.p H? ChÌ Minh', '02/02/2002', 'Luxury', 10050000, N'KhÙng x?t m˘i h??ng lÍn hoa, d˘ng v?t trang trÌ cao c?p');
+CREATE SEQUENCE SEQ1_MAKH START WITH 1;
+SELECT * FROM khachhang;
