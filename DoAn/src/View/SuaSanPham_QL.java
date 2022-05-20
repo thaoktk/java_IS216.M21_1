@@ -94,34 +94,34 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Nhập vào");
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Nhập vào");
 
+        cbb_search.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã SP", "Tên SP", "Màu sắc", "Tên loại SP" }));
         cbb_search.setBackground(new java.awt.Color(249, 255, 254));
+        cbb_search.setFocusable(false);
         cbb_search.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbb_search.setForeground(new java.awt.Color(0, 0, 0));
-        cbb_search.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã SP", "Tên SP", "Màu sắc", "Tên loại SP" }));
-        cbb_search.setFocusable(false);
 
+        jLabel6.setText("Tìm kiếm theo");
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Tìm kiếm theo");
 
-        txtSearch.setBackground(new java.awt.Color(249, 255, 254));
         txtSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSearch.setForeground(new java.awt.Color(0, 0, 0));
+        txtSearch.setBackground(new java.awt.Color(249, 255, 254));
         txtSearch.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtSearch.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtSearch.setForeground(new java.awt.Color(0, 0, 0));
 
-        Back.setText("Quay lại");
         Back.setBackground(new java.awt.Color(249, 255, 254));
+        Back.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Back.setForeground(new java.awt.Color(196, 100, 96));
+        Back.setText("Quay lại");
         Back.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back.setFocusPainted(false);
         Back.setFocusable(false);
-        Back.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Back.setForeground(new java.awt.Color(196, 100, 96));
         Back.setRequestFocusEnabled(false);
         Back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,14 +129,14 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             }
         });
 
-        Find.setText("Tìm");
         Find.setBackground(new java.awt.Color(196, 100, 96));
+        Find.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Find.setForeground(new java.awt.Color(255, 255, 255));
+        Find.setText("Tìm");
         Find.setBorder(null);
         Find.setBorderPainted(false);
         Find.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Find.setFocusPainted(false);
-        Find.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Find.setForeground(new java.awt.Color(255, 255, 255));
         Find.setRequestFocusEnabled(false);
         Find.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,14 +144,14 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             }
         });
 
-        Save.setText("Lưu");
         Save.setBackground(new java.awt.Color(196, 100, 96));
+        Save.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Save.setForeground(new java.awt.Color(255, 255, 255));
+        Save.setText("Lưu");
         Save.setBorder(null);
         Save.setBorderPainted(false);
         Save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Save.setFocusPainted(false);
-        Save.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Save.setForeground(new java.awt.Color(255, 255, 255));
         Save.setRequestFocusEnabled(false);
         Save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,6 +159,9 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             }
         });
 
+        jTable1.setBackground(new java.awt.Color(180, 222, 197));
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -188,14 +191,18 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jTable1.setBackground(new java.awt.Color(180, 222, 197));
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setSelectionBackground(new java.awt.Color(196, 100, 96));
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.setShowGrid(true);
@@ -207,85 +214,85 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        txtTenSP.setBackground(new java.awt.Color(249, 255, 254));
         txtTenSP.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtTenSP.setForeground(new java.awt.Color(0, 0, 0));
+        txtTenSP.setBackground(new java.awt.Color(249, 255, 254));
         txtTenSP.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtTenSP.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtTenSP.setForeground(new java.awt.Color(0, 0, 0));
 
+        jLabel8.setText("Tên sản phẩm");
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Tên sản phẩm");
 
-        txtMausac.setBackground(new java.awt.Color(249, 255, 254));
         txtMausac.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtMausac.setForeground(new java.awt.Color(0, 0, 0));
+        txtMausac.setBackground(new java.awt.Color(249, 255, 254));
         txtMausac.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtMausac.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtMausac.setForeground(new java.awt.Color(0, 0, 0));
 
+        jLabel11.setText("Màu sắc");
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setText("Màu sắc");
 
+        cbbMaLSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tulip", "Hồng", "Cẩm chướng", "Cúc" }));
         cbbMaLSP.setBackground(new java.awt.Color(249, 255, 254));
+        cbbMaLSP.setFocusable(false);
         cbbMaLSP.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbbMaLSP.setForeground(new java.awt.Color(0, 0, 0));
-        cbbMaLSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tulip", "Hồng", "Cẩm chướng", "Cúc" }));
-        cbbMaLSP.setFocusable(false);
 
+        jLabel10.setText("Tên loại SP");
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("Tên loại SP");
 
-        txtGia.setBackground(new java.awt.Color(249, 255, 254));
         txtGia.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtGia.setForeground(new java.awt.Color(0, 0, 0));
+        txtGia.setBackground(new java.awt.Color(249, 255, 254));
         txtGia.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtGia.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtGia.setForeground(new java.awt.Color(0, 0, 0));
 
+        jLabel9.setText("Giá");
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setText("Giá");
 
-        txtSlsan.setBackground(new java.awt.Color(249, 255, 254));
         txtSlsan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSlsan.setForeground(new java.awt.Color(0, 0, 0));
+        txtSlsan.setBackground(new java.awt.Color(249, 255, 254));
         txtSlsan.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtSlsan.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtSlsan.setForeground(new java.awt.Color(0, 0, 0));
 
+        jLabel12.setText("Số lượng sẵn");
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel12.setText("Số lượng sẵn");
 
-        txtGhichu.setBackground(new java.awt.Color(249, 255, 254));
         txtGhichu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtGhichu.setForeground(new java.awt.Color(0, 0, 0));
+        txtGhichu.setBackground(new java.awt.Color(249, 255, 254));
         txtGhichu.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtGhichu.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtGhichu.setForeground(new java.awt.Color(0, 0, 0));
 
+        jLabel13.setText("Ghi chú");
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel13.setText("Ghi chú");
 
+        openFile.setText("Chọn");
         openFile.setBackground(new java.awt.Color(249, 255, 254));
         openFile.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         openFile.setForeground(new java.awt.Color(0, 0, 0));
-        openFile.setText("Chọn");
         openFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openFileActionPerformed(evt);
             }
         });
 
-        txtAnh.setBackground(new java.awt.Color(249, 255, 254));
         txtAnh.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtAnh.setForeground(new java.awt.Color(0, 0, 0));
+        txtAnh.setBackground(new java.awt.Color(249, 255, 254));
         txtAnh.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtAnh.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtAnh.setForeground(new java.awt.Color(0, 0, 0));
 
+        jLabel15.setText("Ảnh");
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel15.setText("Ảnh");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -518,6 +525,11 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
         }
         if (!isNumeric(txtSlsan.getText()) || !isNumeric(txtGia.getText())) {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (Integer.parseInt(txtGia.getText()) <= 0) {
+            JOptionPane.showMessageDialog(this, "Thông tin không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         

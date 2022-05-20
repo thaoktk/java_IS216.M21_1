@@ -129,7 +129,8 @@ public class KhuyenMaiDAO {
     
     public static ArrayList<KhuyenMai> getKhuyenMaiHopLeAll() {
         ArrayList<KhuyenMai> arr = new ArrayList<KhuyenMai>();
-        String SQL = "SELECT MAKM, TENKM, PHANTRAM, NGAYBD, NGAYKT FROM KHUYENMAI WHERE NGAYKT >= SYSDATE OR NGAYKT IS NULL ORDER BY MAKM";
+        String SQL = "SELECT MAKM, TENKM, PHANTRAM, NGAYBD, NGAYKT FROM KHUYENMAI WHERE NGAYBD <= SYSDATE AND "
+                + "NGAYKT >= SYSDATE OR NGAYBD IS NULL ORDER BY MAKM";
 
         try {
             Connection con = null;

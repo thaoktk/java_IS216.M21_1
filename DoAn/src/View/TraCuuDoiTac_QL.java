@@ -92,25 +92,25 @@ public class TraCuuDoiTac_QL extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Nhập vào");
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Nhập vào");
 
-        cbb_search.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã NCC", "Tên NCC", "SĐT" }));
         cbb_search.setBackground(new java.awt.Color(249, 255, 254));
-        cbb_search.setFocusable(false);
         cbb_search.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbb_search.setForeground(new java.awt.Color(0, 0, 0));
+        cbb_search.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã NCC", "Tên NCC", "SĐT" }));
+        cbb_search.setFocusable(false);
 
-        jLabel6.setText("Tìm kiếm theo");
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Tìm kiếm theo");
 
-        txtSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSearch.setBackground(new java.awt.Color(249, 255, 254));
+        txtSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtSearch.setForeground(new java.awt.Color(0, 0, 0));
         txtSearch.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtSearch.setCaretColor(new java.awt.Color(0, 0, 0));
-        txtSearch.setForeground(new java.awt.Color(0, 0, 0));
 
         Del.setBackground(new java.awt.Color(249, 255, 254));
         Del.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -159,9 +159,16 @@ public class TraCuuDoiTac_QL extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Long.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jTable1.setSelectionBackground(new java.awt.Color(196, 100, 96));

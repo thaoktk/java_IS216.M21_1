@@ -120,14 +120,14 @@ public class SuaKhachHang extends javax.swing.JFrame {
         txtSearch.setCaretColor(new java.awt.Color(0, 0, 0));
         txtSearch.setForeground(new java.awt.Color(0, 0, 0));
 
-        Back.setBackground(new java.awt.Color(249, 255, 254));
-        Back.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Back.setForeground(new java.awt.Color(196, 100, 96));
         Back.setText("Quay lại");
+        Back.setBackground(new java.awt.Color(249, 255, 254));
         Back.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back.setFocusPainted(false);
         Back.setFocusable(false);
+        Back.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Back.setForeground(new java.awt.Color(196, 100, 96));
         Back.setRequestFocusEnabled(false);
         Back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,14 +190,14 @@ public class SuaKhachHang extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        Find.setBackground(new java.awt.Color(196, 100, 96));
-        Find.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Find.setForeground(new java.awt.Color(255, 255, 255));
         Find.setText("Tìm");
+        Find.setBackground(new java.awt.Color(196, 100, 96));
         Find.setBorder(null);
         Find.setBorderPainted(false);
         Find.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Find.setFocusPainted(false);
+        Find.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Find.setForeground(new java.awt.Color(255, 255, 255));
         Find.setRequestFocusEnabled(false);
         Find.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,14 +205,14 @@ public class SuaKhachHang extends javax.swing.JFrame {
             }
         });
 
-        Save.setBackground(new java.awt.Color(196, 100, 96));
-        Save.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Save.setForeground(new java.awt.Color(255, 255, 255));
         Save.setText("Lưu");
+        Save.setBackground(new java.awt.Color(196, 100, 96));
         Save.setBorder(null);
         Save.setBorderPainted(false);
         Save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Save.setFocusPainted(false);
+        Save.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Save.setForeground(new java.awt.Color(255, 255, 255));
         Save.setRequestFocusEnabled(false);
         Save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

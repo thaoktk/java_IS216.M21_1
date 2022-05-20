@@ -7,12 +7,16 @@ package DAO;
 
 import Connection.ConnectionUtils;
 import DTO.KhachHang;
+import View.LogIn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -156,5 +160,63 @@ public class KhachHangDAO {
         }
 
         return arr;
+    }
+    
+    public static int getLoaiKH(String value) {
+        String loaiKH = null;
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            String SQL = "SELECT LOAIKH FROM KHACHHANG\n"
+                    + "WHERE MAKH=?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, value);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                loaiKH = rs.getString("LOAIKH");
+            }
+            
+            if (loaiKH.equals("Bình thường")) {
+                return 1;
+            } else if (loaiKH.equals("Thân thiết")) {
+                return 2;
+            } else {
+                return 3;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public static String getNgaySinh(String value) {
+        String ngaySinh = null;
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            String SQL = "SELECT NGAYSINH FROM KHACHHANG\n"
+                    + "WHERE MAKH=?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, value);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM");
+                ngaySinh = dateFormat.format(rs.getDate("NGAYSINH").toLocalDate());
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return ngaySinh;
     }
 }

@@ -134,9 +134,6 @@ public class SuaNhanVien_QL extends javax.swing.JFrame {
         });
 
         jTable1.setAutoCreateRowSorter(true);
-        jTable1.setBackground(new java.awt.Color(180, 222, 197));
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
@@ -177,6 +174,9 @@ public class SuaNhanVien_QL extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setBackground(new java.awt.Color(180, 222, 197));
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setSelectionBackground(new java.awt.Color(196, 100, 96));
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.setShowGrid(true);

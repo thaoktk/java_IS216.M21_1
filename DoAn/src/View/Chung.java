@@ -5,12 +5,18 @@
  */
 package View;
 
+import BUS.DoanhThuBUS;
 import BUS.DoiTacBUS;
 import BUS.KhachHangBUS;
 import BUS.KhuyenMaiBUS;
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
+import DTO.DoanhThu;
 import java.awt.HeadlessException;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -94,7 +100,7 @@ public class Chung extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
+        doanhThu = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Chung");
@@ -547,9 +553,9 @@ public class Chung extends javax.swing.JFrame {
 
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageText/icon/money.png"))); // NOI18N
 
-        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(196, 100, 96));
-        jLabel25.setText("12.2M");
+        doanhThu.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        doanhThu.setForeground(new java.awt.Color(196, 100, 96));
+        doanhThu.setText("12.2M");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -561,7 +567,7 @@ public class Chung extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                .addComponent(jLabel25)
+                .addComponent(doanhThu)
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -579,7 +585,7 @@ public class Chung extends javax.swing.JFrame {
                         .addGap(0, 27, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel25)))
+                        .addComponent(doanhThu)))
                 .addContainerGap())
         );
 
@@ -762,23 +768,34 @@ public class Chung extends javax.swing.JFrame {
     }//GEN-LAST:event_ChamCongBtnActionPerformed
 
     public void setSoLieu() {
+        LocalDate now = LocalDate.now();
+        int year = now.getYear();
         NhanVienBUS busNV = new NhanVienBUS();
         KhachHangBUS busKH = new KhachHangBUS();
         SanPhamBUS busSP = new SanPhamBUS();
         KhuyenMaiBUS busKM = new KhuyenMaiBUS();
         DoiTacBUS busDT = new DoiTacBUS();
+        DoanhThuBUS busDS = new DoanhThuBUS();
+        DoanhThu dt = new DoanhThu(0, year, 0,0,0,null);
         
         int arrNVLength = busNV.getNhanVienAll().size();
         int arrKHLength = busKH.getKhachHangAll().size();
         int arrSPLength = busSP.getSanPhamAll().size();
         int arrKMLength = busKM.getKhuyenMaiAll().size();
         int arrDTLength = busDT.getDoiTacAll().size();
+        double doanhSo = 0;
+        try {
+            doanhSo = busDS.getDoanhThuTheoNam(dt);
+        } catch (SQLException ex) {
+            Logger.getLogger(Chung.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         SoNV.setText(String.valueOf(arrNVLength));
         SoKH.setText(String.valueOf(arrKHLength));
         SoSP.setText(String.valueOf(arrSPLength));
         SoKM.setText(String.valueOf(arrKMLength));
         SoDT.setText(String.valueOf(arrDTLength));
+        doanhThu.setText(String.valueOf(doanhSo / 1000000) + "M");
     }
     /**
      * @param args the command line arguments
@@ -829,6 +846,7 @@ public class Chung extends javax.swing.JFrame {
     private javax.swing.JLabel SoKM;
     private javax.swing.JLabel SoNV;
     private javax.swing.JLabel SoSP;
+    private javax.swing.JLabel doanhThu;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -840,7 +858,6 @@ public class Chung extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

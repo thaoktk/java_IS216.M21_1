@@ -133,9 +133,16 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Long.class, java.lang.Double.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jTable1.setSelectionBackground(new java.awt.Color(196, 100, 96));
@@ -467,7 +474,7 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
         hide();
-        ThemHoaDon.main(user);
+        ThemHoaDon.main(user, null);
     }//GEN-LAST:event_AddActionPerformed
 
     private void QLNVBtn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QLNVBtn5ActionPerformed
@@ -592,12 +599,21 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
             int soHD = hd.getSoHD();
             int maNV = hd.getMaNV();
             int maKH = hd.getMaKH();
+            String maKHnull = "null";
             double tongtien = hd.getTongTien();
             double trigia = hd.getTriGia();
             String nghd = hd.toString(hd.getNgayHD());
             float chietkhau = hd.getChietKhau();
-            Object[] row = {soHD, maNV, maKH, nghd, tongtien, chietkhau, trigia};
-            dtm.addRow(row);
+            Object[] rowKH = null;
+            if (maKH != 0) {
+                Object[] row = {soHD, maNV, maKH, nghd, tongtien, chietkhau, trigia};
+                rowKH = row;
+            } else {
+                Object[] row = {soHD, maNV, maKHnull, nghd, tongtien, chietkhau, trigia};
+                rowKH = row;
+            }
+            
+            dtm.addRow(rowKH);
         }
         jTable1.setModel(dtm);
     }

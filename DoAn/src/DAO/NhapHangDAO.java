@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class NhapHangDAO {
     public static ArrayList<NhapHang> getNhapHangAll() {
         ArrayList<NhapHang> arr = new ArrayList<NhapHang>();
-        String SQL = "SELECT PN.MAPHIEUNHAP, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
+        String SQL = "SELECT PN.MAPHIEUNHAP, MANCC, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
                 + " WHERE PN.MAPHIEUNHAP = CTPN.MAPHIEUNHAP ORDER BY PN.MAPHIEUNHAP";
 
         try (Connection con = ConnectionUtils.getMyConnection()) {
@@ -30,6 +30,7 @@ public class NhapHangDAO {
             while (rs.next()) {
                 NhapHang kh = new NhapHang();
                 kh.setMaPN(rs.getInt("MAPHIEUNHAP"));
+                kh.setMaNCC(rs.getInt("MANCC"));
                 kh.setMaSP(rs.getInt("MASP"));
                 kh.setMaNV(rs.getInt("MANV"));
                 kh.setTongTienNhap(rs.getDouble("TONGTIENNHAP"));
@@ -51,15 +52,15 @@ public class NhapHangDAO {
         String SQL = null;
         switch (option) {
             case "Mã PN":
-                SQL = "SELECT PN.MAPHIEUNHAP, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
+                SQL = "SELECT PN.MAPHIEUNHAP, MANCC, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
                 + " WHERE PN.MAPHIEUNHAP = CTPN.MAPHIEUNHAP AND PN.MAPHIEUNHAP=?";
                 break;
             case "Mã NV":
-                SQL = "SELECT PN.MAPHIEUNHAP, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
+                SQL = "SELECT PN.MAPHIEUNHAP, MANCC, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
                 + " WHERE PN.MAPHIEUNHAP = CTPN.MAPHIEUNHAP AND MANV=?";
                 break;
             case "Mã SP":
-                SQL = "SELECT PN.MAPHIEUNHAP, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
+                SQL = "SELECT PN.MAPHIEUNHAP, MANCC, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
                 + " WHERE PN.MAPHIEUNHAP = CTPN.MAPHIEUNHAP AND MASP=?";
                 break;
         }
@@ -70,6 +71,7 @@ public class NhapHangDAO {
             while (rs.next()) {
                 NhapHang kh = new NhapHang();
                 kh.setMaPN(rs.getInt("MAPHIEUNHAP"));
+                kh.setMaNCC(rs.getInt("MANCC"));
                 kh.setMaSP(rs.getInt("MASP"));
                 kh.setMaNV(rs.getInt("MANV"));
                 kh.setTongTienNhap(rs.getDouble("TONGTIENNHAP"));
@@ -97,11 +99,12 @@ public class NhapHangDAO {
 
         String NgN = nh.toString(nh.getNgayNhap());
 
-        String SQL = "INSERT INTO PHIEUNHAP(MAPHIEUNHAP, NGAYNHAP, MANV)"
-                + " VALUES(SEQ3_MAPHIEUNHAP.NEXTVAL, to_date(?,'dd/mm/yyyy'), ?)";
+        String SQL = "INSERT INTO PHIEUNHAP(MAPHIEUNHAP, MANCC, NGAYNHAP, MANV)"
+                + " VALUES(SEQ3_MAPHIEUNHAP.NEXTVAL, ?, to_date(?,'dd/mm/yyyy'), ?)";
         PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(2, nh.getMaNV());
-        ps.setString(1, NgN);
+        ps.setInt(3, nh.getMaNV());
+        ps.setString(2, NgN);
+        ps.setInt(1, nh.getMaNCC());
 
         return ps.executeUpdate() > 0;
     }
@@ -121,22 +124,6 @@ public class NhapHangDAO {
         ps.setInt(2, nh.getMaPN());
         ps.setInt(3, nh.getSlNhap());
         ps.setLong(4, nh.getGiaNhap());
-
-        return ps.executeUpdate() > 0;
-    }
-    
-    public static boolean insertCungCap(NhapHang nh) throws SQLException {
-        Connection con = null;
-        try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
-        String SQL = "INSERT INTO CUNGCAP(MAPHIEUNHAP, MANCC) VALUES(?, ?)";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(1, nh.getMaPN());
-        ps.setInt(2, nh.getMaNCC());
 
         return ps.executeUpdate() > 0;
     }

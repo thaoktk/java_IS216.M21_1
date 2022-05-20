@@ -34,4 +34,12 @@ public class KhachHangBUS {
     public static ArrayList<KhachHang> timKhachHang(String option, String value) {
         return KhachHangDAO.timKhachHang(option, value);
     }
+    
+    public static int getLoaiKH(String value) {
+        return KhachHangDAO.getLoaiKH(value);
+    }
+    
+    public static String getNgaySinh(String value) {
+        return KhachHangDAO.getNgaySinh(value);
+    }
 }

@@ -5,23 +5,17 @@
             <url>src/View/ThemHoaDon.java</url>
             <bookmark id="1">
                 <name/>
-                <line>385</line>
+                <line>457</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Downloads/java/DoAn/src/View/SuaNhanVien_QL.java</file>
-            <file>file:/D:/Downloads/java/DoAn/src/BUS/SanPhamBUS.java</file>
-            <file>file:/D:/Downloads/java/DoAn/src/DAO/SanPhamDAO.java</file>
-            <file>file:/D:/Downloads/java/DoAn/src/View/ThemNhapHang.java</file>
-            <file>file:/D:/Downloads/java/DoAn/src/DTO/NhapHang.java</file>
-            <file>file:/D:/Downloads/java/DoAn/src/DAO/NhapHangDAO.java</file>
-            <file>file:/D:/Downloads/java/DoAn/src/DAO/DoiTacDAO.java</file>
-            <file>file:/D:/Downloads/java/DoAn/src/View/BaoCaoDoanhThu_QL.java</file>
-            <file>file:/D:/Downloads/java/DoAn/src/BUS/DoiTacBUS.java</file>
-            <file>file:/D:/Downloads/java/DoAn/src/DAO/ChamCongDAO.java</file>
+            <file>file:/D:/Downloads/java/DoAn/src/DTO/KhachHang.java</file>
+            <file>file:/D:/Downloads/java/DoAn/src/DAO/KhachHangDAO.java</file>
+            <file>file:/D:/Downloads/java/DoAn/src/View/ThemHoaDon.java</file>
+            <file>file:/D:/Downloads/java/DoAn/src/BUS/KhachHangBUS.java</file>
         </group>
     </open-files>
 </project-private>

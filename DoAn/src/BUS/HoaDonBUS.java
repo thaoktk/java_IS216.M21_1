@@ -7,6 +7,7 @@ package BUS;
 
 import DAO.HoaDonDAO;
 import DTO.HoaDon;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -17,4 +18,21 @@ public class HoaDonBUS {
     public static ArrayList<HoaDon> getHoaDonAll() {
         return HoaDonDAO.getHoaDonAll();
     }
+    
+    public static boolean insertHD(HoaDon hd) throws SQLException {
+        return HoaDonDAO.insert(hd);
+    }
+    
+    public static int getSoHD() {
+        return HoaDonDAO.getSoHD();
+    }
+    
+    public static boolean insertCTHD(HoaDon hd) throws SQLException {
+        return HoaDonDAO.insertCTHD(hd);
+    }
+    
+    public static boolean insertCTKM(HoaDon hd) throws SQLException {
+        return HoaDonDAO.insertCTKM(hd);
+    }
+    
 }

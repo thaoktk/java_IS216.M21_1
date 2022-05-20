@@ -32,10 +32,6 @@ public class NhapHangBUS {
         return NhapHangDAO.insertCTPN(nh);
     }
     
-    public static boolean insertCungCap(NhapHang nh) throws SQLException {
-        return NhapHangDAO.insertCungCap(nh);
-    }
-    
     public static int getMaPN() {
         return NhapHangDAO.getMaPN();
     }

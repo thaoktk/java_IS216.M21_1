@@ -7,8 +7,9 @@ package DAO;
 
 import Connection.ConnectionUtils;
 import DTO.HoaDon;
-import DTO.NhanVien;
+import DTO.NhapHang;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -50,4 +51,84 @@ public class HoaDonDAO {
         }
         return arr;
     }
+    
+    public static boolean insert(HoaDon hd) throws SQLException {
+        Connection con = null;
+        try {
+            con = ConnectionUtils.getMyConnection();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        String SQL = "INSERT INTO HOADON(SOHD, MANV, MAKH) VALUES(SEQ7_SOHD.NEXTVAL, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(SQL);
+        ps.setInt(1, hd.getMaNV());
+        if (hd.getMaKH() != null) {
+            ps.setInt(2, hd.getMaKH());
+        } else {
+            ps.setObject(2, hd.getMaKH());
+        }
+        
+
+        return ps.executeUpdate() > 0;
+    }
+    
+    public static int getSoHD() {
+        int soHD = 0;
+        String SQL = "SELECT MAX(SOHD) FROM HOADON";
+
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(SQL);
+            if (rs.next()) {
+                soHD = rs.getInt("MAX(SOHD)");
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return soHD;
+    }
+    
+    public static boolean insertCTHD(HoaDon hd) throws SQLException {
+        Connection con = null;
+        try {
+            con = ConnectionUtils.getMyConnection();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        String SQL = "INSERT INTO CTHD(SOHD,MASP,SOLUONG) VALUES(?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(SQL);
+        ps.setInt(1, hd.getSoHD());
+        ps.setInt(2, hd.getMaSP());
+        ps.setInt(3, hd.getSoLuong());
+
+        return ps.executeUpdate() > 0;
+    } 
+    
+    public static boolean insertCTKM(HoaDon hd) throws SQLException {
+        Connection con = null;
+        try {
+            con = ConnectionUtils.getMyConnection();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        String SQL = "INSERT INTO CTKM(SOHD, MAKM) VALUES(?, ?)";
+        PreparedStatement ps = con.prepareStatement(SQL);
+        ps.setInt(1, hd.getSoHD());
+        ps.setInt(2, hd.getMaKM());
+
+        return ps.executeUpdate() > 0;
+    } 
 }

@@ -29,7 +29,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
      * Creates new form ThemNhapHang_QL
      */
     String user;
-    String ngayNhapHang = null;
+    String ngayNhapHang = null, tenNhaCungCap = null;
     ArrayList<Object> arrObj = new ArrayList<Object>();
     String tenSPAdd = null;
     public ThemNhapHang(String a)throws HeadlessException {
@@ -68,6 +68,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
         AddIntoTable = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         cbbTenNCC = new javax.swing.JComboBox<>();
+        Del = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -84,6 +85,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Thêm nhập hàng");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -203,6 +205,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setSelectionBackground(new java.awt.Color(196, 100, 96));
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.setShowGrid(true);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
@@ -231,9 +234,19 @@ public class ThemNhapHang extends javax.swing.JFrame {
         cbbTenNCC.setFocusable(false);
         cbbTenNCC.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbbTenNCC.setForeground(new java.awt.Color(0, 0, 0));
-        cbbTenNCC.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbbTenNCCItemStateChanged(evt);
+
+        Del.setText("Xóa");
+        Del.setBackground(new java.awt.Color(249, 255, 254));
+        Del.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
+        Del.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Del.setFocusPainted(false);
+        Del.setFocusable(false);
+        Del.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Del.setForeground(new java.awt.Color(196, 100, 96));
+        Del.setRequestFocusEnabled(false);
+        Del.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DelActionPerformed(evt);
             }
         });
 
@@ -244,6 +257,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Del, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 718, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -317,7 +331,9 @@ public class ThemNhapHang extends javax.swing.JFrame {
                 .addComponent(AddIntoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
+                .addComponent(Del, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(AddInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -326,7 +342,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 760, 640));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 760, 700));
 
         jPanel1.setBackground(new java.awt.Color(231, 238, 237));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -463,7 +479,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
         });
         jPanel1.add(QLDS, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 562, 151, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 640));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -625,6 +641,11 @@ public class ThemNhapHang extends javax.swing.JFrame {
     
     private void AddInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddInsertActionPerformed
         // TODO add your handling code here:
+        if (arrObj.size() <= 0) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa thêm sản phẩm để nhập hàng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn nhập hàng?", "Xác nhận",JOptionPane.YES_NO_OPTION );
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;
@@ -641,30 +662,24 @@ public class ThemNhapHang extends javax.swing.JFrame {
             LocalDate ldNgNhap = LocalDate.parse(ngNhapHang, fIn);
             int maNV = Integer.parseInt(user);
             int maDT = busDT.getMaDT(firstRow[1].toString());
-            int maSP = busSP.getMaSP(firstRow[2].toString());
-            int SLnhap = Integer.parseInt(firstRow[4].toString());
-            long giaNhap = Long.parseLong(firstRow[5].toString());
-            NhapHang kh = new NhapHang(ma, maNV, maSP, maDT, SLnhap, ldNgNhap, 0, giaNhap);
+            NhapHang kh = new NhapHang(ma, maNV, 0, maDT, 0, ldNgNhap, 0, 0);
             
             if (busNH.insertNH(kh)) {
                 if (busNH.getMaPN() != 0) {
                     Object[] row = null;
                     boolean nhaphangCTPN = false;
-                    boolean nhaphangCungCap = false;
                     for (int i = 0; i < arrObj.size(); i++) {
                         row = (Object[]) arrObj.get(i);
-                        int maDTRow = busDT.getMaDT(row[1].toString());
-//                        if (maDTRow )
                         int maSPRow = busSP.getMaSP(row[2].toString());
                         int SLNhapRow = Integer.parseInt(row[4].toString());
                         long giaNhapRow = Long.parseLong(row[5].toString());
-                        NhapHang rowNH = new NhapHang(busNH.getMaPN(), maNV, maSPRow, maDTRow, SLNhapRow, ldNgNhap, 0, giaNhapRow);
+                        NhapHang rowNH = new NhapHang(busNH.getMaPN(), maNV, maSPRow, maDT, SLNhapRow, ldNgNhap, 0, giaNhapRow);
                         nhaphangCTPN = busNH.insertCTPN(rowNH);
-                        nhaphangCungCap = busNH.insertCungCap(rowNH);
                     }
-                    if (nhaphangCTPN && nhaphangCungCap) {
+                    if (nhaphangCTPN) {
                         JOptionPane.showMessageDialog(this, "Đã nhập hàng thành công!");
                         datePickerNgNhap.setEnabled(true);
+                        cbbTenNCC.setEnabled(true);
                         clearTB();
                     }
                 }
@@ -682,10 +697,14 @@ public class ThemNhapHang extends javax.swing.JFrame {
         // TODO add your handling code here:
         String slnhap = txtSLNhap.getText();
         String ngnhap = null;
+        String tenNCC = null;
         if (datePickerNgNhap.isEnabled()) {
             ngnhap = String.format("%1$td/%1$tm/%1$tY", datePickerNgNhap.getDate());
+        } 
+        if (cbbTenNCC.isEnabled()) {
+            tenNCC = cbbTenNCC.getSelectedItem().toString();
         }
-        String tenNCC = cbbTenNCC.getSelectedItem().toString();
+        
         tenSPAdd = cbbTenSP.getSelectedItem().toString();
         String gianhap = txtGiaNhap.getText();
         
@@ -695,7 +714,12 @@ public class ThemNhapHang extends javax.swing.JFrame {
                 return;
             }
         }
-        if (slnhap.equals("") || tenSPAdd.equals("") || gianhap.equals("") || tenNCC.equals("")) {
+        
+        if (Integer.parseInt(slnhap) <= 0 || Integer.parseInt(gianhap) <= 0) {
+            JOptionPane.showMessageDialog(this, "Thông tin không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (slnhap.equals("") || gianhap.equals("")) {
             JOptionPane.showMessageDialog(this, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -710,8 +734,8 @@ public class ThemNhapHang extends javax.swing.JFrame {
             rowCheck = (Object[]) arrObj.get(i);
             String tenSPCheck = rowCheck[2].toString();
             if (tenSPAdd.equals(tenSPCheck)) {
-                JOptionPane.showMessageDialog(this,"Bạn đã thêm sản phẩm này rồi!","Lỗi",JOptionPane.ERROR_MESSAGE);
-            return;
+                JOptionPane.showMessageDialog(this, "Bạn đã thêm sản phẩm này rồi!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
             }
         }
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận",JOptionPane.YES_NO_OPTION );
@@ -724,18 +748,36 @@ public class ThemNhapHang extends javax.swing.JFrame {
             ngayNhapHang = ngnhap;
         }
         
-        Object[] row = {user, tenNCC, tenSPAdd, ngayNhapHang, slnhap, gianhap};
+        if (tenNCC != null){
+            cbbTenNCC.setEnabled(false);
+            tenNhaCungCap = tenNCC;
+        }
+        
+        Object[] row = {user, tenNhaCungCap, tenSPAdd, ngayNhapHang, slnhap, gianhap};
         arrObj.add(row);
         JOptionPane.showMessageDialog(this, "Đã thêm thành công!");
         clearNH();
         loadTable();
-        System.out.println("arrObj: " + arrObj);
     }//GEN-LAST:event_AddIntoTableActionPerformed
 
-    private void cbbTenNCCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbTenNCCItemStateChanged
+    private void DelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelActionPerformed
         // TODO add your handling code here:
-        loadTenSP();
-    }//GEN-LAST:event_cbbTenNCCItemStateChanged
+        int rowSelected = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        if (rowSelected == -1) {
+            JOptionPane.showMessageDialog(this,"Bạn chưa chọn sản phẩm để xóa!","Lỗi",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận",JOptionPane.YES_NO_OPTION );
+        if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
+            return;
+        }
+        
+        model.removeRow(rowSelected);
+        arrObj.remove(rowSelected);
+    }//GEN-LAST:event_DelActionPerformed
 
     public void loadTable() {
         String[] header = {"Mã NV","Tên NCC", "Tên SP", "Ngày nhập", "SL nhập", "Giá nhập"};
@@ -800,6 +842,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
     private javax.swing.JButton AddIntoTable;
     private javax.swing.JButton Back;
     private javax.swing.JButton ChungBtn;
+    private javax.swing.JButton Del;
     private javax.swing.JButton QLDS;
     private javax.swing.JButton QLDT;
     private javax.swing.JButton QLHD;

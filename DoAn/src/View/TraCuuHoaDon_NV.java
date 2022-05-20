@@ -80,9 +80,9 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Nhập vào");
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Nhập vào");
 
         jComboBox1.setBackground(new java.awt.Color(249, 255, 254));
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -90,15 +90,15 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Số HD", "Mã NV", "Mã KH" }));
         jComboBox1.setFocusable(false);
 
-        jLabel6.setText("Tìm kiếm theo");
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Tìm kiếm theo");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextField1.setBackground(new java.awt.Color(249, 255, 254));
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
         jTextField1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTextField1.setCaretColor(new java.awt.Color(0, 0, 0));
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
 
         jTable1.setBackground(new java.awt.Color(180, 222, 197));
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -132,9 +132,16 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Long.class, java.lang.Double.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jTable1.setSelectionBackground(new java.awt.Color(196, 100, 96));

@@ -24,7 +24,7 @@ public class TraCuuKhachHang extends javax.swing.JFrame {
      * Creates new form TraCuuKhachHang
      */
     String user;
-
+    int maKH;
     public TraCuuKhachHang(String a) throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
@@ -122,6 +122,9 @@ public class TraCuuKhachHang extends javax.swing.JFrame {
             }
         });
 
+        jTable1.setBackground(new java.awt.Color(180, 222, 197));
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
@@ -161,13 +164,15 @@ public class TraCuuKhachHang extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setBackground(new java.awt.Color(180, 222, 197));
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setSelectionBackground(new java.awt.Color(196, 100, 96));
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.setShowGrid(true);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         Find.setBackground(new java.awt.Color(196, 100, 96));
@@ -192,6 +197,7 @@ public class TraCuuKhachHang extends javax.swing.JFrame {
         AddHD.setBorder(null);
         AddHD.setBorderPainted(false);
         AddHD.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AddHD.setEnabled(false);
         AddHD.setFocusPainted(false);
         AddHD.setRequestFocusEnabled(false);
         AddHD.addActionListener(new java.awt.event.ActionListener() {
@@ -539,7 +545,7 @@ public class TraCuuKhachHang extends javax.swing.JFrame {
     private void AddHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddHDActionPerformed
         // TODO add your handling code here:
         hide();
-        ThemHoaDon.main(user);
+        ThemHoaDon.main(user, maKH);
     }//GEN-LAST:event_AddHDActionPerformed
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
@@ -680,6 +686,20 @@ public class TraCuuKhachHang extends javax.swing.JFrame {
             FindKhachHang();
         }
     }//GEN-LAST:event_FindActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        if (jTable1.isFocusable()) {
+            AddHD.setEnabled(true);
+        } else {
+            AddHD.setEnabled(false);
+        }
+        
+        int rowSelected = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String ma = model.getValueAt(rowSelected, 0).toString();
+        maKH = Integer.parseInt(ma);
+    }//GEN-LAST:event_jTable1MouseClicked
 
     public void FindKhachHang() {
         DefaultTableModel SearchTable = (DefaultTableModel) jTable1.getModel();

@@ -5,7 +5,6 @@
  */
 package View;
 
-import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
 import BUS.NhapHangBUS;
 import DTO.NhapHang;
@@ -136,9 +135,16 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Long.class, java.lang.Double.class, java.lang.String.class, java.lang.Double.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jTable1.setSelectionBackground(new java.awt.Color(196, 100, 96));
@@ -603,7 +609,7 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
     }//GEN-LAST:event_FindActionPerformed
 
     public void loadNhapHangAll() {
-        String[] header = {"Mã PN", "Mã NV", "Mã SP", "Ngày nhập", "SL nhập", "Giá nhập", "Tổng tiền nhập"};
+        String[] header = {"Mã PN", "Mã NV", "Mã SP", "Mã NCC", "Ngày nhập", "SL nhập", "Giá nhập", "Tổng tiền nhập"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
         ArrayList<NhapHang> arr = new ArrayList<NhapHang>();
         arr = NhapHangBUS.getNhapHangAll();
@@ -613,11 +619,12 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
             int maPN = kh.getMaPN();
             int maNV = kh.getMaNV();
             int maSP = kh.getMaSP();
+            int maDT = kh.getMaNCC();
             String ngnhap = kh.toString(kh.getNgayNhap());
             int slnhap = kh.getSlNhap();
             long gianhap = kh.getGiaNhap();
             long tongtien = kh.getTongTienNhap();
-            Object[] row = {maPN, maNV, maSP, ngnhap, slnhap, gianhap, tongtien};
+            Object[] row = {maPN, maNV, maSP, maDT, ngnhap, slnhap, gianhap, tongtien};
             dtm.addRow(row);
         }
         jTable1.setModel(dtm);
@@ -644,11 +651,12 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
             int maPN = kh.getMaPN();
             int maNV = kh.getMaNV();
             int maSP = kh.getMaSP();
+            int maDT = kh.getMaNCC();
             String ngnhap = kh.toString(kh.getNgayNhap());
             int slnhap = kh.getSlNhap();
             long gianhap = kh.getGiaNhap();
             long tongtien = kh.getTongTienNhap();
-            Object[] row = {maPN, maNV, maSP, ngnhap, slnhap, gianhap, tongtien};
+            Object[] row = {maPN, maNV, maSP, maDT, ngnhap, slnhap, gianhap, tongtien};
             SearchTable.addRow(row);
         }
         if (arr.size() <= 0) {

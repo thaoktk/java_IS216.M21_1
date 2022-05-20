@@ -13,17 +13,19 @@ import java.time.format.DateTimeFormatter;
  * @author asus
  */
 public class HoaDon {
-    private int soHD, maNV, maKH, maSP, soLuong;
+    private int soHD, maNV, maSP, maKM, soLuong;
+    private Integer maKH;
     private LocalDate ngayHD;
     private double tongTien, triGia;
     private float chietKhau;
     private String ghiChu;
     DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public HoaDon(int soHD, int maNV, int maKH, int maSP, int soLuong, LocalDate ngayHD, double tongTien, double triGia, float chietKhau, String ghiChu) {
+    public HoaDon(int soHD, int maNV, Integer maKH, int maSP, int maKM, int soLuong, LocalDate ngayHD, double tongTien, double triGia, float chietKhau, String ghiChu) {
         this.soHD = soHD;
         this.maNV = maNV;
         this.maKH = maKH;
+        this.maKM = maKM;
         this.maSP = maSP;
         this.soLuong = soLuong;
         this.ngayHD = ngayHD;
@@ -36,8 +38,9 @@ public class HoaDon {
     public HoaDon() {
         this.soHD = 0;
         this.maNV = 0;
-        this.maKH = 0;
+        this.maKH = null;
         this.maSP = 0;
+        this.maKM = 0;
         this.soLuong = 0;
         this.ngayHD = null;
         this.tongTien = 0;
@@ -54,7 +57,7 @@ public class HoaDon {
         return maNV;
     }
 
-    public int getMaKH() {
+    public Integer getMaKH() {
         return maKH;
     }
 
@@ -86,6 +89,10 @@ public class HoaDon {
         return soLuong;
     }
 
+    public int getMaKM() {
+        return maKM;
+    }
+
     public void setSoHD(int soHD) {
         this.soHD = soHD;
     }
@@ -94,7 +101,7 @@ public class HoaDon {
         this.maNV = maNV;
     }
 
-    public void setMaKH(int maKH) {
+    public void setMaKH(Integer maKH) {
         this.maKH = maKH;
     }
 
@@ -124,6 +131,10 @@ public class HoaDon {
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
+    }
+
+    public void setMaKM(int maKM) {
+        this.maKM = maKM;
     }
     
     public String toString(LocalDate date) {

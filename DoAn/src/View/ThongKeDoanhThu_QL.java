@@ -52,9 +52,9 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbbThongKeTheo = new javax.swing.JComboBox<>();
         jLabel20 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbbThang = new javax.swing.JComboBox<>();
         ChooseThongKe = new javax.swing.JComboBox<>();
         jLabel21 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -62,7 +62,7 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         Back2 = new javax.swing.JButton();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cbbNam = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
 
@@ -78,26 +78,26 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageText/tag/Quản lý.png"))); // NOI18N
 
-        QLNVBtn5.setText("Nhân viên");
         QLNVBtn5.setBackground(new java.awt.Color(231, 238, 237));
+        QLNVBtn5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLNVBtn5.setForeground(new java.awt.Color(196, 100, 96));
+        QLNVBtn5.setText("Nhân viên");
         QLNVBtn5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLNVBtn5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLNVBtn5.setFocusPainted(false);
-        QLNVBtn5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLNVBtn5.setForeground(new java.awt.Color(196, 100, 96));
         QLNVBtn5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLNVBtn5ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Chung");
         jButton2.setBackground(new java.awt.Color(231, 238, 237));
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(196, 100, 96));
+        jButton2.setText("Chung");
         jButton2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.setFocusPainted(false);
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(196, 100, 96));
         jButton2.setRequestFocusEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,99 +105,99 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
             }
         });
 
-        QLSPBtn.setText("Sản phẩm");
         QLSPBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLSPBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLSPBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLSPBtn.setText("Sản phẩm");
         QLSPBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLSPBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLSPBtn.setFocusPainted(false);
-        QLSPBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLSPBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLSPBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLSPBtnActionPerformed(evt);
             }
         });
 
-        QLKHBtn.setText("Khách hàng");
         QLKHBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLKHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLKHBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLKHBtn.setText("Khách hàng");
         QLKHBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLKHBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLKHBtn.setFocusPainted(false);
-        QLKHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLKHBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLKHBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLKHBtnActionPerformed(evt);
             }
         });
 
-        QLDTBtn.setText("Đối tác");
         QLDTBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLDTBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLDTBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLDTBtn.setText("Đối tác");
         QLDTBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLDTBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLDTBtn.setFocusPainted(false);
-        QLDTBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLDTBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLDTBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLDTBtnActionPerformed(evt);
             }
         });
 
-        QLKMBtn.setText("Khuyến mãi");
         QLKMBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLKMBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLKMBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLKMBtn.setText("Khuyến mãi");
         QLKMBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLKMBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLKMBtn.setFocusPainted(false);
-        QLKMBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLKMBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLKMBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLKMBtnActionPerformed(evt);
             }
         });
 
-        QLNHBtn.setText("Nhập hàng");
         QLNHBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLNHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLNHBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLNHBtn.setText("Nhập hàng");
         QLNHBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLNHBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLNHBtn.setFocusPainted(false);
-        QLNHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLNHBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLNHBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLNHBtnActionPerformed(evt);
             }
         });
 
-        QLHDBtn.setText("Hóa đơn");
         QLHDBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLHDBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLHDBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLHDBtn.setText("Hóa đơn");
         QLHDBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLHDBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLHDBtn.setFocusPainted(false);
-        QLHDBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLHDBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLHDBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLHDBtnActionPerformed(evt);
             }
         });
 
-        QLDSBtn.setText("Doanh thu");
         QLDSBtn.setBackground(new java.awt.Color(196, 100, 96));
+        QLDSBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLDSBtn.setForeground(new java.awt.Color(255, 255, 255));
+        QLDSBtn.setText("Doanh thu");
         QLDSBtn.setBorder(null);
         QLDSBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLDSBtn.setFocusPainted(false);
-        QLDSBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLDSBtn.setForeground(new java.awt.Color(255, 255, 255));
 
-        ChamCongBtn.setText("Chấm công");
         ChamCongBtn.setBackground(new java.awt.Color(231, 238, 237));
+        ChamCongBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ChamCongBtn.setForeground(new java.awt.Color(196, 100, 96));
+        ChamCongBtn.setText("Chấm công");
         ChamCongBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         ChamCongBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ChamCongBtn.setFocusPainted(false);
-        ChamCongBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        ChamCongBtn.setForeground(new java.awt.Color(196, 100, 96));
         ChamCongBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ChamCongBtnActionPerformed(evt);
@@ -305,21 +305,26 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
         jLabel19.setForeground(new java.awt.Color(0, 0, 0));
         jLabel19.setText("Thống kê theo");
 
-        jComboBox1.setBackground(new java.awt.Color(249, 255, 254));
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tháng", "Năm" }));
-        jComboBox1.setFocusable(false);
+        cbbThongKeTheo.setBackground(new java.awt.Color(249, 255, 254));
+        cbbThongKeTheo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbbThongKeTheo.setForeground(new java.awt.Color(0, 0, 0));
+        cbbThongKeTheo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tháng", "Năm" }));
+        cbbThongKeTheo.setFocusable(false);
+        cbbThongKeTheo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbThongKeTheoItemStateChanged(evt);
+            }
+        });
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Chọn tháng");
 
-        jComboBox2.setBackground(new java.awt.Color(249, 255, 254));
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3", "4", "5", "6" }));
-        jComboBox2.setFocusable(false);
+        cbbThang.setBackground(new java.awt.Color(249, 255, 254));
+        cbbThang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbbThang.setForeground(new java.awt.Color(0, 0, 0));
+        cbbThang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3", "4", "5", "6" }));
+        cbbThang.setFocusable(false);
 
         ChooseThongKe.setBackground(new java.awt.Color(249, 255, 254));
         ChooseThongKe.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -336,6 +341,9 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
         jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jLabel21.setText("Chọn thống kê");
 
+        jTable1.setBackground(new java.awt.Color(180, 222, 197));
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -348,7 +356,7 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Long.class, java.lang.String.class, java.lang.Object.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -359,9 +367,6 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setBackground(new java.awt.Color(180, 222, 197));
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setSelectionBackground(new java.awt.Color(196, 100, 96));
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.setShowGrid(true);
@@ -376,14 +381,14 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Tổng cộng");
 
-        Back2.setText("Quay lại");
         Back2.setBackground(new java.awt.Color(249, 255, 254));
+        Back2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Back2.setForeground(new java.awt.Color(196, 100, 96));
+        Back2.setText("Quay lại");
         Back2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         Back2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back2.setFocusPainted(false);
         Back2.setFocusable(false);
-        Back2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Back2.setForeground(new java.awt.Color(196, 100, 96));
         Back2.setRequestFocusEnabled(false);
         Back2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -391,11 +396,11 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
             }
         });
 
-        jComboBox3.setBackground(new java.awt.Color(249, 255, 254));
-        jComboBox3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox3.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2021", "2022" }));
-        jComboBox3.setFocusable(false);
+        cbbNam.setBackground(new java.awt.Color(249, 255, 254));
+        cbbNam.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbbNam.setForeground(new java.awt.Color(0, 0, 0));
+        cbbNam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2021", "2022" }));
+        cbbNam.setFocusable(false);
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(0, 0, 0));
@@ -430,16 +435,16 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addComponent(ChooseThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(80, 80, 80)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbbThongKeTheo, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jLabel20)
                         .addGap(183, 183, 183)
                         .addComponent(jLabel22))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(448, 448, 448)
+                        .addGap(324, 324, 324)
                         .addComponent(jLabel11)
-                        .addGap(119, 119, 119)
+                        .addGap(243, 243, 243)
                         .addComponent(jLabel10))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(636, 636, 636)
@@ -449,9 +454,9 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbbThang, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(80, 80, 80)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbbNam, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(53, 53, 53)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(21, 21, 21))
@@ -474,24 +479,24 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ChooseThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbbThongKeTheo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel20)
                     .addComponent(jLabel22))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbThang, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbbNam, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel10))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
                 .addGap(18, 18, 18)
                 .addComponent(Back2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -650,6 +655,16 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
         System.out.println("hello: " + ChooseThongKe.getSelectedItem());
     }//GEN-LAST:event_ChooseThongKeItemStateChanged
 
+    private void cbbThongKeTheoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbThongKeTheoItemStateChanged
+        // TODO add your handling code here:
+        String chosen = cbbThongKeTheo.getSelectedItem().toString();
+        if (chosen == "Tháng") {
+            cbbThang.setEnabled(true);
+        } else {
+            cbbThang.setEnabled(false);
+        }
+    }//GEN-LAST:event_cbbThongKeTheoItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -697,11 +712,11 @@ public class ThongKeDoanhThu_QL extends javax.swing.JFrame {
     private javax.swing.JButton QLNHBtn;
     private javax.swing.JButton QLNVBtn5;
     private javax.swing.JButton QLSPBtn;
+    private javax.swing.JComboBox<String> cbbNam;
+    private javax.swing.JComboBox<String> cbbThang;
+    private javax.swing.JComboBox<String> cbbThongKeTheo;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

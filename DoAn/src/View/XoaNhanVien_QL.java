@@ -129,7 +129,6 @@ public class XoaNhanVien_QL extends javax.swing.JFrame {
         jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Integer(8), "Trần Thu Thảo", "fghfghf", "fdsfsf", "fdsfsfs", "sdfsfs", "fsdfsfds", "fsdfdsfs", "dfsfs",  new Double(6.5464645654E10)},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},

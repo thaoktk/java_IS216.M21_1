@@ -7,17 +7,10 @@ package View;
 
 import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
-import Connection.ConnectionUtils;
 import DTO.KhachHang;
 import static View.TraCuuNhanVien_QL.isNumeric;
 import java.awt.HeadlessException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
