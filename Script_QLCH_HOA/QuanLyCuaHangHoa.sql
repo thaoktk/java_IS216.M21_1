@@ -12,7 +12,7 @@ DROP TABLE CTPN;
 DROP TABLE LOAISANPHAM;
 DROP TABLE LUONG;
 DROP TABLE CHAMCONG;
---Chan chodean kkkkkkkkkkkkkkkkkkkkkkkkkkk
+
 --------------- XÓA CÁC SEQUENCE ---------------
 DROP SEQUENCE SEQ1_MAKH;
 DROP SEQUENCE SEQ2_MASP;
