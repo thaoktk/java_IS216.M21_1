@@ -663,48 +663,6 @@ BEGIN
     RETURN var_tiennhap;
 END;
 
---Thống kê tiền nhập từng sản phẩm theo tháng
-CREATE OR REPLACE PROCEDURE ThongKeTienNhapSPThang(var_thang NUMBER, var_nam NUMBER, var_masp OUT SANPHAM.MASP%TYPE,
-var_tensp OUT SANPHAM.TENSP%TYPE, var_tongtiennhap OUT NUMBER)
-AS
-    var_tiennhapsp NUMBER;
-    cur_pn CTPN.MAPHIEUNHAP%TYPE;
-    CURSOR cur IS SELECT MAPHIEUNHAP
-                FROM PHIEUNHAP
-                WHERE EXTRACT(MONTH FROM NGAYNHAP) = var_thang AND EXTRACT(YEAR FROM NGAYNHAP) = var_nam;
-BEGIN
-    OPEN cur;
-    LOOP
-        FETCH cur INTO cur_pn;
-        EXIT WHEN cur%NOTFOUND;
-        SELECT C.MASP, S.TENSP, SUM(SLNHAP*GIANHAP) INTO var_masp,var_tensp,var_tongtiennhap
-        FROM CTPN C JOIN SANPHAM S ON C.MASP = S.MASP
-        WHERE MAPHIEUNHAP = cur_pn
-        GROUP BY C.MASP, S.TENSP;
-    END LOOP;
-END;
-
---Thống kê tiền nhập từng sản phẩm theo năm
-CREATE OR REPLACE PROCEDURE ThongKeTienNhapSPNam(var_nam NUMBER, var_masp OUT SANPHAM.MASP%TYPE,
-var_tensp OUT SANPHAM.TENSP%TYPE, var_tongtiennhap OUT NUMBER)
-AS
-    var_tiennhapsp NUMBER;
-    cur_pn CTPN.MAPHIEUNHAP%TYPE;
-    CURSOR cur IS SELECT MAPHIEUNHAP
-                FROM PHIEUNHAP
-                WHERE EXTRACT(YEAR FROM NGAYNHAP) = var_nam;
-BEGIN
-    OPEN cur;
-    LOOP
-        FETCH cur INTO cur_pn;
-        EXIT WHEN cur%NOTFOUND;
-        SELECT C.MASP, S.TENSP, SUM(SLNHAP*GIANHAP) INTO var_masp,var_tensp,var_tongtiennhap
-        FROM CTPN C JOIN SANPHAM S ON C.MASP = S.MASP
-        WHERE MAPHIEUNHAP = cur_pn
-        GROUP BY C.MASP, S.TENSP;
-    END LOOP;
-END;
-
 ----------------- CAC FUNCTION INSERT -----------------
 /*Function insert KHACHHANG*/
 CREATE OR REPLACE FUNCTION INSERT_KHACHHANG(var_hoten IN KHACHHANG.HOTEN%TYPE, var_sdt KHACHHANG.SDT%TYPE,var_diachi KHACHHANG.DIACHI%TYPE,
