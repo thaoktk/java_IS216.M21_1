@@ -106,6 +106,10 @@ ADD CONSTRAINT CHECK_SDT_NHANVIEN CHECK(LENGTH(SDT) = 10 AND (SDT LIKE '0%'));
 ALTER TABLE KHACHHANG
 ADD CONSTRAINT CHECK_SDT_KHACHHANG CHECK(LENGTH(SDT) = 10 AND (SDT LIKE '0%'));
 
+--Số điện thoại của nhà cung cấp phải có 10 số và bắt đầu bằng số 0.
+ALTER TABLE NHACUNGCAP
+ADD CONSTRAINT CHECK_SDT_NHACUNGCAP CHECK(LENGTH(SDT) = 10 AND (SDT LIKE '0%'));
+
 --CMND của nhân viên là số cmnd có 9 số hoặc cccd có 12 số.
 ALTER TABLE NHANVIEN
 ADD CONSTRAINT CHECK_CMND_NHANVIEN CHECK(LENGTH(CMND)= 9 OR LENGTH(CMND)= 12);
@@ -431,18 +435,6 @@ BEGIN
     :NEW.NGAYDK := SYSDATE;
 END;
 
-
---Khi insert 1 chấm công, giá trị checkin bằng sysdate và giá trị checkout bằng null
-SET DEFINE OFF;
-CREATE OR REPLACE TRIGGER TRIGGER_INSERT_CHAMCONG
-BEFORE INSERT ON CHAMCONG
-FOR EACH ROW
-DECLARE
-BEGIN
-    :NEW.CHECKIN := SYSDATE;
-    :NEW.CHECKOUT := NULL;
-END;
-
 --Không thể update thời điểm checkin của một chấm công
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_UPDATE_CHECKIN
@@ -669,48 +661,6 @@ BEGIN
     WHERE EXTRACT(YEAR FROM NGAYNHAP) = var_nam;
     
     RETURN var_tiennhap;
-END;
-
---Thống kê tiền nhập từng sản phẩm theo tháng
-CREATE OR REPLACE PROCEDURE ThongKeTienNhapSPThang(var_thang NUMBER, var_nam NUMBER, var_masp OUT SANPHAM.MASP%TYPE,
-var_tensp OUT SANPHAM.TENSP%TYPE, var_tongtiennhap OUT NUMBER)
-AS
-    var_tiennhapsp NUMBER;
-    cur_pn CTPN.MAPHIEUNHAP%TYPE;
-    CURSOR cur IS SELECT MAPHIEUNHAP
-                FROM PHIEUNHAP
-                WHERE EXTRACT(MONTH FROM NGAYNHAP) = var_thang AND EXTRACT(YEAR FROM NGAYNHAP) = var_nam;
-BEGIN
-    OPEN cur;
-    LOOP
-        FETCH cur INTO cur_pn;
-        EXIT WHEN cur%NOTFOUND;
-        SELECT C.MASP, S.TENSP, SUM(SLNHAP*GIANHAP) INTO var_masp,var_tensp,var_tongtiennhap
-        FROM CTPN C JOIN SANPHAM S ON C.MASP = S.MASP
-        WHERE MAPHIEUNHAP = cur_pn
-        GROUP BY C.MASP, S.TENSP;
-    END LOOP;
-END;
-
---Thống kê tiền nhập từng sản phẩm theo năm
-CREATE OR REPLACE PROCEDURE ThongKeTienNhapSPNam(var_nam NUMBER, var_masp OUT SANPHAM.MASP%TYPE,
-var_tensp OUT SANPHAM.TENSP%TYPE, var_tongtiennhap OUT NUMBER)
-AS
-    var_tiennhapsp NUMBER;
-    cur_pn CTPN.MAPHIEUNHAP%TYPE;
-    CURSOR cur IS SELECT MAPHIEUNHAP
-                FROM PHIEUNHAP
-                WHERE EXTRACT(YEAR FROM NGAYNHAP) = var_nam;
-BEGIN
-    OPEN cur;
-    LOOP
-        FETCH cur INTO cur_pn;
-        EXIT WHEN cur%NOTFOUND;
-        SELECT C.MASP, S.TENSP, SUM(SLNHAP*GIANHAP) INTO var_masp,var_tensp,var_tongtiennhap
-        FROM CTPN C JOIN SANPHAM S ON C.MASP = S.MASP
-        WHERE MAPHIEUNHAP = cur_pn
-        GROUP BY C.MASP, S.TENSP;
-    END LOOP;
 END;
 
 ----------------- CAC FUNCTION INSERT -----------------
@@ -982,7 +932,7 @@ END;
 CREATE OR REPLACE FUNCTION INSERT_CHAMCONG(var_manv CHAMCONG.MANV%TYPE) RETURN NUMBER
 AS
 BEGIN
-    INSERT INTO CHAMCONG(MANV) VALUES(var_manv);
+    INSERT INTO CHAMCONG(MANV, CHECKIN) VALUES(var_manv, SYSDATE);
     COMMIT;
     RETURN 1;
 EXCEPTION
