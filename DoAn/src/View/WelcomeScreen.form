@@ -85,7 +85,7 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="D:\Downloads\java\DoAn\src\ImageText\tag\Ti&#xea;&#x323;m hoa bi&#x300;nh y&#xea;n.png"/>
+              <Image iconType="3" name="/ImageText/tag/Ti&#xea;&#x323;m hoa bi&#x300;nh y&#xea;n.png"/>
             </Property>
           </Properties>
           <Constraints>

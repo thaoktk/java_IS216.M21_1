@@ -111,14 +111,14 @@ public class XoaKhachHang extends javax.swing.JFrame {
         txtSearch.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtSearch.setCaretColor(new java.awt.Color(0, 0, 0));
 
-        Back.setBackground(new java.awt.Color(249, 255, 254));
-        Back.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Back.setForeground(new java.awt.Color(196, 100, 96));
         Back.setText("Quay lại");
+        Back.setBackground(new java.awt.Color(249, 255, 254));
         Back.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back.setFocusPainted(false);
         Back.setFocusable(false);
+        Back.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Back.setForeground(new java.awt.Color(196, 100, 96));
         Back.setRequestFocusEnabled(false);
         Back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,14 +181,14 @@ public class XoaKhachHang extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        Find.setBackground(new java.awt.Color(196, 100, 96));
-        Find.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Find.setForeground(new java.awt.Color(255, 255, 255));
         Find.setText("Tìm");
+        Find.setBackground(new java.awt.Color(196, 100, 96));
         Find.setBorder(null);
         Find.setBorderPainted(false);
         Find.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Find.setFocusPainted(false);
+        Find.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Find.setForeground(new java.awt.Color(255, 255, 255));
         Find.setRequestFocusEnabled(false);
         Find.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,14 +196,14 @@ public class XoaKhachHang extends javax.swing.JFrame {
             }
         });
 
-        Del.setBackground(new java.awt.Color(196, 100, 96));
-        Del.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Del.setForeground(new java.awt.Color(255, 255, 255));
         Del.setText("Xóa");
+        Del.setBackground(new java.awt.Color(196, 100, 96));
         Del.setBorder(null);
         Del.setBorderPainted(false);
         Del.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Del.setFocusPainted(false);
+        Del.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Del.setForeground(new java.awt.Color(255, 255, 255));
         Del.setRequestFocusEnabled(false);
         Del.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,26 +281,26 @@ public class XoaKhachHang extends javax.swing.JFrame {
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageText/tag/Chung.png"))); // NOI18N
 
-        QLNVBtn3.setBackground(new java.awt.Color(231, 238, 237));
-        QLNVBtn3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLNVBtn3.setForeground(new java.awt.Color(196, 100, 96));
         QLNVBtn3.setText("Nhân viên");
+        QLNVBtn3.setBackground(new java.awt.Color(231, 238, 237));
         QLNVBtn3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLNVBtn3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLNVBtn3.setFocusPainted(false);
+        QLNVBtn3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLNVBtn3.setForeground(new java.awt.Color(196, 100, 96));
         QLNVBtn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLNVBtn3ActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(231, 238, 237));
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(196, 100, 96));
         jButton2.setText("Chung");
+        jButton2.setBackground(new java.awt.Color(231, 238, 237));
         jButton2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.setFocusPainted(false);
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(196, 100, 96));
         jButton2.setRequestFocusEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -308,99 +308,99 @@ public class XoaKhachHang extends javax.swing.JFrame {
             }
         });
 
-        QLSPBtn.setBackground(new java.awt.Color(231, 238, 237));
-        QLSPBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLSPBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLSPBtn.setText("Sản phẩm");
+        QLSPBtn.setBackground(new java.awt.Color(231, 238, 237));
         QLSPBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLSPBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLSPBtn.setFocusPainted(false);
+        QLSPBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLSPBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLSPBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLSPBtnActionPerformed(evt);
             }
         });
 
-        QLKHBtn.setBackground(new java.awt.Color(196, 100, 96));
-        QLKHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLKHBtn.setForeground(new java.awt.Color(255, 255, 255));
         QLKHBtn.setText("Khách hàng");
+        QLKHBtn.setBackground(new java.awt.Color(196, 100, 96));
         QLKHBtn.setBorder(null);
         QLKHBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLKHBtn.setFocusPainted(false);
+        QLKHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLKHBtn.setForeground(new java.awt.Color(255, 255, 255));
 
-        QLDTBtn.setBackground(new java.awt.Color(231, 238, 237));
-        QLDTBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLDTBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLDTBtn.setText("Đối tác");
+        QLDTBtn.setBackground(new java.awt.Color(231, 238, 237));
         QLDTBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLDTBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLDTBtn.setFocusPainted(false);
+        QLDTBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLDTBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLDTBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLDTBtnActionPerformed(evt);
             }
         });
 
-        QLKMBtn.setBackground(new java.awt.Color(231, 238, 237));
-        QLKMBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLKMBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLKMBtn.setText("Khuyến mãi");
+        QLKMBtn.setBackground(new java.awt.Color(231, 238, 237));
         QLKMBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLKMBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLKMBtn.setFocusPainted(false);
+        QLKMBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLKMBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLKMBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLKMBtnActionPerformed(evt);
             }
         });
 
-        QLNHBtn.setBackground(new java.awt.Color(231, 238, 237));
-        QLNHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLNHBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLNHBtn.setText("Nhập hàng");
+        QLNHBtn.setBackground(new java.awt.Color(231, 238, 237));
         QLNHBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLNHBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLNHBtn.setFocusPainted(false);
+        QLNHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLNHBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLNHBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLNHBtnActionPerformed(evt);
             }
         });
 
-        QLHDBtn.setBackground(new java.awt.Color(231, 238, 237));
-        QLHDBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLHDBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLHDBtn.setText("Hóa đơn");
+        QLHDBtn.setBackground(new java.awt.Color(231, 238, 237));
         QLHDBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLHDBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLHDBtn.setFocusPainted(false);
+        QLHDBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLHDBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLHDBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLHDBtnActionPerformed(evt);
             }
         });
 
-        QLDSBtn.setBackground(new java.awt.Color(231, 238, 237));
-        QLDSBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLDSBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLDSBtn.setText("Doanh thu");
+        QLDSBtn.setBackground(new java.awt.Color(231, 238, 237));
         QLDSBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLDSBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLDSBtn.setFocusPainted(false);
+        QLDSBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLDSBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLDSBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLDSBtnActionPerformed(evt);
             }
         });
 
-        ChamCongBtn.setBackground(new java.awt.Color(231, 238, 237));
-        ChamCongBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        ChamCongBtn.setForeground(new java.awt.Color(196, 100, 96));
         ChamCongBtn.setText("Chấm công");
+        ChamCongBtn.setBackground(new java.awt.Color(231, 238, 237));
         ChamCongBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         ChamCongBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ChamCongBtn.setFocusPainted(false);
+        ChamCongBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ChamCongBtn.setForeground(new java.awt.Color(196, 100, 96));
         ChamCongBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ChamCongBtnActionPerformed(evt);
@@ -481,7 +481,7 @@ public class XoaKhachHang extends javax.swing.JFrame {
                 .addComponent(QLNHBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(QLHDBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(QLDSBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -599,7 +599,7 @@ public class XoaKhachHang extends javax.swing.JFrame {
         // TODO add your handling code here:
         hide();
         if (checkChucVu() == 1) {
-            DoanhThu_LuaChon_QL.main(user);
+            BaoCaoDoanhThu_QL.main(user);
         } else {
             DoanhThu_KhongTruyCap_NV.main(user);
         }

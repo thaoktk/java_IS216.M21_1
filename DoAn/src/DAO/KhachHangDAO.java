@@ -7,7 +7,7 @@ package DAO;
 
 import Connection.ConnectionUtils;
 import DTO.KhachHang;
-import View.LogIn;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -34,22 +32,24 @@ public class KhachHangDAO {
 
         String NgS = kh.toString(kh.getNgSinh());
 
-        String SQL = "INSERT INTO KHACHHANG(MAKH, HOTEN, SDT, DIACHI, NGAYSINH, GHICHU, GIOITINH)"
-                + " VALUES(SEQ1_MAKH.NEXTVAL, ?, ?, ?, to_date(?,'dd/mm/yyyy'), ?,  ?)";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, kh.getHoTen());
-        ps.setString(2, kh.getSDT());
-        ps.setString(3, kh.getDiaChi());
-        ps.setString(4, NgS);
-        ps.setString(5, kh.getGhiChu());
-        ps.setString(6, kh.getGioiTinh());
+        String SQL = "{? = call INSERT_KHACHHANG(?, ?, ?, to_date(?,'dd/mm/yyyy'), ?, ?)}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, kh.getHoTen());
+        ps.setString(3, kh.getSDT());
+        ps.setString(4, kh.getDiaChi());
+        ps.setString(5, NgS);
+        ps.setString(6, kh.getGhiChu());
+        ps.setString(7, kh.getGioiTinh());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
 
-        return ps.executeUpdate() > 0;
+        return check > 0;
     }
 
     public static boolean update(KhachHang kh) throws SQLException {
-        String SQL = "UPDATE KHACHHANG SET HOTEN=?, SDT=?, DIACHI=?, NGAYSINH=to_date(?,'dd/mm/yyyy'), NGAYDK=to_date(?,'dd/mm/yyyy'), "
-                + "LOAIKH=?, TICHLUY=?, GHICHU=?, GIOITINH=? WHERE MAKH=?";
+        String SQL = "{? = call UPDATE_KHACHHANG(?, ?, ?, ?, to_date(?,'dd/mm/yyyy'), ?, ?)}";
         Connection con = null;
         try {
             con = ConnectionUtils.getMyConnection();
@@ -58,20 +58,20 @@ public class KhachHangDAO {
         }
 
         String NgS = kh.toString(kh.getNgSinh());
-        String NgDK = kh.toString(kh.getNgDK());
 
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(10, kh.getMaKH());
-        ps.setString(1, kh.getHoTen());
-        ps.setString(2, kh.getSDT());
-        ps.setString(3, kh.getDiaChi());
-        ps.setString(4, NgS);
-        ps.setString(5, NgDK);
-        ps.setString(6, kh.getLoaiKH());
-        ps.setInt(7, kh.getTichLuy());
-        ps.setString(8, kh.getGhiChu());
-        ps.setString(9, kh.getGioiTinh());
-        return ps.executeUpdate() > 0;
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setInt(2, kh.getMaKH());
+        ps.setString(3, kh.getHoTen());
+        ps.setString(4, kh.getSDT());
+        ps.setString(5, kh.getDiaChi());
+        ps.setString(6, NgS);
+        ps.setString(7, kh.getGhiChu());
+        ps.setString(8, kh.getGioiTinh());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+
+        return check > 0;
     }
 
     public static boolean delete(String value) throws SQLException {
@@ -82,10 +82,14 @@ public class KhachHangDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "DELETE FROM KHACHHANG WHERE SDT=?";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, value);
-        return ps.executeUpdate() > 0;
+        String SQL = "{? = call DELETE_KHACHHANG(?)}";
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, value);
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+        
+        return check > 0;
     }
 
     public static ArrayList<KhachHang> getKhachHangAll() {

@@ -5,15 +5,8 @@
  */
 package View;
 import BUS.NhanVienBUS;
-import Connection.ConnectionUtils;
 import DTO.NhanVien;
 import static View.TraCuuNhanVien_QL.isNumeric;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -27,7 +20,7 @@ public class XoaNhanVien_QL extends javax.swing.JFrame {
     /**
      * Creates new form XoaNhanVien_QL
      */
-    String user, CMND;
+    String user, maNV;
     public XoaNhanVien_QL(String a) throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
@@ -604,7 +597,7 @@ public class XoaNhanVien_QL extends javax.swing.JFrame {
         // TODO add your handling code here:
         hide();
         if (checkChucVu() == 1) {
-            DoanhThu_LuaChon_QL.main(user);
+            BaoCaoDoanhThu_QL.main(user);
         } else {
             DoanhThu_KhongTruyCap_NV.main(user);
         }
@@ -683,12 +676,12 @@ public class XoaNhanVien_QL extends javax.swing.JFrame {
         // TODO add your handling code here:
         int rowSelected = jTable1.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        CMND = (String) model.getValueAt(rowSelected, 3);
+        maNV = model.getValueAt(rowSelected, 0).toString();
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void DelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelActionPerformed
         // TODO add your handling code here:
-        if (CMND == null) {
+        if (maNV == null) {
             JOptionPane.showMessageDialog(this, "bạn chưa chọn nhân viên để xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -699,7 +692,7 @@ public class XoaNhanVien_QL extends javax.swing.JFrame {
         try {
             NhanVienBUS bus = new NhanVienBUS();
 
-            if (bus.deleteNV(CMND)) {
+            if (bus.deleteNV(maNV)) {
                 JOptionPane.showMessageDialog(this, "Đã xóa thành công!");
                 loadNhanVienAll();
             } else {

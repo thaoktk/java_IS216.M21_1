@@ -92,7 +92,7 @@ public class LogIn extends javax.swing.JFrame {
         userName.setBackground(new java.awt.Color(249, 255, 254));
         userName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userName.setForeground(new java.awt.Color(0, 0, 0));
-        userName.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        userName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -124,7 +124,7 @@ public class LogIn extends javax.swing.JFrame {
         password.setBackground(new java.awt.Color(249, 255, 254));
         password.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         password.setForeground(new java.awt.Color(0, 0, 0));
-        password.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        password.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

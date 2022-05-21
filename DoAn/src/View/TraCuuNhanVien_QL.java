@@ -35,6 +35,7 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.user = a;
         loadNhanVienAll();
+        loadThangNam();
         
     }
 
@@ -658,7 +659,7 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
         // TODO add your handling code here:
         hide();
         if (checkChucVu() == 1) {
-            DoanhThu_LuaChon_QL.main(user);
+            BaoCaoDoanhThu_QL.main(user);
         } else {
             DoanhThu_KhongTruyCap_NV.main(user);
         }
@@ -729,11 +730,13 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
             FindNhanVien();
         }
     }//GEN-LAST:event_FindActionPerformed
-
-    public void tinhLuongNV() throws SQLException {
+    public void loadThangNam() {
         LocalDate now = LocalDate.now();
         thang = now.getMonthValue();
         nam = now.getYear();
+    }
+    
+    public void tinhLuongNV() throws SQLException {
         LuongBUS bus = new LuongBUS();
         ArrayList<Integer> arr = new ArrayList<Integer>();
         arr = bus.getMaNV();
@@ -741,18 +744,18 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
             int maNV = arr.get(i);
             Luong luong = new Luong(thang, nam, maNV, 0, 0, 0);
             tinhLuongThanhCong = bus.tinhLuong(luong);
-
-            System.out.println("thanh cong: " + tinhLuongThanhCong);
         }
     }
     
     private void SalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalaryActionPerformed
         // TODO add your handling code here:
-        if (tinhLuongThanhCong == false) {
+        LuongBUS bus = new LuongBUS();
+        int thangLuong = bus.getThangLuong();
+        if (thangLuong != thang) {
             try {
                 tinhLuongNV();
             } catch (SQLException ex) {
-                Logger.getLogger(TraCuuNhanVien_QL.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
         hide();

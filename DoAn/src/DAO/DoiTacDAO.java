@@ -7,6 +7,7 @@ package DAO;
 
 import Connection.ConnectionUtils;
 import DTO.DoiTac;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,14 +28,17 @@ public class DoiTacDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "INSERT INTO NHACUNGCAP(MANCC, TENNCC, DIACHI, SDT)"
-                + " VALUES(SEQ5_MANCC.NEXTVAL, ?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, dt.getTenDT());
-        ps.setString(2, dt.getDiaChi());
-        ps.setString(3, dt.getSDT());
+        String SQL = "{? = call INSERT_NHACUNGCAP(?, ?, ?)}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, dt.getTenDT());
+        ps.setString(3, dt.getDiaChi());
+        ps.setString(4, dt.getSDT());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
 
-        return ps.executeUpdate() > 0;
+        return check > 0;
     }
 
     public static boolean update(DoiTac dt) throws SQLException {
@@ -45,15 +49,18 @@ public class DoiTacDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "UPDATE NHACUNGCAP SET TENNCC=?, DIACHI=?, SDT=?"
-                + "WHERE MANCC=?";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(4, dt.getMaDT());
-        ps.setString(1, dt.getTenDT());
-        ps.setString(2, dt.getDiaChi());
-        ps.setString(3, dt.getSDT());
+        String SQL = "{? = call UPDATE_NHACUNGCAP(?, ?, ?, ?)}";
 
-        return ps.executeUpdate() > 0;
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setInt(2, dt.getMaDT());
+        ps.setString(3, dt.getTenDT());
+        ps.setString(4, dt.getDiaChi());
+        ps.setString(5, dt.getSDT());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+
+        return check > 0;
     }
 
     public static boolean delete(String value) throws SQLException {
@@ -64,10 +71,15 @@ public class DoiTacDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "DELETE FROM NHACUNGCAP WHERE MANCC=?";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, value);
-        return ps.executeUpdate() > 0;
+        String SQL = "{? = call DELETE_NHACUNGCAP(?)}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, value);
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+        
+        return check > 0;
     }
 
     public static ArrayList<DoiTac> getDoiTacAll() {

@@ -129,11 +129,6 @@ public class ThemKhuyenMai_QL extends javax.swing.JFrame {
         txtTenKM.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtTenKM.setCaretColor(new java.awt.Color(0, 0, 0));
         txtTenKM.setForeground(new java.awt.Color(0, 0, 0));
-        txtTenKM.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTenKMActionPerformed(evt);
-            }
-        });
 
         jLabel7.setText("Tên KM");
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -144,11 +139,6 @@ public class ThemKhuyenMai_QL extends javax.swing.JFrame {
         txtPhanTram.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtPhanTram.setCaretColor(new java.awt.Color(0, 0, 0));
         txtPhanTram.setForeground(new java.awt.Color(0, 0, 0));
-        txtPhanTram.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPhanTramActionPerformed(evt);
-            }
-        });
 
         jLabel8.setText("Phần trăm");
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -563,7 +553,7 @@ public class ThemKhuyenMai_QL extends javax.swing.JFrame {
         // TODO add your handling code here:
         hide();
         if (checkChucVu() == 1) {
-            DoanhThu_LuaChon_QL.main(user);
+            BaoCaoDoanhThu_QL.main(user);
         } else {
             DoanhThu_KhongTruyCap_NV.main(user);
         }
@@ -584,14 +574,6 @@ public class ThemKhuyenMai_QL extends javax.swing.JFrame {
         hide();
         Chung.main(user);
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void txtTenKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenKMActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTenKMActionPerformed
-
-    private void txtPhanTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhanTramActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPhanTramActionPerformed
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         // TODO add your handling code here:

@@ -7,13 +7,14 @@ package View;
 
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
-import Connection.ConnectionUtils;
 import DTO.SanPham;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
@@ -150,24 +151,24 @@ public class ChiTietSanPham extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Ảnh hoa");
 
-        txtGhiChu.setEditable(false);
-        txtGhiChu.setBackground(new java.awt.Color(249, 255, 254));
         txtGhiChu.setColumns(20);
-        txtGhiChu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtGhiChu.setForeground(new java.awt.Color(0, 0, 0));
+        txtGhiChu.setEditable(false);
         txtGhiChu.setLineWrap(true);
         txtGhiChu.setRows(5);
+        txtGhiChu.setBackground(new java.awt.Color(249, 255, 254));
         txtGhiChu.setBorder(null);
+        txtGhiChu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtGhiChu.setForeground(new java.awt.Color(0, 0, 0));
         jScrollPane1.setViewportView(txtGhiChu);
 
-        Back.setBackground(new java.awt.Color(249, 255, 254));
-        Back.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Back.setForeground(new java.awt.Color(196, 100, 96));
         Back.setText("Quay lại");
+        Back.setBackground(new java.awt.Color(249, 255, 254));
         Back.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back.setFocusPainted(false);
         Back.setFocusable(false);
+        Back.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Back.setForeground(new java.awt.Color(196, 100, 96));
         Back.setRequestFocusEnabled(false);
         Back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,8 +205,8 @@ public class ChiTietSanPham extends javax.swing.JFrame {
                                     .addComponent(jLabel6))
                                 .addGap(52, 52, 52)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtMaLoaiSP)))
+                                    .addComponent(txtMaLoaiSP)
+                                    .addComponent(jScrollPane1)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
@@ -273,18 +274,20 @@ public class ChiTietSanPham extends javax.swing.JFrame {
                             .addComponent(jLabel10)
                             .addComponent(ImageFlo, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(txtMaLoaiSP, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(155, 155, 155))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(246, 246, 246))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(65, 65, 65))))))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 620));
@@ -356,23 +359,28 @@ public class ChiTietSanPham extends javax.swing.JFrame {
         txtSLSan.setText(Integer.toString(slsan));
         txtMaLoaiSP.setText(Integer.toString(maloaiSP));
         
-        
-        
-        BufferedImage img = null;
-        try {
-            if (anhSP.contains("D:\\Downloads\\java\\DoAn\\build\\classes")) {
-                img = ImageIO.read(new File(anhSP));
-            } else {
-                img = ImageIO.read(new File("D:\\Downloads\\java\\DoAn\\src" + anhSP));
-            }
+        ImageIcon MyImage = null;
+        ImageIcon image = null;
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        BufferedImage myPicture = null;
+        if (anhSP.contains("build\\classes")) {
+            try {
+                myPicture = ImageIO.read(new File(anhSP));
+            } catch (IOException ex) {
+                Logger.getLogger(ChiTietSanPham.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Image newImg = myPicture.getScaledInstance(ImageFlo.getWidth(), ImageFlo.getHeight(), Image.SCALE_SMOOTH);
+            image = new ImageIcon(newImg);
+
+        } else {
+            MyImage = new ImageIcon(getClass().getResource("/HinhAnh/" + anhSP));
+            Image img = MyImage.getImage();
+            Image newImg = img.getScaledInstance(ImageFlo.getWidth(), ImageFlo.getHeight(), Image.SCALE_SMOOTH);
+            image = new ImageIcon(newImg);
         }
+
+        ImageFlo.setIcon(image);
         
-        Image dimg = img.getScaledInstance(ImageFlo.getWidth(), ImageFlo.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon imageIcon = new ImageIcon(dimg);
-        ImageFlo.setIcon(imageIcon);
    }
     /**
      * @param args the command line arguments

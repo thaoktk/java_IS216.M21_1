@@ -655,7 +655,7 @@ public class TraCuuKhachHang extends javax.swing.JFrame {
         // TODO add your handling code here:
         hide();
         if (checkChucVu() == 1) {
-            DoanhThu_LuaChon_QL.main(user);
+            BaoCaoDoanhThu_QL.main(user);
         } else {
             DoanhThu_KhongTruyCap_NV.main(user);
         }

@@ -284,11 +284,12 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             }
         });
 
-        txtAnh.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtAnh.setBackground(new java.awt.Color(249, 255, 254));
+        txtAnh.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtAnh.setForeground(new java.awt.Color(0, 0, 0));
         txtAnh.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtAnh.setCaretColor(new java.awt.Color(0, 0, 0));
-        txtAnh.setForeground(new java.awt.Color(0, 0, 0));
+        txtAnh.setEnabled(false);
 
         jLabel15.setText("Ảnh");
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N

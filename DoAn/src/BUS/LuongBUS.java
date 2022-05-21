@@ -30,4 +30,8 @@ public class LuongBUS {
     public static ArrayList<Luong> timLuong(String option, String value) {
         return LuongDAO.timLuong(option, value);
     }
+    public static int getThangLuong() {
+        return LuongDAO.getThangLuong();
+    }
+    
 }

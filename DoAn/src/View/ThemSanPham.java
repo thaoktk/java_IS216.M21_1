@@ -637,7 +637,7 @@ public class ThemSanPham extends javax.swing.JFrame {
         // TODO add your handling code here:
         hide();
         if (checkChucVu() == 1) {
-            DoanhThu_LuaChon_QL.main(user);
+            BaoCaoDoanhThu_QL.main(user);
         } else {
             DoanhThu_KhongTruyCap_NV.main(user);
         }
@@ -685,7 +685,7 @@ public class ThemSanPham extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFileChooser fc = new JFileChooser();
         try {
-            fc.setCurrentDirectory(new File(getClass().getResource("/CuaHangHoa/").toURI()));
+            fc.setCurrentDirectory(new File(getClass().getResource("/HinhAnh/").toURI()));
         } catch (URISyntaxException ex) {
             ex.printStackTrace();
         }
@@ -751,7 +751,7 @@ public class ThemSanPham extends javax.swing.JFrame {
             int maLSP = bus.getMaLSP(tenloaiSP);
             int slSanSP = Integer.parseInt(slsan);
             long giaSP = Long.parseLong(gia);
-            String anh = file.getPath();
+            String anh = file.getAbsolutePath();
             SanPham dt = new SanPham(ma, maLSP, slSanSP, tenSP, mausac, ghichu, anh, giaSP);
 
             if (bus.insertSP(dt)) {

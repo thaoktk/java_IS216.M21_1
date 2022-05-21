@@ -35,4 +35,7 @@ public class HoaDonBUS {
         return HoaDonDAO.insertCTKM(hd);
     }
     
+    public static ArrayList<HoaDon> timHoaDon(String option, String value) {
+        return HoaDonDAO.timHoaDon(option, value);
+    }
 }

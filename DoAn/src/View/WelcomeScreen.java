@@ -50,7 +50,7 @@ public class WelcomeScreen extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(249, 255, 254));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Downloads\\java\\DoAn\\src\\ImageText\\tag\\Tiệm hoa bình yên.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageText/tag/Tiệm hoa bình yên.png"))); // NOI18N
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, -1, -1));
 
         logIn.setBackground(new java.awt.Color(196, 100, 96));

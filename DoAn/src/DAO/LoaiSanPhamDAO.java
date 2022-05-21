@@ -6,9 +6,8 @@
 package DAO;
 
 import Connection.ConnectionUtils;
-import DTO.KhuyenMai;
 import DTO.LoaiSanPham;
-import DTO.SanPham;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,13 +28,16 @@ public class LoaiSanPhamDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "INSERT INTO LOAISANPHAM(MALOAISP, TENLOAISP, GHICHU)"
-                + " VALUES(SEQ8_MALOAISP.NEXTVAL, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, lsp.getTenLoaiSP());
-        ps.setString(2, lsp.getGhiChu());
+        String SQL = "{? = call INSERT_LOAISANPHAM(?, ?)}";
 
-        return ps.executeUpdate() > 0;
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, lsp.getTenLoaiSP());
+        ps.setString(3, lsp.getGhiChu());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+
+        return check > 0;
     }
     
     public static ArrayList<LoaiSanPham> getLoaiSanPhamAll() {

@@ -64,21 +64,24 @@ public class NhanVienDAO {
         String NgS = nv.toString(nv.getNgSinh());
         String NgVL = nv.toString(nv.getNgVaoLam());
 
-        String SQL = "UPDATE NHANVIEN SET HOTEN=?, DIACHI=?, SDT=?, CMND=?, NGAYSINH=to_date(?,'dd/mm/yyyy'), NGAYVL=to_date(?,'dd/mm/yyyy'), LUONGCOBAN=?, CHUCVU=?, GIOITINH=?"
-                + "WHERE MANV=?";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(10, nv.getMaNV());
-        ps.setString(1, nv.getHoTen());
-        ps.setString(2, nv.getDiaChi());
-        ps.setString(3, nv.getSDT());
-        ps.setString(4, nv.getCMND());
-        ps.setString(5, NgS);
-        ps.setString(6, NgVL);
-        ps.setInt(7, nv.getLuongCoBan());
-        ps.setString(8, nv.getChucVu());
-        ps.setString(9, nv.getGioiTinh());
+        String SQL = "{? = call UPDATE_NHANVIEN(?, ?, ?, ?, ?, to_date(?,'dd/mm/yyyy'), to_date(?,'dd/mm/yyyy'), ?, ?, ?)}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setInt(2, nv.getMaNV());
+        ps.setString(3, nv.getHoTen());
+        ps.setString(4, nv.getDiaChi());
+        ps.setString(5, nv.getSDT());
+        ps.setString(6, nv.getCMND());
+        ps.setString(7, NgS);
+        ps.setString(8, NgVL);
+        ps.setInt(9, nv.getLuongCoBan());
+        ps.setString(10, nv.getChucVu());
+        ps.setString(11, nv.getGioiTinh());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
 
-        return ps.executeUpdate() > 0;
+        return check > 0;
     }
 
     public static boolean delete(String value) throws SQLException {
@@ -89,10 +92,15 @@ public class NhanVienDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "DELETE FROM NHANVIEN WHERE CMND=?";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, value);
-        return ps.executeUpdate() > 0;
+        String SQL = "{? = call DELETE_NHANVIEN(?)}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, value);
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+        
+        return check > 0;
     }
 
     public static ArrayList<NhanVien> getNhanVienAll() {

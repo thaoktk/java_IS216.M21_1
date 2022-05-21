@@ -7,7 +7,7 @@ package DAO;
 
 import Connection.ConnectionUtils;
 import DTO.ChamCong;
-import DTO.KhuyenMai;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -33,11 +33,15 @@ public class ChamCongDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "INSERT INTO CHAMCONG(MANV, CHECKIN) VALUES(?, SYSDATE)";
+        String SQL = "{? = call INSERT_CHAMCONG(?)}";
         
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, value);
-        return ps.executeUpdate() > 0;
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, value);
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+
+        return check > 0;
     }
 
     public static boolean update(String value) throws SQLException {
@@ -48,15 +52,15 @@ public class ChamCongDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "UPDATE CHAMCONG"
-                + " SET CHECKOUT = SYSDATE"
-                + " WHERE MANV=?"
-                + " AND ((EXTRACT(YEAR FROM SYSDATE) = EXTRACT(YEAR FROM CHECKIN)) AND (EXTRACT(MONTH FROM SYSDATE) = EXTRACT(MONTH FROM CHECKIN))\n"
-                + " AND (EXTRACT(DAY FROM SYSDATE) = EXTRACT(DAY FROM CHECKIN)))";
-        
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, value);
-        return ps.executeUpdate() > 0;
+        String SQL = "{? = call UPDATE_CHAMCONG(?)}";
+
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, value);
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+
+        return check > 0;
     }
 
     public static ArrayList<ChamCong> getChamCongAll() {

@@ -321,8 +321,10 @@ public class Chung extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 690));
 
         jPanel2.setBackground(new java.awt.Color(249, 255, 254));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageText/tag/Tổng quan.png"))); // NOI18N
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 24, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageText/tag/Đăng xuất.png"))); // NOI18N
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -331,6 +333,7 @@ public class Chung extends javax.swing.JFrame {
                 jLabel4MouseClicked(evt);
             }
         });
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(585, 24, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(249, 255, 254));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
@@ -372,6 +375,8 @@ public class Chung extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 138, 301, -1));
+
         jPanel4.setBackground(new java.awt.Color(249, 255, 254));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
 
@@ -411,6 +416,8 @@ public class Chung extends javax.swing.JFrame {
                 .addComponent(SoSP)
                 .addContainerGap())
         );
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 138, 295, 75));
 
         jPanel5.setBackground(new java.awt.Color(249, 255, 254));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
@@ -457,6 +464,8 @@ public class Chung extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 243, 301, 77));
+
         jPanel7.setBackground(new java.awt.Color(249, 255, 254));
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
 
@@ -498,6 +507,8 @@ public class Chung extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
+
+        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 353, -1, 77));
 
         jPanel8.setBackground(new java.awt.Color(249, 255, 254));
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
@@ -544,6 +555,8 @@ public class Chung extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 243, 295, -1));
+
         jPanel9.setBackground(new java.awt.Color(249, 255, 254));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
 
@@ -566,7 +579,9 @@ public class Chung extends javax.swing.JFrame {
                 .addComponent(jLabel23)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addGap(148, 148, 148))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(doanhThu)
                 .addContainerGap())
         );
@@ -575,64 +590,17 @@ public class Chung extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel23))
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel24)))
-                        .addGap(0, 27, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(doanhThu)))
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel23))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel24)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(doanhThu)
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 410, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(51, 51, 51))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(73, 73, 73)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(260, Short.MAX_VALUE))
-        );
+        jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 353, 300, 80));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 760, 690));
 
@@ -745,7 +713,7 @@ public class Chung extends javax.swing.JFrame {
         // TODO add your handling code here:
         hide();
         if (checkChucVu() == 1) {
-            DoanhThu_LuaChon_QL.main(user);
+            BaoCaoDoanhThu_QL.main(user);
         } else {
             DoanhThu_KhongTruyCap_NV.main(user);
         }
@@ -776,7 +744,7 @@ public class Chung extends javax.swing.JFrame {
         KhuyenMaiBUS busKM = new KhuyenMaiBUS();
         DoiTacBUS busDT = new DoiTacBUS();
         DoanhThuBUS busDS = new DoanhThuBUS();
-        DoanhThu dt = new DoanhThu(0, year, 0,0,0,null);
+        DoanhThu dt = new DoanhThu(0, year, 0);
         
         int arrNVLength = busNV.getNhanVienAll().size();
         int arrKHLength = busKH.getKhachHangAll().size();

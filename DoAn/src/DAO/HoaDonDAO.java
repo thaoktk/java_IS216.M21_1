@@ -7,7 +7,7 @@ package DAO;
 
 import Connection.ConnectionUtils;
 import DTO.HoaDon;
-import DTO.NhapHang;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,17 +60,20 @@ public class HoaDonDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "INSERT INTO HOADON(SOHD, MANV, MAKH) VALUES(SEQ7_SOHD.NEXTVAL, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(1, hd.getMaNV());
-        if (hd.getMaKH() != null) {
-            ps.setInt(2, hd.getMaKH());
-        } else {
-            ps.setObject(2, hd.getMaKH());
-        }
+        String SQL = "{? = call INSERT_HOADON(?, ?)}";
         
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setInt(2, hd.getMaNV());
+        if (hd.getMaKH() != null) {
+            ps.setInt(3, hd.getMaKH());
+        } else {
+            ps.setObject(3, hd.getMaKH());
+        }
+        ps.executeUpdate();
+        int check = ps.getInt(1);
 
-        return ps.executeUpdate() > 0;
+        return check > 0;
     }
     
     public static int getSoHD() {
@@ -107,13 +110,17 @@ public class HoaDonDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "INSERT INTO CTHD(SOHD,MASP,SOLUONG) VALUES(?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(1, hd.getSoHD());
-        ps.setInt(2, hd.getMaSP());
-        ps.setInt(3, hd.getSoLuong());
+        String SQL = "{? = call INSERT_CTHD(?, ?, ?)}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setInt(2, hd.getSoHD());
+        ps.setInt(3, hd.getMaSP());
+        ps.setInt(4, hd.getSoLuong());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
 
-        return ps.executeUpdate() > 0;
+        return check > 0;
     } 
     
     public static boolean insertCTKM(HoaDon hd) throws SQLException {
@@ -124,11 +131,59 @@ public class HoaDonDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "INSERT INTO CTKM(SOHD, MAKM) VALUES(?, ?)";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(1, hd.getSoHD());
-        ps.setInt(2, hd.getMaKM());
+        String SQL = "{? = call INSERT_CTKM(?, ?)}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setInt(2, hd.getSoHD());
+        ps.setInt(3, hd.getMaKM());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
 
-        return ps.executeUpdate() > 0;
+        return check > 0;
     } 
+    
+    public static ArrayList<HoaDon> timHoaDon(String option, String value) {
+        ArrayList<HoaDon> arr = new ArrayList<HoaDon>();
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+            String SQL = null;
+            switch (option) {
+                case "Số HD":
+                    SQL = "SELECT SOHD, MANV,MAKH,NGAYHD,TONGTIEN,CHIETKHAU,TRIGIAHD FROM HOADON WHERE SOHD=?";
+                    break;
+                case "Mã NV":
+                    SQL = "SELECT SOHD, MANV,MAKH,NGAYHD,TONGTIEN,CHIETKHAU,TRIGIAHD FROM HOADON WHERE MANV=?";
+                    break;
+                case "Mã KH":
+                    SQL = "SELECT SOHD, MANV,MAKH,NGAYHD,TONGTIEN,CHIETKHAU,TRIGIAHD FROM HOADON WHERE MAKH=?";
+                    break;
+            }
+
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, value);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                HoaDon hd = new HoaDon();
+                hd.setMaNV(rs.getInt("MANV"));
+                hd.setSoHD(rs.getInt("SOHD"));
+                hd.setMaKH(rs.getInt("MAKH"));
+                hd.setChietKhau(rs.getFloat("CHIETKHAU"));
+                hd.setTongTien(rs.getDouble("TONGTIEN"));
+                hd.setTriGia(rs.getDouble("TRIGIAHD"));
+                hd.setNgayHD(rs.getDate("NGAYHD").toLocalDate());
+                arr.add(hd);
+            }
+            
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return arr;
+    }
 }

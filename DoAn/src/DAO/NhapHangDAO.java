@@ -7,6 +7,7 @@ package DAO;
 
 import Connection.ConnectionUtils;
 import DTO.NhapHang;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -99,14 +100,17 @@ public class NhapHangDAO {
 
         String NgN = nh.toString(nh.getNgayNhap());
 
-        String SQL = "INSERT INTO PHIEUNHAP(MAPHIEUNHAP, MANCC, NGAYNHAP, MANV)"
-                + " VALUES(SEQ3_MAPHIEUNHAP.NEXTVAL, ?, to_date(?,'dd/mm/yyyy'), ?)";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(3, nh.getMaNV());
-        ps.setString(2, NgN);
-        ps.setInt(1, nh.getMaNCC());
+        String SQL = "{? = call INSERT_PHIEUNHAP(?, to_date(?,'dd/mm/yyyy'), ?)}";
 
-        return ps.executeUpdate() > 0;
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setInt(4, nh.getMaNV());
+        ps.setString(3, NgN);
+        ps.setInt(2, nh.getMaNCC());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+
+        return check > 0;
     }
     
     public static boolean insertCTPN(NhapHang nh) throws SQLException {
@@ -117,15 +121,18 @@ public class NhapHangDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "INSERT INTO CTPN(MASP, MAPHIEUNHAP, SLNHAP, GIANHAP)"
-                + " VALUES(?, ?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(1, nh.getMaSP());
-        ps.setInt(2, nh.getMaPN());
-        ps.setInt(3, nh.getSlNhap());
-        ps.setLong(4, nh.getGiaNhap());
+        String SQL = "{? = call INSERT_CTPN(?, ?, ?, ?)}";
 
-        return ps.executeUpdate() > 0;
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setInt(2, nh.getMaSP());
+        ps.setInt(3, nh.getMaPN());
+        ps.setInt(4, nh.getSlNhap());
+        ps.setLong(5, nh.getGiaNhap());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+
+        return check > 0;
     }
     
     public static int getMaPN() {

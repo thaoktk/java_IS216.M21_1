@@ -7,6 +7,7 @@ package DAO;
 
 import Connection.ConnectionUtils;
 import DTO.KhuyenMai;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,20 +34,23 @@ public class KhuyenMaiDAO {
         String NgBD = km.toString(km.getNgBD());
         String NgKT = km.toString(km.getNgKT());
 
-        String SQL = "INSERT INTO KHUYENMAI(MAKM, TENKM, PHANTRAM, NGAYBD, NGAYKT)"
-                + " VALUES(SEQ6_MAKM.NEXTVAL, ?, ?, to_date(?,'dd/mm/yyyy HH24:MI:SS'), to_date(?,'dd/mm/yyyy HH24:MI:SS'))";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, km.getTenKM());
-        ps.setFloat(2, km.getPhanTram());
+        String SQL = "{? = call INSERT_KHUYENMAI(?, ?, to_date(?,'dd/mm/yyyy HH24:MI:SS'), to_date(?,'dd/mm/yyyy HH24:MI:SS'))}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, km.getTenKM());
+        ps.setFloat(3, km.getPhanTram());
         if (!NgBD.equals("") && !NgKT.equals("")) {
-            ps.setString(3, NgBD);
-            ps.setString(4, NgKT);
+            ps.setString(4, NgBD);
+            ps.setString(5, NgKT);
         } else {
-            ps.setString(3, null);
             ps.setString(4, null);
+            ps.setString(5, null);
         }
+        ps.executeUpdate();
+        int check = ps.getInt(1);
 
-        return ps.executeUpdate() > 0;
+        return check > 0;
     }
 
     public static boolean update(KhuyenMai km) throws SQLException {
@@ -60,22 +64,24 @@ public class KhuyenMaiDAO {
         String NgBD = km.toString(km.getNgBD());
         String NgKT = km.toString(km.getNgKT());
 
-        String SQL = "UPDATE KHUYENMAI SET TENKM=?, PHANTRAM=?, NGAYBD=to_date(?,'dd/mm/yyyy HH24:MI:SS'), NGAYKT=to_date(?,'dd/mm/yyyy HH24:MI:SS')"
-                + "WHERE MAKM=?";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(5, km.getMaKM());
-        System.out.println("mã km: " + km.getMaKM());
-        ps.setString(1, km.getTenKM());
-        ps.setFloat(2, km.getPhanTram());
-        if (!NgBD.equals("") && !NgKT.equals("")) {
-            ps.setString(3, NgBD);
-            ps.setString(4, NgKT);
-        } else {
-            ps.setString(3, null);
-            ps.setString(4, null);
-        }
+        String SQL = "{? = call UPDATE_KHUYENMAI(?, ?, ?, to_date(?,'dd/mm/yyyy HH24:MI:SS'), to_date(?,'dd/mm/yyyy HH24:MI:SS'))}";
 
-        return ps.executeUpdate() > 0;
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setInt(2, km.getMaKM());
+        ps.setString(3, km.getTenKM());
+        ps.setFloat(4, km.getPhanTram());
+        if (!NgBD.equals("") && !NgKT.equals("")) {
+            ps.setString(5, NgBD);
+            ps.setString(6, NgKT);
+        } else {
+            ps.setString(5, null);
+            ps.setString(6, null);
+        }
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+
+        return check > 0;
     }
 
     public static boolean delete(String value) throws SQLException {
@@ -86,10 +92,15 @@ public class KhuyenMaiDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "DELETE FROM KHUYENMAI WHERE MAKM=?";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, value);
-        return ps.executeUpdate() > 0;
+        String SQL = "{? = call DELETE_KHUYENMAI(?)}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, value);
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+        
+        return check > 0;
     }
 
     public static ArrayList<KhuyenMai> getKhuyenMaiAll() {

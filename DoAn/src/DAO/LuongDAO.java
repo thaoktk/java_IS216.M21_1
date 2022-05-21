@@ -7,6 +7,7 @@ package DAO;
 
 import Connection.ConnectionUtils;
 import DTO.Luong;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,13 +89,17 @@ public class LuongDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "INSERT INTO LUONG(THANG, NAM, MANV) VALUES(?,?,?)";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(1, luong.getThang());
-        ps.setInt(2, luong.getNam());
-        ps.setInt(3, luong.getMaNV());
+        String SQL = "{? = call INSERT_LUONG(?, ?, ?)}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setInt(3, luong.getThang());
+        ps.setInt(4, luong.getNam());
+        ps.setInt(2, luong.getMaNV());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
 
-        return ps.executeUpdate() > 0;
+        return check > 0;
     }
     
     public static ArrayList<Luong> timLuong(String option, String value) {
@@ -139,5 +144,31 @@ public class LuongDAO {
         }
 
         return arr;
+    }
+    
+    public static int getThangLuong() {
+        int thang = 0;
+        String SQL = "SELECT MAX(THANG) FROM LUONG";
+
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(SQL);
+            if (rs.next()) {
+                thang = rs.getInt("MAX(THANG)");
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return thang;
     }
 }

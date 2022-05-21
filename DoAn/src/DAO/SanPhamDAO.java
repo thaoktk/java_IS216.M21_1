@@ -7,6 +7,7 @@ package DAO;
 
 import Connection.ConnectionUtils;
 import DTO.SanPham;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,19 +29,21 @@ public class SanPhamDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "INSERT INTO SANPHAM(MASP, TENSP, GIA, MALOAISP, MAUSAC, SLSAN, GHICHU, ANHSP)"
-                + " VALUES(SEQ2_MASP.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, sp.getTenSP());
-        ps.setLong(2, sp.getGiaSP());
-        ps.setInt(3, sp.getMaLoaiSP());
-        ps.setString(4, sp.getMauSac());
-        ps.setInt(5, sp.getSlsan());
-        ps.setString(6, sp.getGhiChu());
-        ps.setString(7, sp.getAnhSP());
+        String SQL = "{? = call INSERT_SANPHAM(?, ?, ?, ?, ?, ?, ?)}";
         
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, sp.getTenSP());
+        ps.setLong(3, sp.getGiaSP());
+        ps.setInt(4, sp.getMaLoaiSP());
+        ps.setString(5, sp.getMauSac());
+        ps.setInt(6, sp.getSlsan());
+        ps.setString(7, sp.getGhiChu());
+        ps.setString(8, sp.getAnhSP());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
 
-        return ps.executeUpdate() > 0;
+        return check > 0;
     }
 
     public static boolean update(SanPham sp) throws SQLException {
@@ -51,19 +54,22 @@ public class SanPhamDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "UPDATE SANPHAM SET TENSP=?, GIA=?, MALOAISP=?, MAUSAC=?, SLSAN=?, GHICHU=?, ANHSP=?"
-                + "WHERE MASP=?";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setInt(8, sp.getMaSP());
-        ps.setString(1, sp.getTenSP());
-        ps.setLong(2, sp.getGiaSP());
-        ps.setInt(3, sp.getMaLoaiSP());
-        ps.setString(4, sp.getMauSac());
-        ps.setInt(5, sp.getSlsan());
-        ps.setString(6, sp.getGhiChu());
-        ps.setString(7, sp.getAnhSP());
+        String SQL = "{? = call UPDATE_SANPHAM(?, ?, ?, ?, ?, ?, ?, ?)}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setInt(2, sp.getMaSP());
+        ps.setString(3, sp.getTenSP());
+        ps.setLong(4, sp.getGiaSP());
+        ps.setInt(5, sp.getMaLoaiSP());
+        ps.setString(6, sp.getMauSac());
+        ps.setInt(7, sp.getSlsan());
+        ps.setString(8, sp.getGhiChu());
+        ps.setString(9, sp.getAnhSP());
+        ps.executeUpdate();
+        int check = ps.getInt(1);
 
-        return ps.executeUpdate() > 0;
+        return check > 0;
     }
 
     public static boolean delete(String value) throws SQLException {
@@ -74,10 +80,15 @@ public class SanPhamDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "DELETE FROM SANPHAM WHERE MASP=?";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, value);
-        return ps.executeUpdate() > 0;
+        String SQL = "{? = call DELETE_SANPHAM(?)}";
+        
+        CallableStatement ps = con.prepareCall(SQL);
+        ps.registerOutParameter(1, java.sql.Types.INTEGER);
+        ps.setString(2, value);
+        ps.executeUpdate();
+        int check = ps.getInt(1);
+        
+        return check > 0;
     }
 
     public static ArrayList<SanPham> getSanPhamAll() {
