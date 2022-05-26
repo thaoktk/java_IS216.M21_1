@@ -4,32 +4,52 @@
 
 ## CÁC CHỨC NĂNG ĐÃ LÀM
 
+- Chung: 
+	
+    * Đăng nhập.
+    * Xem thông tin tổng quát.
+
 - Người quản lý:
 
-    * Thêm / xóa / sửa sản phẩm.
-    * Thêm / xóa / sửa nhân viên, phân quyền.
-    * Quản lý nhập hàng vào kho.
+    * Quản lý sản phẩm, xem chi tiết sản phẩm, thêm loại sản phẩm.
+    * Quản lý nhân viên, tính lương cho từng nhân viên.
+    * Quản lý nhập hàng vào kho, in phiếu nhập.
     * Quản lý khách hàng.
-    * Quản lý các hóa đơn của khách hàng.
+    * Chấm công và tra cứu chấm công.
+    * Tạo, tra cứu hóa đơn và in hóa đơn.
     * Quản lý đối tác (nhà cung cấp).
     * Quản lý các khuyến mãi.
-    * Xem thống kê doanh thu, xuất báo cáo(PDF).
+    * Báo cáo, thống kê doanh thu và số tiền nhập hàng.
 
-- Nhân viên:
+- Nhân viên thu ngân:
 
-    * Thêm / xóa / sửa 1 hóa đơn cho khách hàng.
+    * Tạo, tra cứu, in hóa đơn cho khách hàng.
     * Quản lý khách hàng.
-    * Xem thống kê doanh thu, xuất báo cáo (PDF).
+    * Tra cứu khuyến mãi.
+    * Tra cứu sản phẩm.
 
-## GIỚI THIỆU CÔNG NGHỆ MỚI ĐÃ SỬ DỤNG TRONG ĐỒ ÁN (KHÔNG NẰM TRONG PHẠM VI MÔN HỌC) (NẾU CÓ):
+- Nhân viên bán hàng: 
+    
+    * Tra cứu khách hàng.
+    * Tra cứu sản phẩm.
+    * Tra cứu hóa đơn.
+
+- Nhân viên kho:
+
+    * Quản lý nhập hàng vào kho, in phiếu nhập.
+    * Thêm sản phẩm mới.
+
+## CÁC THƯ VIỆN NGOÀI ĐÃ SỬ DỤNG
+- LGoodDatePicker (download tại đây: [Link](https://github.com/LGoodDatePicker/LGoodDatePicker/releases))
+(Lưu ý: hãy chọn bản LGoodDatePicker-11.2.1.jar để có trải nghiệm tốt nhất)
 
 ## GIỚI THIỆU CÁC THÀNH VIÊN TRONG NHÓM
 | HỌ TÊN | MSSV | FB | SĐT | NHIỆM VỤ | HOÀN THÀNH |
 | ------ | ---- | -- | --- | -------- | ---------- |
-| Trần Thu Thảo (Nhóm trưởng) | 20520769 | [Thảo Thu Trần](https://www.facebook.com/thaoktk0508) | 0962298125 | Xây dựng các giao diện phần mềm, code các chức năng chính | XXX% |
-| Võ Thị Hà Trang | 20522043 | [Võ Hà Trang](https://www.facebook.com/h4ch4n) | 0363466904 | Code các chức năng chính của phần mềm | XXX% |
-| Võ Nữ Diễm Trang | 20521013 | [Diễm Trang](https://www.facebook.com/vo.nu.diem.trang.ltd) | 0913941345 | Code các chức năng chính của phần mềm | XXX% |
-| Võ Phạm Thùy Nhung | 20520679 | [Võ Phạm Thùy Nhung](https://www.facebook.com/linh.phong.1829405) | 0783276098 | Tester kiểm tra các test case, lọc bug, hỗ trợ code thêm | XXX% |
+| Trần Thu Thảo (Nhóm trưởng) | 20520769 | [Thảo Thu Trần](https://www.facebook.com/thaoktk0508) | 0962298125 | Xây dựng các giao diện phần mềm, code các chức năng chính của phần mềm | XXX% |
+| Võ Thị Hà Trang | 20522043 | [Võ Hà Trang](https://www.facebook.com/h4ch4n) | 0363466904 | Tạo toàn bộ Database, viết báo cáo hệ quản trị, hỗ trợ code thêm | XXX% |
+| Võ Nữ Diễm Trang | 20521013 | [Diễm Trang](https://www.facebook.com/vo.nu.diem.trang.ltd) | 0913941345 | Thiết kế các hoạt động cho ứng dụng, viết báo cáo phân tích thiết kế, hỗ trợ code thêm | XXX% |
+| Võ Phạm Thùy Nhung | 20520679 | [Võ Phạm Thùy Nhung](https://www.facebook.com/linh.phong.1829405) | 0783276098 | Tester kiểm tra các test case, lọc bug, viết báo cáo quản lý dự án, hỗ trợ code thêm | XXX% |
 
 ## CÀI ĐẶT CHƯƠNG TRÌNH PHẦN MỀM
 
@@ -37,6 +57,8 @@
 - Thư viện sử dụng:
     * Java Swing (Java SE 12 & JSK 12).
     * Apache NetBeans 13.
+    * LGoodDatePicker-11.2.1.jar
+    * ojdbc11.jar
 
 ## CÁC BƯỚC CHẠY PHẦN MỀM
 
@@ -46,4 +68,4 @@ B2: Cài đặt hệ quản trị cơ sở dữ liệu Oracle 19C
 
     + https://www.oracle.com/database/technologies/oracle19c-windows-downloads.html
     
-B3: ......
+B3: Setup database, tạo các table -> chạy trigger, procedure, function -> insert dữ liệu -> commit.
