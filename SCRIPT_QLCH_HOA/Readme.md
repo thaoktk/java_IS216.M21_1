@@ -68,4 +68,5 @@ B2: Cài đặt hệ quản trị cơ sở dữ liệu Oracle 19C
 
     + https://www.oracle.com/database/technologies/oracle19c-windows-downloads.html
     
-B3: Setup database, tạo các table -> chạy trigger, procedure, function -> insert dữ liệu -> commit.
+B3: Setup database, tạo các table -> chạy trigger, procedure, function -> insert dữ liệu -> commit 
+
