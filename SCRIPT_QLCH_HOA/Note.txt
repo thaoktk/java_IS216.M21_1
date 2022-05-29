@@ -1,9 +1,0 @@
-Phân quyền truy cập SQL: 
-- tạo một PDB: qlchhoa (pass: Admin123)
-- Tạo 4 user trong đó:
-	+ user_qlch bao gồm file QLCH_HOA và các file có mở đầu là u1_***
-	+ user_quanly: file QUANLY để chứa những dữ liệu mà người quản lý được cấp quyền
-	+ user_thungan: file THUNGAN để chứa những dữ liệu mà người thu ngân được cấp quyền
-	+ user_banhang: file NVBANHANG để chứa những dữ liệu mà người bán hàng được cấp quyền
-	+ user_nhanvienkho: file NHANVIENKHO để chứa những dữ liệu mà nhân viên kho được cấp quyền
---vẽ bảng giải pháp mức cô lập
