@@ -54,9 +54,9 @@ ALTER TABLE LUONG DROP CONSTRAINT FK_LUONG_NHANVIEN_14;
 ALTER TABLE PHIEUNHAP DROP CONSTRAINT FK_PHIEUNHAP_NCC_15;
 
 ----------------------- CAC RANG BUOC TOAN VEN ------------------------------
---Co 3 loai khach hang: Binh thuong, Than thiet, VIP.
+--Co 3 loai khach hang: Moi, Than thiet, VIP.
 ALTER TABLE KHACHHANG
-ADD CONSTRAINT CHECK_LOAIKH CHECK(LOAIKH IN('Binh thuong', 'Than thiet', 'VIP'));
+ADD CONSTRAINT CHECK_LOAIKH CHECK(LOAIKH IN('Moi', 'Than thiet', 'VIP'));
 
 -- Gioi tinh cua khach hang la 'Nam', 'Nu' hoac 'Khac'
 ALTER TABLE KHACHHANG
@@ -156,6 +156,10 @@ BEGIN
     UPDATE HOADON
     SET TONGTIEN = TONGTIEN + (:NEW.SOLUONG * var_giaban)
     WHERE SOHD = :NEW.SOHD;
+    
+    UPDATE SANPHAM
+    SET SLSAN = SLSAN - :NEW.SOLUONG
+    WHERE MASP = :NEW.MASP;
 END;
 
 /*Khi delete, update mot CTHD thi Tong tien cua hoa don cung thay doi*/
@@ -173,9 +177,13 @@ BEGIN
     UPDATE HOADON
     SET TONGTIEN = TONGTIEN - (:OLD.SOLUONG * var_giaban)
     WHERE SOHD = :OLD.SOHD;
+    
+    UPDATE SANPHAM
+    SET SLSAN = SLSAN + :OLD.SOLUONG
+    WHERE MASP = :OLD.MASP;
 END;
 
---Chiet khau cua hoa don la tong so tien duoc giam cua khach hang
+--Phần trăm các khuyến mãi cho một hóa đơn được cộng vào chiết khấu của hóa đơn đó.
 /*Khi insert, update mot CTKM thi chiet khau cua hoa don cung thay doi*/
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_CHIETKHAU_INSERT_UPDATE_CTKM
@@ -225,8 +233,6 @@ BEGIN
     
     IF(:NEW.NGAYHD < var_ngayvl) THEN
         RAISE_APPLICATION_ERROR(-20000,'Ngay ban hang truoc ngay vao lam cua nhan vien.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('THANH CONG!');
     END IF;
 END;
 
@@ -253,8 +259,6 @@ BEGIN
         
         IF(:NEW.NGAYVL > var_ngayhd) THEN
             RAISE_APPLICATION_ERROR(-20000,'Ngay ban hang truoc ngay vao lam cua nhan vien.');
-        ELSE
-            DBMS_OUTPUT.PUT_LINE('THANH CONG!');
         END IF;
     END LOOP;
 END;
@@ -274,8 +278,6 @@ BEGIN
     
     IF(:NEW.NGAYHD < var_ngaydk) THEN
         RAISE_APPLICATION_ERROR(-20000,'Ngay mua hang truoc ngay dang ky thanh vien cua khach hang.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('THANH CONG!');
     END IF;
 
 EXCEPTION 
@@ -306,16 +308,14 @@ BEGIN
         
         IF(:NEW.NGAYDK > var_ngayhd) THEN
             RAISE_APPLICATION_ERROR(-20000,'Ngay mua hang truoc ngay dang ky thanh vien cua khach hang.');
-        ELSE
-            DBMS_OUTPUT.PUT_LINE('THANH CONG!');
         END IF;
     END LOOP;
 END;
 
 --Tich luy cua mot khach hang la tong tri gia cac hoa don ma khach hang thanh vien do da mua. Dong thoi cap nhat loai khach hang
 --Cap nhat loai KH:
---	+ Tich luy tu <10000000 la khach hang binh thuong
---	+ Tich luy tu >10000000 - 30000000 la khach hang thuong xuyen.
+--	+ Tich luy tu <10000000 la khach hang mới
+--	+ Tich luy tu >10000000 - 30000000 la khach hang thân thiết.
 --	+ Tich luy >30000000 la khach hang VIP.
 /*Khi insert, update mot hoa don thi tich luy cua khach hang so huu hoa don do cung thay doi*/
 SET DEFINE OFF;
@@ -375,7 +375,7 @@ BEGIN
         END IF;
         IF(var_tichluy < 10000000) THEN
             UPDATE KHACHHANG
-            SET LOAIKH = N'Binh thuong'
+            SET LOAIKH = N'Moi'
             WHERE MAKH = :NEW.MAKH;
         END IF;
     END IF;
@@ -398,10 +398,6 @@ BEGIN
         RAISE_APPLICATION_ERROR(-20000, 'San pham khong du so luong co san!');
     ELSIF(:NEW.SOLUONG <= 0) THEN
         RAISE_APPLICATION_ERROR(-20000, 'Loi nhap so luong!');
-    ELSE
-        UPDATE SANPHAM
-        SET SLSAN = SLSAN - :NEW.SOLUONG
-        WHERE MASP = :NEW.MASP;
     END IF;
 END;
 
@@ -445,7 +441,7 @@ BEGIN
     RAISE_APPLICATION_ERROR(-20000, 'Không được sửa checkin!');
 END;
 
---Trong mot cham cong, khi update thoi diem checkout thì thoi diem checkin va checkout cua mot cham cong phai cung mot ngay, so gio lam them cung thay doi.
+--Trong mot cham cong, khi update thoi diem checkout thì so gio lam cung thay doi.
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_UPDATE_CHECKOUT 
 BEFORE UPDATE OF CHECKOUT ON CHAMCONG
@@ -454,8 +450,8 @@ DECLARE
     var_sogiolam NUMBER;
     var_ngaycuoituan DATE;
 BEGIN   
-    var_sogiolam := (TO_DATE(:NEW.CHECKOUT,'DD/MM/YYYY HH24:MI:SS') - TO_DATE(:NEW.CHECKIN,'DD/MM/YYYY HH24:MI:SS'))*24;
-    
+    var_sogiolam := (TO_DATE(to_char(:NEW.CHECKOUT, 'DD/MM/YYYY HH24:MI:SS'),'DD/MM/YYYY HH24:MI:SS') - TO_DATE(to_char(:NEW.CHECKIN, 'DD/MM/YYYY HH24:MI:SS'),'DD/MM/YYYY HH24:MI:SS')) * 24;
+        
     var_ngaycuoituan := NEXT_DAY(:NEW.CHECKOUT,'SATURDAY');
     IF(TO_DATE(var_ngaycuoituan,'DD/MM/YYYY HH24:MI:SS') - TO_DATE(:NEW.CHECKOUT,'DD/MM/YYYY HH24:MI:SS') = 7 
        OR TO_DATE(var_ngaycuoituan,'DD/MM/YYYY HH24:MI:SS') - TO_DATE(:NEW.CHECKOUT,'DD/MM/YYYY HH24:MI:SS') = 6) 
@@ -466,7 +462,39 @@ BEGIN
     END IF;
 END;
 
+
+--Khi thêm một tháng lương cho nhân viên thì lương của nhân viên đó vào tháng đó tự cập nhật.
+SET DEFINE OFF;
+CREATE OR REPLACE TRIGGER TRIGGER_INSERT_LUONG
+BEFORE INSERT ON LUONG
+FOR EACH ROW
+DECLARE 
+    var_luongcoban NHANVIEN.LUONGCOBAN%TYPE;
+BEGIN
+    SELECT LUONGCOBAN INTO var_luongcoban
+    FROM NHANVIEN
+    WHERE MANV = :NEW.MANV; 
+
+    :NEW.SOGIOLAMTC := TinhSoGioLamTieuChuan(:NEW.THANG, :NEW.NAM);
+    :NEW.SOGIOLAMTT := TinhSoGioLamThucTe(:NEW.THANG, :NEW.NAM, :NEW.MANV);
+    :NEW.LUONG := (var_luongcoban/:NEW.SOGIOLAMTC)*:NEW.SOGIOLAMTT;
+END;
+
 /*========================= HE THONG STORE PROCEDURE ========================*/
+--Hàm sleep
+CREATE OR REPLACE PROCEDURE sleep (in_time NUMBER)
+AS
+ var_now DATE;
+BEGIN
+ SELECT SYSDATE
+ INTO var_now
+ FROM DUAL;
+
+ LOOP
+ EXIT WHEN var_now + (in_time * (1/86400)) <= SYSDATE;
+ END LOOP;
+end;
+
 --Hien thi thong tin khach hang
 SET SERVEROUTPUT ON;
 CREATE OR REPLACE PROCEDURE HienThiThongTinKhachHang(var_sdt KHACHHANG.SDT%TYPE)
@@ -712,6 +740,10 @@ BEGIN
     SET TENSP = var_tensp, GIA = var_gia, MALOAISP = var_maloaisp, 
     MAUSAC = var_mausac, SLSAN = var_slsan, GHICHU = var_ghichu, ANHSP = var_anh
     WHERE MASP = var_masp;
+    LOCK TABLE CTHD IN EXCLUSIVE MODE;
+    LOCK TABLE CTPN IN EXCLUSIVE MODE;
+    SLEEP(10);
+    
     COMMIT;
     RETURN 1;
 EXCEPTION
@@ -730,7 +762,7 @@ END;
 CREATE OR REPLACE FUNCTION INSERT_HOADON(var_manv HOADON.MANV%TYPE,var_makh HOADON.MAKH%TYPE) RETURN NUMBER
 AS
     var_loaikh KHACHHANG.LOAIKH%TYPE;
-    var_chietkhau HOADON.CHIETKHAU%TYPE;
+    var_chietkhau HOADON.CHIETKHAU%TYPE := 0;
 BEGIN
     IF var_makh IS NOT NULL THEN
         SELECT LOAIKH INTO var_loaikh
@@ -739,10 +771,10 @@ BEGIN
         
         IF(var_loaikh = N'Than thiet')
         THEN
-            var_chietkhau := 0.05;
+            var_chietkhau := var_chietkhau + 0.05;
         ELSIF(var_loaikh = N'VIP')
         THEN
-            var_chietkhau := 0.1;
+            var_chietkhau := var_chietkhau + 0.1;
         END IF;
     END IF;
     
@@ -843,13 +875,19 @@ END;
 /*function insert CTHD*/
 CREATE OR REPLACE FUNCTION INSERT_CTHD(var_sohd CTHD.SOHD%TYPE,var_masp CTHD.MASP%TYPE, var_soluong CTHD.SOLUONG%TYPE) RETURN NUMBER AS
 BEGIN
+    --SET TRANSACTION ISOLATION LEVEL Read committed;
     INSERT INTO CTHD(SOHD,MASP,SOLUONG) VALUES(var_sohd, var_masp, var_soluong);
+    --LOCK TABLE CTHD IN EXCLUSIVE MODE;
+    
+    --SLEEP(10);
     COMMIT;
     RETURN 1;
 EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
+
+SELECT * FROM CTHD;
 
 /*Function insert CTPN*/
 CREATE OR REPLACE FUNCTION INSERT_CTPN(var_masp CTPN.MASP%TYPE,var_maphieunhap CTPN.MAPHIEUNHAP%TYPE, var_slnhap CTPN.SLNHAP%TYPE,
@@ -884,6 +922,9 @@ BEGIN
     UPDATE KHUYENMAI 
     SET TENKM = var_tenkm, PHANTRAM = var_phantram, NGAYBD = var_ngaybd, NGAYKT = var_ngaykt
     WHERE MAKM = var_makm;
+    LOCK TABLE CTKM IN EXCLUSIVE MODE;
+    SLEEP(10);
+    
     COMMIT;
     RETURN 1;
 EXCEPTION
@@ -1015,6 +1056,7 @@ BEGIN
     RETURN (var_songaytrongthang - var_songaycuoituan)*9.5; --giờ làm tiêu chuẩn là từ 7h sáng đến 4h30 chiều.
 END;
 
+set serveroutput on;
 begin
     dbms_output.put_line(SoNgayToiDaCuaThang(7,2022));
     dbms_output.put_line(SoNgayCuoiTuanTrongThang(7,2022));
@@ -1049,24 +1091,6 @@ EXCEPTION
         RETURN 0;
 END;
 
---Khi thêm một tháng lương cho nhân viên thì lương của nhân viên đó vào tháng đó tự cập nhật.
-SET DEFINE OFF;
-CREATE OR REPLACE TRIGGER TRIGGER_INSERT_LUONG
-BEFORE INSERT ON LUONG
-FOR EACH ROW
-DECLARE 
-    var_luongcoban NHANVIEN.LUONGCOBAN%TYPE;
-BEGIN
-    SELECT LUONGCOBAN INTO var_luongcoban
-    FROM NHANVIEN
-    WHERE MANV = :NEW.MANV; 
-
-    :NEW.SOGIOLAMTC := TinhSoGioLamTieuChuan(:NEW.THANG, :NEW.NAM);
-    :NEW.SOGIOLAMTT := TinhSoGioLamThucTe(:NEW.THANG, :NEW.NAM, :NEW.MANV);
-    :NEW.LUONG := (var_luongcoban/:NEW.SOGIOLAMTC)*:NEW.SOGIOLAMTT;
-END;
-
-COMMIT;
 
 --Xóa dòng dữ liệu bảng SANPHAM
 CREATE OR REPLACE FUNCTION DELETE_SANPHAM(var_khoachinh NUMBER) RETURN NUMBER
@@ -1128,8 +1152,122 @@ EXCEPTION
         RETURN 0;
 END;
 
---Giải quyết các vấn đề thao tác đồng thời: đọc file của  cô
---Phân quyền truy cập
+/*======================= PHÂN QUYỀN TRUY CẬP CSDL ===========================*/
+CREATE USER user_quanly IDENTIFIED BY Admin123;
+CREATE USER user_thungan IDENTIFIED BY Admin123;
+CREATE USER user_banhang IDENTIFIED BY Admin123;
+CREATE USER user_nhanvienkho IDENTIFIED BY Admin123;
+-------------------------
+GRANT CREATE SESSION, SELECT ANY SEQUENCE TO user_quanly;
+GRANT CREATE SESSION TO user_thungan;
+GRANT CREATE SESSION TO user_banhang;
+GRANT CREATE SESSION TO user_nhanvienkho;
+
+/*============ Phân quyền cho nhân viên quản lý: user_quanly ================*/
+--Quản lý thông tin nhân viên.	Thêm/Xóa/Sửa/Tra cứu nhân viên.
+GRANT INSERT, DELETE, UPDATE, SELECT ON NHANVIEN TO user_quanly;
+
+--Quản lý thông tin sản phẩm.Thêm/Xóa /Sửa/Tra cứu thông tin sản phẩm.
+GRANT INSERT, DELETE, UPDATE, SELECT ON SANPHAM TO user_quanly;
+GRANT INSERT, DELETE, UPDATE, SELECT ON LOAISANPHAM TO user_quanly;
+
+--Quản lý thông tin khuyến mãi.	Thêm/Xóa/Sửa/Tra cứu thông tin khuyến mãi.
+GRANT INSERT, DELETE, UPDATE, SELECT ON KHUYENMAI TO user_quanly;
+GRANT INSERT, DELETE, UPDATE, SELECT ON CTKM TO user_quanly;
+
+--Quản lý thông tin khách hàng.	Thêm/Xóa/Sửa/Tra cứu thông tin khách hàng.
+GRANT INSERT, DELETE, UPDATE, SELECT ON KHACHHANG TO user_quanly;
+
+--Quản lý thông tin nhà cung cấp.Thêm/Xóa/Sửa/Tra cứu thông tin nhà cung cấp.
+GRANT INSERT, DELETE, UPDATE, SELECT ON NHACUNGCAP TO user_quanly;
+
+--Quản lý thông tin hóa đơn.Thêm/ Tra cứu thông tin hóa đơn.
+GRANT INSERT, SELECT ON HOADON TO user_quanly;
+GRANT INSERT, DELETE, UPDATE, SELECT ON CTHD TO user_quanly;
+GRANT INSERT, DELETE, UPDATE, SELECT ON CTKM TO user_quanly;
+
+--Quản lý thông tin nhập sản phẩm.	Thêm/Tra cứu thông tin nhập sản phẩm.
+GRANT INSERT, SELECT ON CTPN TO user_quanly;
+GRANT INSERT, SELECT ON PHIEUNHAP TO user_quanly;
+
+--Quản lý chấm công. Tra cứu danh sách chấm công.
+--Chấm công. Check-in(insert) vào đầu giờ làm việc và check-out(update) vào cuối giờ làm việc.
+GRANT SELECT ON CHAMCONG TO user_quanly;
+GRANT EXECUTE ON INSERT_CHAMCONG TO user_quanly;
+GRANT EXECUTE ON UPDATE_CHAMCONG TO user_quanly;
+
+--Báo cáo thống kê.	Tạo các biểu mẫu báo cáo và thống kê.
+GRANT EXECUTE ON ThongKeDoanhThuThang TO user_quanly;
+GRANT EXECUTE ON ThongKeDoanhThuNam TO user_quanly;
+GRANT EXECUTE ON ThongKeTienNhapThang TO user_quanly;
+GRANT EXECUTE ON ThongKeTienNhapNam TO user_quanly;
+
+--Quản lý lương. Tra cứu danh sách lương
+GRANT INSERT, SELECT ON CHAMCONG TO user_quanly;
+GRANT EXECUTE ANY PROCEDURE TO user_quanly;
+
+/*============= Phân quyền cho nhân viên thu ngân: user_thungan ==============*/
+--Chấm công	Check-in vào đầu giờ làm việc và check-out vào cuối giờ làm việc.
+GRANT EXECUTE ON INSERT_CHAMCONG TO user_thungan;
+GRANT EXECUTE ON UPDATE_CHAMCONG TO user_thungan;
+
+--Xem thông tin khuyến mãi.
+GRANT SELECT ON KHUYENMAI TO user_thungan;
+GRANT INSERT, DELETE, UPDATE, SELECT ON CTKM TO user_thungan;
+
+--Xem thông tin sản phẩm. 
+GRANT SELECT ON SANPHAM TO user_thungan;
+
+--Quản lý thông tin hóa đơn. Thêm/Tra cứu thông tin hóa đơn.
+GRANT INSERT, SELECT ON HOADON TO user_thungan;
+GRANT INSERT, DELETE, UPDATE, SELECT ON CTHD TO user_thungan;
+GRANT INSERT, DELETE, UPDATE, SELECT ON CTKM TO user_thungan;
+--REVOKE UPDATE ON HOADON FROM user_thungan;
+GRANT SELECT ON SEQ7_SOHD TO user_thungan;
+COMMIT;
+
+--Quản lý thông tin khách hàng. Thêm/Xóa/Sửa/Tra cứu thông tin khách hàng.
+GRANT INSERT, DELETE, UPDATE, SELECT ON KHACHHANG TO user_thungan;
+GRANT SELECT ON SEQ1_MAKH TO user_thungan;
+
+/*============= Phân quyền cho nhân viên bán hàng: user_banhang ==============*/
+--Chấm công. Check-in vào đầu ca làm việc và check-out vào cuối ca.
+GRANT EXECUTE ON INSERT_CHAMCONG TO user_banhang;
+GRANT EXECUTE ON UPDATE_CHAMCONG TO user_banhang;
+
+--Xem thông tin khách hàng.
+GRANT SELECT ON KHACHHANG TO user_banhang;
+
+--Xem thông tin hóa đơn.
+GRANT SELECT ON HOADON TO user_banhang;
+
+--Xem thông tin sản phẩm.
+GRANT SELECT ON SANPHAM TO user_banhang;
+
+/*========= Phân quyền cho nhân viên nhân viên kho: user_nhanvienkho =========*/
+--Chấm công. Check-in vào đầu ca làm việc và check-out vào cuối ca.
+GRANT EXECUTE ON INSERT_CHAMCONG TO user_nhanvienkho;
+GRANT EXECUTE ON UPDATE_CHAMCONG TO user_nhanvienkho;
+
+--Quản lý thông tin nhập sản phẩm. Thêm/Xóa/Sửa/Tra cứu thông tin nhập sản phẩm.
+GRANT INSERT, DELETE, UPDATE, SELECT ON LOAISANPHAM TO user_nhanvienkho;
+GRANT INSERT, DELETE, UPDATE, SELECT ON SANPHAM TO user_nhanvienkho;
+GRANT INSERT, SELECT ON CTPN TO user_nhanvienkho;
+GRANT INSERT, SELECT ON PHIEUNHAP TO user_nhanvienkho;
+GRANT SELECT ON SEQ2_MASP TO user_nhanvienkho;
+GRANT SELECT ON SEQ3_MAPHIEUNHAP TO user_nhanvienkho;
+
+COMMIT;
+--Tên khách hàng, nhân viên tự động viết hoa chữ đầu khi insert
+
+
+
+
+
+
+
+
+
 
 
 
