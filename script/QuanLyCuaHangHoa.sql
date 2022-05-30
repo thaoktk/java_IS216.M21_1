@@ -754,14 +754,7 @@ EXCEPTION
 END;
 /
 GRANT execute ON DBMS_LOCK TO c##QLCH_HOA;
-/*Function insert HOADON*/ 
---     SET TRANSACTION ISOLATION LEVEL Read committed;
---    INSERT INTO DATVE VALUES(Mave_seq9.nextval, in_makh, in_manv, in_lichchieu, in_maghe, v_gia, v_date, in_hinhthuc, in_thanhtoan);
---        LOCK TABLE DATVE IN EXCLUSIVE MODE;
---    
---    SLEEP(10);
---    COMMIT;
--- 
+
 CREATE OR REPLACE FUNCTION INSERT_HOADON(var_manv HOADON.MANV%TYPE,var_makh HOADON.MAKH%TYPE) RETURN NUMBER
 AS
     var_loaikh KHACHHANG.LOAIKH%TYPE;
