@@ -96,9 +96,7 @@ B3: Setup database, tạo user trên sqlplus (tên user: c##QLCH_HOA, mật kh�
 
 B4: Cài đặt các thư viện và plugin đã neu ở trên, chạy chương trình
     + Tài khoản để đăng nhập vào chương trình:
-	Quản lý: 
-	3
-	023289018294
+
 
 	Thu ngân:
 	1
@@ -111,3 +109,7 @@ B4: Cài đặt các thư viện và plugin đã neu ở trên, chạy chương 
 	Nhân viên kho:
 	2
 	010200108272
+	
+	Quản lý: 
+	3
+	023289018294
