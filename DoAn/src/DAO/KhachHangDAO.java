@@ -12,9 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -44,6 +44,7 @@ public class KhachHangDAO {
         ps.setString(7, kh.getGioiTinh());
         ps.executeUpdate();
         int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     }
@@ -70,35 +71,40 @@ public class KhachHangDAO {
         ps.setString(8, kh.getGioiTinh());
         ps.executeUpdate();
         int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     }
 
-    public static boolean delete(String value) throws SQLException {
-        Connection con = null;
+    public static boolean delete(String value) throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionUtils.getMyConnection();
+        CallableStatement ps = null;
+        con.setAutoCommit(false);
         try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
+            String SQL = "{? = call DELETE_KHACHHANG(?)}";
+            ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, java.sql.Types.INTEGER);
+            ps.setString(2, value);
+            ps.executeUpdate();
+            con.commit();
+        } catch (Exception ex) {
             ex.printStackTrace();
+            con.rollback();
         }
-
-        String SQL = "{? = call DELETE_KHACHHANG(?)}";
-        CallableStatement ps = con.prepareCall(SQL);
-        ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setString(2, value);
-        ps.executeUpdate();
         int check = ps.getInt(1);
-        
+        con.close();
         return check > 0;
     }
 
     public static ArrayList<KhachHang> getKhachHangAll() {
         ArrayList<KhachHang> arr = new ArrayList<KhachHang>();
-        String SQL = "SELECT MAKH, HOTEN, SDT, DIACHI, NGAYSINH, NGAYDK, LOAIKH, TICHLUY, GHICHU, GIOITINH FROM KHACHHANG ORDER BY MAKH";
+        String SQL = "{ call GET_KHACHHANG_ALL(?) }";
 
         try (Connection con = ConnectionUtils.getMyConnection()) {
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 KhachHang kh = new KhachHang();
                 kh.setMaKH(rs.getInt("MAKH"));
@@ -126,22 +132,24 @@ public class KhachHangDAO {
         String SQL = null;
         switch (option) {
             case "Mã KH":
-                SQL = "SELECT MAKH, HOTEN, SDT, DIACHI, NGAYSINH, NGAYDK, LOAIKH, TICHLUY, GHICHU, GIOITINH FROM KHACHHANG WHERE MAKH=?";
+                SQL = "{ call GET_KHACHHANG_BY_MAKH(?, ?) }";
                 break;
             case "Họ tên":
-                SQL = "SELECT MAKH, HOTEN, SDT, DIACHI, NGAYSINH, NGAYDK, LOAIKH, TICHLUY, GHICHU, GIOITINH FROM KHACHHANG WHERE HOTEN=?";
+                SQL = "{ call GET_KHACHHANG_BY_HOTEN(?, ?) }";
                 break;
             case "SĐT":
-                SQL = "SELECT MAKH, HOTEN, SDT, DIACHI, NGAYSINH, NGAYDK, LOAIKH, TICHLUY, GHICHU, GIOITINH FROM KHACHHANG WHERE SDT=?";
+                SQL = "{ call GET_KHACHHANG_BY_SDT(?, ?) }";
                 break;
             case "Loại KH":
-                SQL = "SELECT MAKH, HOTEN, SDT, DIACHI, NGAYSINH, NGAYDK, LOAIKH, TICHLUY, GHICHU, GIOITINH FROM KHACHHANG WHERE LOAIKH=?";
+                SQL = "{ call GET_KHACHHANG_BY_LOAIKH(?, ?) }";
                 break;
         }
         try (Connection con = ConnectionUtils.getMyConnection()) {
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             while (rs.next()) {
                 KhachHang temp = new KhachHang();
                 temp.setMaKH(rs.getInt("MAKH"));
@@ -185,9 +193,9 @@ public class KhachHangDAO {
                 loaiKH = rs.getString("LOAIKH");
             }
             
-            if (loaiKH.equals("Bình thường")) {
+            if (loaiKH.equals("Moi")) {
                 return 1;
-            } else if (loaiKH.equals("Thân thiết")) {
+            } else if (loaiKH.equals("Than thiet")) {
                 return 2;
             } else {
                 return 3;

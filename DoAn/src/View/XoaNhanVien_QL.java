@@ -697,6 +697,7 @@ public class XoaNhanVien_QL extends javax.swing.JFrame {
                 loadNhanVienAll();
             } else {
                 JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                loadNhanVienAll();
                 return;
             }
         } catch (Exception e) {

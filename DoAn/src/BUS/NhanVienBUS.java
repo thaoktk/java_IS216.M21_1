@@ -27,8 +27,8 @@ public class NhanVienBUS {
         return NhanVienDAO.update(nv);
     }
     
-    public static boolean deleteNV(String CMND) throws SQLException {
-        return NhanVienDAO.delete(CMND);
+    public static boolean deleteNV(String USER) throws SQLException, ClassNotFoundException {
+        return NhanVienDAO.delete(USER);
     }
     
     public static ArrayList<NhanVien> timNhanVien(String option, String value) {

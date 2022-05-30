@@ -14,6 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -42,69 +45,76 @@ public class SanPhamDAO {
         ps.setString(8, sp.getAnhSP());
         ps.executeUpdate();
         int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     }
 
-    public static boolean update(SanPham sp) throws SQLException {
-        Connection con = null;
+    public static boolean update(SanPham sp) throws SQLException{
         try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
-        String SQL = "{? = call UPDATE_SANPHAM(?, ?, ?, ?, ?, ?, ?, ?)}";
-        
-        CallableStatement ps = con.prepareCall(SQL);
-        ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setInt(2, sp.getMaSP());
-        ps.setString(3, sp.getTenSP());
-        ps.setLong(4, sp.getGiaSP());
-        ps.setInt(5, sp.getMaLoaiSP());
-        ps.setString(6, sp.getMauSac());
-        ps.setInt(7, sp.getSlsan());
-        ps.setString(8, sp.getGhiChu());
-        ps.setString(9, sp.getAnhSP());
-        ps.executeUpdate();
-        int check = ps.getInt(1);
-
-        return check > 0;
-    }
-
-    public static boolean delete(String value) throws SQLException {
-        Connection con = null;
-        try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
-        String SQL = "{? = call DELETE_SANPHAM(?)}";
-        
-        CallableStatement ps = con.prepareCall(SQL);
-        ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setString(2, value);
-        ps.executeUpdate();
-        int check = ps.getInt(1);
-        
-        return check > 0;
-    }
-
-    public static ArrayList<SanPham> getSanPhamAll() {
-        ArrayList<SanPham> arr = new ArrayList<SanPham>();
-        String SQL = "SELECT MASP, TENSP, GIA, MALOAISP, MAUSAC, SLSAN, GHICHU FROM SANPHAM ORDER BY MASP";
-
-        try {
-            Connection con = null;
+            Connection con = ConnectionUtils.getMyConnection();
+            CallableStatement ps = null;
+            con.setAutoCommit(false);
             try {
-                con = ConnectionUtils.getMyConnection();
-            } catch (ClassNotFoundException ex) {
+                String SQL = "{? = call UPDATE_SANPHAM(?, ?, ?, ?, ?, ?, ?, ?)}";
+                
+                ps = con.prepareCall(SQL);
+                ps.registerOutParameter(1, java.sql.Types.INTEGER);
+                ps.setInt(2, sp.getMaSP());
+                ps.setString(3, sp.getTenSP());
+                ps.setLong(4, sp.getGiaSP());
+                ps.setInt(5, sp.getMaLoaiSP());
+                ps.setString(6, sp.getMauSac());
+                ps.setInt(7, sp.getSlsan());
+                ps.setString(8, sp.getGhiChu());
+                ps.setString(9, sp.getAnhSP());
+                ps.executeUpdate();
+                con.commit();
+            } catch (SQLException ex) {
                 ex.printStackTrace();
+                con.rollback();
             }
+            int check = ps.getInt(1);
+            con.close();
+            
+            return check > 0;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+    public static boolean delete(String value) throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionUtils.getMyConnection();
+        CallableStatement ps = null;
+        con.setAutoCommit(false);
+        try {
+            String SQL = "{? = call DELETE_SANPHAM(?)}";
+            ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, java.sql.Types.INTEGER);
+            ps.setString(2, value);
+            ps.executeUpdate();
+            con.commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            con.rollback();
+        }
+        int check = ps.getInt(1);
+        con.close();
+        return check > 0;
+    }
+
+    public static ArrayList<SanPham> getSanPhamAll()  {
+        ArrayList<SanPham> arr = new ArrayList<SanPham>();
+        String SQL = "{ call GET_SANPHAM_ALL(?) }";
+
+        Connection con = null;
+        try {
+            con = ConnectionUtils.getMyConnection();
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 SanPham sp = new SanPham();
                 sp.setMaSP(rs.getInt("MASP"));
@@ -116,17 +126,18 @@ public class SanPhamDAO {
                 sp.setGhiChu(rs.getString("GHICHU"));
                 arr.add(sp);
             }
-
             con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return arr;
     }
 
     public static SanPham getChiTietSanPham(int value) {
-        String SQL = "SELECT MASP, TENSP, GIA, MALOAISP, MAUSAC, SLSAN, GHICHU, ANHSP FROM SANPHAM WHERE MASP=?";
+        String SQL = "SELECT * FROM SANPHAM WHERE MASP=?";
         SanPham sp = new SanPham();
         try {
             Connection con = null;
@@ -173,17 +184,16 @@ public class SanPhamDAO {
             String SQL = null;
             switch (option) {
                 case "Mã SP":
-                    SQL = "SELECT MASP, TENSP, GIA, MALOAISP, MAUSAC, SLSAN, GHICHU FROM SANPHAM WHERE MASP=?";
+                    SQL = "SELECT * FROM SANPHAM WHERE MASP=?";
                     break;
                 case "Tên SP":
-                    SQL = "SELECT MASP, TENSP, GIA, MALOAISP, MAUSAC, SLSAN, GHICHU FROM SANPHAM WHERE TENSP=?";
+                    SQL = "SELECT * FROM SANPHAM WHERE TENSP=?";
                     break;
                 case "Màu sắc":
-                    SQL = "SELECT MASP, TENSP, GIA, MALOAISP, MAUSAC, SLSAN, GHICHU FROM SANPHAM WHERE MAUSAC=?";
+                    SQL = "SELECT * FROM SANPHAM WHERE MAUSAC=?";
                     break;
                 case "Tên loại SP":
-                    SQL = "SELECT MASP, TENSP, GIA, SP.MALOAISP, MAUSAC, SLSAN, GHICHU \n"
-                            + "FROM SANPHAM SP\n"
+                    SQL = "SELECT * FROM SANPHAM SP\n"
                             + "WHERE MALOAISP = (SELECT MALOAISP FROM LOAISANPHAM WHERE TENLOAISP=?)";
                     break;
             }

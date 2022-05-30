@@ -24,11 +24,11 @@ public class DoiTacBUS {
         return DoiTacDAO.insert(km);
     }
     
-    public static boolean updateDT(DoiTac km) throws SQLException {
+    public static boolean updateDT(DoiTac km) throws SQLException, ClassNotFoundException {
         return DoiTacDAO.update(km);
     }
     
-    public static boolean deleteDT(String value) throws SQLException {
+    public static boolean deleteDT(String value) throws SQLException, ClassNotFoundException {
         return DoiTacDAO.delete(value);
     }
     

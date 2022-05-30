@@ -9,15 +9,28 @@ import BUS.DoiTacBUS;
 import BUS.NhanVienBUS;
 import BUS.NhapHangBUS;
 import BUS.SanPhamBUS;
+import Connection.ConnectionUtils;
 import DTO.NhapHang;
 import static View.SuaNhanVien_QL.isNumeric;
 import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -82,6 +95,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         QLHD = new javax.swing.JButton();
         QLDS = new javax.swing.JButton();
+        ChamCongBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Thêm nhập hàng");
@@ -345,17 +359,13 @@ public class ThemNhapHang extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 760, 700));
 
         jPanel1.setBackground(new java.awt.Color(231, 238, 237));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageText/tag/logo nhỏ.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 25, -1, -1));
 
         jSeparator1.setBackground(new java.awt.Color(85, 122, 100));
         jSeparator1.setForeground(new java.awt.Color(85, 122, 100));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 72, 216, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageText/tag/Chung.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, -1, -1));
 
         QLNV.setText("Nhân viên");
         QLNV.setBackground(new java.awt.Color(231, 238, 237));
@@ -369,7 +379,6 @@ public class ThemNhapHang extends javax.swing.JFrame {
                 QLNVActionPerformed(evt);
             }
         });
-        jPanel1.add(QLNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 198, 151, 40));
 
         ChungBtn.setText("Chung");
         ChungBtn.setBackground(new java.awt.Color(231, 238, 237));
@@ -384,7 +393,6 @@ public class ThemNhapHang extends javax.swing.JFrame {
                 ChungBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(ChungBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 146, 151, 40));
 
         QLSP.setText("Sản phẩm");
         QLSP.setBackground(new java.awt.Color(231, 238, 237));
@@ -398,7 +406,6 @@ public class ThemNhapHang extends javax.swing.JFrame {
                 QLSPActionPerformed(evt);
             }
         });
-        jPanel1.add(QLSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 250, 151, 40));
 
         QLKH.setText("Khách hàng");
         QLKH.setBackground(new java.awt.Color(231, 238, 237));
@@ -412,7 +419,6 @@ public class ThemNhapHang extends javax.swing.JFrame {
                 QLKHActionPerformed(evt);
             }
         });
-        jPanel1.add(QLKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 302, 151, 40));
 
         QLDT.setText("Đối tác");
         QLDT.setBackground(new java.awt.Color(231, 238, 237));
@@ -426,7 +432,6 @@ public class ThemNhapHang extends javax.swing.JFrame {
                 QLDTActionPerformed(evt);
             }
         });
-        jPanel1.add(QLDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 354, 151, 40));
 
         QLKM.setText("Khuyến mãi");
         QLKM.setBackground(new java.awt.Color(231, 238, 237));
@@ -440,7 +445,6 @@ public class ThemNhapHang extends javax.swing.JFrame {
                 QLKMActionPerformed(evt);
             }
         });
-        jPanel1.add(QLKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 406, 151, 40));
 
         jButton7.setText("Nhập hàng");
         jButton7.setBackground(new java.awt.Color(196, 100, 96));
@@ -449,7 +453,6 @@ public class ThemNhapHang extends javax.swing.JFrame {
         jButton7.setFocusable(false);
         jButton7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 458, 151, 40));
 
         QLHD.setText("Hóa đơn");
         QLHD.setBackground(new java.awt.Color(231, 238, 237));
@@ -463,7 +466,6 @@ public class ThemNhapHang extends javax.swing.JFrame {
                 QLHDActionPerformed(evt);
             }
         });
-        jPanel1.add(QLHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 510, 151, 40));
 
         QLDS.setText("Doanh thu");
         QLDS.setBackground(new java.awt.Color(231, 238, 237));
@@ -477,7 +479,85 @@ public class ThemNhapHang extends javax.swing.JFrame {
                 QLDSActionPerformed(evt);
             }
         });
-        jPanel1.add(QLDS, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 562, 151, 40));
+
+        ChamCongBtn.setBackground(new java.awt.Color(231, 238, 237));
+        ChamCongBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ChamCongBtn.setForeground(new java.awt.Color(196, 100, 96));
+        ChamCongBtn.setText("Chấm công");
+        ChamCongBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
+        ChamCongBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ChamCongBtn.setFocusPainted(false);
+        ChamCongBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChamCongBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ChamCongBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ChungBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(QLNV, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(QLSP, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(QLKH, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(QLDT, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(QLKM, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(QLHD, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(QLDS, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(52, 52, 52)))
+                .addGap(30, 30, 30))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel2)
+                .addGap(6, 6, 6)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1)
+                .addGap(25, 25, 25)
+                .addComponent(ChungBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(ChamCongBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(QLNV, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(QLSP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(QLKH, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(QLDT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(QLKM, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(QLHD, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(QLDS, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 700));
 
@@ -681,6 +761,8 @@ public class ThemNhapHang extends javax.swing.JFrame {
                         datePickerNgNhap.setEnabled(true);
                         cbbTenNCC.setEnabled(true);
                         clearTB();
+                        int maPN = busNH.getMaPN();
+                        LayReport(maPN);
                     }
                 }
             } else {
@@ -708,6 +790,17 @@ public class ThemNhapHang extends javax.swing.JFrame {
         tenSPAdd = cbbTenSP.getSelectedItem().toString();
         String gianhap = txtGiaNhap.getText();
         
+        if (!isNumeric(slnhap) || !isNumeric(gianhap)) {
+            JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        String decimalPattern = "([0-9]*)\\.([0-9]*)"; 
+        if (Pattern.matches(decimalPattern, slnhap) || Pattern.matches(decimalPattern, gianhap)) {
+            JOptionPane.showMessageDialog(this, "Số không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         if (datePickerNgNhap.isEnabled()) {
             if (ngnhap.equals("null/null/null") ) {
                 JOptionPane.showMessageDialog(this, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -723,11 +816,6 @@ public class ThemNhapHang extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (!isNumeric(txtSLNhap.getText()) || !isNumeric(txtGiaNhap.getText())) {
-            JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
         
         Object [] rowCheck = null;
         for (int i = 0; i < arrObj.size(); i++) {
@@ -779,6 +867,16 @@ public class ThemNhapHang extends javax.swing.JFrame {
         arrObj.remove(rowSelected);
     }//GEN-LAST:event_DelActionPerformed
 
+    private void ChamCongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChamCongBtnActionPerformed
+        // TODO add your handling code here:
+        hide();
+        if (checkChucVu() == 1) {
+            ChamCong_QL.main(user);
+        } else {
+            ChamCong_NV.main(user);
+        }
+    }//GEN-LAST:event_ChamCongBtnActionPerformed
+
     public void loadTable() {
         String[] header = {"Mã NV","Tên NCC", "Tên SP", "Ngày nhập", "SL nhập", "Giá nhập"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
@@ -800,6 +898,22 @@ public class ThemNhapHang extends javax.swing.JFrame {
         ArrayList<String> arr = new ArrayList<String>();
         arr = DoiTacBUS.getTenDT();
         cbbTenNCC.setModel(new DefaultComboBoxModel(arr.toArray()));
+    }
+    
+    public void LayReport(int a) throws SQLException, JRException {
+        int maphieunhap = a;
+        Hashtable map = new Hashtable();
+        JasperReport report = JasperCompileManager.compileReport("src\\report\\Phieunhap.jrxml");
+        
+        map.put("Maphieunhap", maphieunhap);
+        try {
+            Connection con = ConnectionUtils.getMyConnection();
+            JasperPrint p = JasperFillManager.fillReport(report, map, con);
+            JasperViewer.viewReport(p, false);
+//            JasperExportManager.exportReportToPdfFile(p, maphieunhap);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     /**
      * @param args the command line arguments
@@ -841,6 +955,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
     private javax.swing.JButton AddInsert;
     private javax.swing.JButton AddIntoTable;
     private javax.swing.JButton Back;
+    private javax.swing.JButton ChamCongBtn;
     private javax.swing.JButton ChungBtn;
     private javax.swing.JButton Del;
     private javax.swing.JButton QLDS;

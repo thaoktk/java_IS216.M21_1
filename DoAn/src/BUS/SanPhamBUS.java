@@ -24,7 +24,7 @@ public class SanPhamBUS {
         return SanPhamDAO.update(sp);
     }
 
-    public static boolean deleteSP(String value) throws SQLException {
+    public static boolean deleteSP(String value) throws SQLException, ClassNotFoundException {
         return SanPhamDAO.delete(value);
     }
     

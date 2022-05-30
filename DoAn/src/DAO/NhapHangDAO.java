@@ -109,6 +109,7 @@ public class NhapHangDAO {
         ps.setInt(2, nh.getMaNCC());
         ps.executeUpdate();
         int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     }
@@ -131,6 +132,7 @@ public class NhapHangDAO {
         ps.setLong(5, nh.getGiaNhap());
         ps.executeUpdate();
         int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     }

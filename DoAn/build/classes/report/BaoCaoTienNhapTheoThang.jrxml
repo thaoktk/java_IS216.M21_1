@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="500" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="da937597-cf3d-4a45-be1e-360141bbfa7a">
+	<property name="ireport.zoom" value="1.7715610000000013"/>
+	<property name="ireport.x" value="38"/>
+	<property name="ireport.y" value="230"/>
+	<parameter name="thang" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nam" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select sum(tongtiennhap) as tiennhap, EXTRACT(MONTH FROM ngaynhap) as thang, 
+EXTRACT(YEAR FROM ngaynhap) as nam from phieunhap
+where EXTRACT(MONTH FROM ngaynhap) = $P{thang}
+and EXTRACT(YEAR FROM ngaynhap) = $P{nam}
+group by EXTRACT(MONTH FROM ngaynhap), EXTRACT(YEAR FROM ngaynhap)]]>
+	</queryString>
+	<field name="TIENNHAP" class="java.math.BigDecimal"/>
+	<field name="THANG" class="java.math.BigDecimal"/>
+	<field name="NAM" class="java.math.BigDecimal"/>
+	<group name="THANG">
+		<groupExpression><![CDATA[$F{THANG}]]></groupExpression>
+	</group>
+	<group name="NAM">
+		<groupExpression><![CDATA[$F{NAM}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="107" splitType="Stretch">
+			<image>
+				<reportElement x="134" y="0" width="284" height="44" uuid="8cf33edb-441d-43d0-85cb-12156e022ad9"/>
+				<imageExpression><![CDATA["D:\\Downloads\\java\\DoAn\\src\\ImageText\\tag\\Tiệm hoa bình yên mau do.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="148" y="67" width="270" height="26" forecolor="#C46460" uuid="36d6ad32-af4f-41c1-a1bc-643f799be619"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="20" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Báo cáo tiền nhập theo tháng]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="342" y="29" width="213" height="32" uuid="295a36d4-0693-4dac-8924-e4e7e901da81"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<text><![CDATA[Tổng tiền]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="18" width="555" height="1" uuid="5c2a51d7-3925-4adb-ac55-dacc007cdc2d"/>
+			</line>
+			<staticText>
+				<reportElement x="154" y="29" width="188" height="32" uuid="a731ba32-40a6-4a4c-9e06-dd140d808d89"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<text><![CDATA[Năm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="29" width="154" height="32" uuid="88108fa3-9fa4-48d2-9d4c-cfeafe1bd2ce"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<text><![CDATA[Tháng]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="4eeb315a-a7e7-4407-ac26-94f4504bd4f3"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="12" width="154" height="27" uuid="fc35fbef-6a1f-4cda-b820-83606a4c55ed"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{THANG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="154" y="12" width="188" height="27" uuid="ee4953c6-8c2c-4b47-990d-134bfcb04702"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="342" y="12" width="213" height="27" uuid="64d5473c-e4f1-4014-9255-2d01f5b0f44c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIENNHAP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="134" splitType="Stretch">
+			<staticText>
+				<reportElement x="185" y="112" width="146" height="22" forecolor="#668D75" uuid="ac853e8a-bc5f-4ab0-b53d-51f6eb5b67ff"/>
+				<textElement>
+					<font fontName="Times New Roman" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[@butterdogsandcats]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="21" width="82" height="24" uuid="083b2919-8643-4d49-a070-4aaf588313a3"/>
+				<textElement>
+					<font fontName="Times New Roman" size="20"/>
+				</textElement>
+				<text><![CDATA[Người lập]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

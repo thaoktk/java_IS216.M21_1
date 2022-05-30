@@ -7,12 +7,18 @@ package View;
 
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
+import Connection.ConnectionUtils;
 import DTO.SanPham;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
@@ -465,24 +471,27 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
         cbbMaLSP.setSelectedItem(model.getValueAt(rowSelected, 3));
         txtMausac.setText((String) model.getValueAt(rowSelected, 4));
         txtSlsan.setText(model.getValueAt(rowSelected, 5).toString());
-        txtGhichu.setText(model.getValueAt(rowSelected, 6).toString());
+        if (model.getValueAt(rowSelected, 6) != null) {
+            txtGhichu.setText(model.getValueAt(rowSelected, 6).toString());
+        }
         txtAnh.setText("");
         String ma = model.getValueAt(rowSelected, 0).toString();
         int maSP = Integer.parseInt(ma);
         maSPSave = maSP;
+        
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void openFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
         // TODO add your handling code here:
         JFileChooser fc = new JFileChooser();
         try {
-            fc.setCurrentDirectory(new File(getClass().getResource("/CuaHangHoa/").toURI()));
+            fc.setCurrentDirectory(new File(getClass().getResource("/HinhAnh/").toURI()));
         } catch (URISyntaxException ex) {
             ex.printStackTrace();
         }
         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg","gif","png");
         fc.addChoosableFileFilter(filter);
-        fc.setDialogTitle("Chọn ảnh");
+        fc.setDialogTitle("Chọn ảnh sản phẩm");
         int result = fc.showOpenDialog(null);
         if(result == JFileChooser.APPROVE_OPTION){
             file = fc.getSelectedFile();
@@ -528,8 +537,13 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        String decimalPattern = "([0-9]*)\\.([0-9]*)"; 
+        if (Pattern.matches(decimalPattern, slsan) || Pattern.matches(decimalPattern, gia)) {
+            JOptionPane.showMessageDialog(this, "Số không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
-        if (Integer.parseInt(txtGia.getText()) <= 0) {
+        if (Integer.parseInt(gia) <= 0 || Integer.parseInt(slsan) <= 0) {
             JOptionPane.showMessageDialog(this, "Thông tin không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -557,6 +571,7 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
                 loadSanPhamAll();
             } else {
                 JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                loadSanPhamAll();
                 return;
             }
         } catch (Exception e) {
@@ -628,6 +643,7 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             dtm.addRow(row);
         }
         jTable1.setModel(dtm);
+
     }
     
     public void loaiLoaiSP() {
@@ -665,7 +681,11 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SuaSanPham_QL(args).setVisible(true);
+                try {
+                    new SuaSanPham_QL(args).setVisible(true);
+                } catch (HeadlessException ex) {
+                    Logger.getLogger(SuaSanPham_QL.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

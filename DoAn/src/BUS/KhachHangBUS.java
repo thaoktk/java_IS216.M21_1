@@ -27,7 +27,7 @@ public class KhachHangBUS {
         return KhachHangDAO.update(kh);
     }
     
-    public static boolean deleteKH(String maNV) throws SQLException {
+    public static boolean deleteKH(String maNV) throws SQLException, ClassNotFoundException {
         return KhachHangDAO.delete(maNV);
     }
     

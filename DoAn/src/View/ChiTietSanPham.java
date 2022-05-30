@@ -94,6 +94,7 @@ public class ChiTietSanPham extends javax.swing.JFrame {
         txtMaSP.setForeground(new java.awt.Color(0, 0, 0));
         txtMaSP.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtMaSP.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtMaSP.setFocusable(false);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -108,6 +109,7 @@ public class ChiTietSanPham extends javax.swing.JFrame {
         txtGia.setForeground(new java.awt.Color(0, 0, 0));
         txtGia.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtGia.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtGia.setFocusable(false);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
@@ -118,6 +120,7 @@ public class ChiTietSanPham extends javax.swing.JFrame {
         txtSLSan.setForeground(new java.awt.Color(0, 0, 0));
         txtSLSan.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtSLSan.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtSLSan.setFocusable(false);
         txtSLSan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSLSanActionPerformed(evt);
@@ -141,6 +144,7 @@ public class ChiTietSanPham extends javax.swing.JFrame {
         txtMauSac.setForeground(new java.awt.Color(0, 0, 0));
         txtMauSac.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtMauSac.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtMauSac.setFocusable(false);
         txtMauSac.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMauSacActionPerformed(evt);
@@ -151,24 +155,25 @@ public class ChiTietSanPham extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Ảnh hoa");
 
-        txtGhiChu.setColumns(20);
         txtGhiChu.setEditable(false);
-        txtGhiChu.setLineWrap(true);
-        txtGhiChu.setRows(5);
         txtGhiChu.setBackground(new java.awt.Color(249, 255, 254));
-        txtGhiChu.setBorder(null);
+        txtGhiChu.setColumns(20);
         txtGhiChu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtGhiChu.setForeground(new java.awt.Color(0, 0, 0));
+        txtGhiChu.setLineWrap(true);
+        txtGhiChu.setRows(5);
+        txtGhiChu.setBorder(null);
+        txtGhiChu.setFocusable(false);
         jScrollPane1.setViewportView(txtGhiChu);
 
-        Back.setText("Quay lại");
         Back.setBackground(new java.awt.Color(249, 255, 254));
+        Back.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Back.setForeground(new java.awt.Color(196, 100, 96));
+        Back.setText("Quay lại");
         Back.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back.setFocusPainted(false);
         Back.setFocusable(false);
-        Back.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Back.setForeground(new java.awt.Color(196, 100, 96));
         Back.setRequestFocusEnabled(false);
         Back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,6 +186,7 @@ public class ChiTietSanPham extends javax.swing.JFrame {
         txtTenSP.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtTenSP.setLineWrap(true);
         txtTenSP.setRows(5);
+        txtTenSP.setFocusable(false);
         jScrollPane2.setViewportView(txtTenSP);
 
         txtMaLoaiSP.setBackground(new java.awt.Color(249, 255, 254));
@@ -188,6 +194,7 @@ public class ChiTietSanPham extends javax.swing.JFrame {
         txtMaLoaiSP.setForeground(new java.awt.Color(0, 0, 0));
         txtMaLoaiSP.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtMaLoaiSP.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtMaLoaiSP.setFocusable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

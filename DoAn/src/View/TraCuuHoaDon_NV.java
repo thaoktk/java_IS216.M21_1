@@ -8,8 +8,10 @@ package View;
 import BUS.HoaDonBUS;
 import BUS.NhanVienBUS;
 import DTO.HoaDon;
+import static View.TraCuuNhanVien_QL.isNumeric;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,12 +44,12 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbb_search = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton11 = new javax.swing.JButton();
+        Find = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
@@ -84,21 +86,21 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Nhập vào");
 
-        jComboBox1.setBackground(new java.awt.Color(249, 255, 254));
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Số HD", "Mã NV", "Mã KH" }));
-        jComboBox1.setFocusable(false);
+        cbb_search.setBackground(new java.awt.Color(249, 255, 254));
+        cbb_search.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cbb_search.setForeground(new java.awt.Color(0, 0, 0));
+        cbb_search.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Số HD", "Mã NV", "Mã KH" }));
+        cbb_search.setFocusable(false);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Tìm kiếm theo");
 
-        jTextField1.setBackground(new java.awt.Color(249, 255, 254));
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTextField1.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtSearch.setBackground(new java.awt.Color(249, 255, 254));
+        txtSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtSearch.setForeground(new java.awt.Color(0, 0, 0));
+        txtSearch.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtSearch.setCaretColor(new java.awt.Color(0, 0, 0));
 
         jTable1.setBackground(new java.awt.Color(180, 222, 197));
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -149,15 +151,20 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
-        jButton11.setBackground(new java.awt.Color(196, 100, 96));
-        jButton11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("Tìm");
-        jButton11.setBorder(null);
-        jButton11.setBorderPainted(false);
-        jButton11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton11.setFocusPainted(false);
-        jButton11.setRequestFocusEnabled(false);
+        Find.setBackground(new java.awt.Color(196, 100, 96));
+        Find.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Find.setForeground(new java.awt.Color(255, 255, 255));
+        Find.setText("Tìm");
+        Find.setBorder(null);
+        Find.setBorderPainted(false);
+        Find.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Find.setFocusPainted(false);
+        Find.setRequestFocusEnabled(false);
+        Find.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FindActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -169,13 +176,13 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbb_search, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Find, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(112, 112, 112))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -201,9 +208,9 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addGap(4, 4, 4)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)))
-                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSearch)
+                            .addComponent(cbb_search, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)))
+                    .addComponent(Find, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(201, Short.MAX_VALUE))
@@ -560,6 +567,16 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
         Chung.main(user);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void FindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindActionPerformed
+        // TODO add your handling code here:
+        String search = txtSearch.getText();
+        if (search.equals("")) {
+            loadHoaDonAll();
+        } else {
+            FindHoaDon();
+        }
+    }//GEN-LAST:event_FindActionPerformed
+
     public void loadHoaDonAll() {
         String[] header = {"Số HD", "Mã NV", "Mã KH", "Ngày hóa đơn", "Tổng tiền", "Chiết khấu", "Trị giá"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
@@ -571,14 +588,66 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
             int soHD = hd.getSoHD();
             int maNV = hd.getMaNV();
             int maKH = hd.getMaKH();
-            double tongtien = hd.getTongTien();
-            double trigia = hd.getTriGia();
+            String maKHnull = "null";
+            long tongtien = (long) hd.getTongTien();
+            long trigia = (long) hd.getTriGia();
             String nghd = hd.toString(hd.getNgayHD());
             float chietkhau = hd.getChietKhau();
-            Object[] row = {soHD, maNV, maKH, nghd, tongtien, chietkhau, trigia};
-            dtm.addRow(row);
+            Object[] rowKH = null;
+            if (maKH != 0) {
+                Object[] row = {soHD, maNV, maKH, nghd, tongtien, chietkhau, trigia};
+                rowKH = row;
+            } else {
+                Object[] row = {soHD, maNV, maKHnull, nghd, tongtien, chietkhau, trigia};
+                rowKH = row;
+            }
+            
+            dtm.addRow(rowKH);
         }
         jTable1.setModel(dtm);
+    }
+    
+    public void FindHoaDon() {
+        DefaultTableModel SearchTable = (DefaultTableModel) jTable1.getModel();
+        String option = (String) cbb_search.getSelectedItem();
+        String search = txtSearch.getText();
+        SearchTable.setRowCount(0);
+
+        if (option.equals("Số HD") || option.equals("Mã NV") || option.equals("Mã KH")) {
+            if (!isNumeric(txtSearch.getText())) {
+                JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        
+        ArrayList<HoaDon> arr = new ArrayList<HoaDon>();
+        arr = HoaDonBUS.timHoaDon(option, search);
+        HoaDon hd = new HoaDon();
+        for (int i = 0; i < arr.size(); i++) {
+            hd = arr.get(i);
+            int soHD = hd.getSoHD();
+            int maNV = hd.getMaNV();
+            int maKH = hd.getMaKH();
+            String maKHnull = "null";
+            long tongtien = (long) hd.getTongTien();
+            long trigia = (long) hd.getTriGia();
+            String nghd = hd.toString(hd.getNgayHD());
+            float chietkhau = hd.getChietKhau();
+            Object[] rowKH = null;
+            if (maKH != 0) {
+                Object[] row = {soHD, maNV, maKH, nghd, tongtien, chietkhau, trigia};
+                rowKH = row;
+            } else {
+                Object[] row = {soHD, maNV, maKHnull, nghd, tongtien, chietkhau, trigia};
+                rowKH = row;
+            }
+            
+            SearchTable.addRow(rowKH);
+        }
+        if (arr.size() <= 0) {
+            JOptionPane.showMessageDialog(this, "Thông tin tìm kiếm không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
     }
     /**
      * @param args the command line arguments
@@ -617,6 +686,7 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ChamCongBtn;
+    private javax.swing.JButton Find;
     private javax.swing.JButton QLDSBtn;
     private javax.swing.JButton QLDTBtn;
     private javax.swing.JButton QLHDBtn;
@@ -625,9 +695,8 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
     private javax.swing.JButton QLNHBtn;
     private javax.swing.JButton QLNVBtn7;
     private javax.swing.JButton QLSPBtn;
-    private javax.swing.JButton jButton11;
+    private javax.swing.JComboBox<String> cbb_search;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
@@ -639,6 +708,6 @@ public class TraCuuHoaDon_NV extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

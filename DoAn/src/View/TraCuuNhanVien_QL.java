@@ -736,7 +736,7 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
         nam = now.getYear();
     }
     
-    public void tinhLuongNV() throws SQLException {
+    public void tinhLuongNV() throws SQLException, ClassNotFoundException {
         LuongBUS bus = new LuongBUS();
         ArrayList<Integer> arr = new ArrayList<Integer>();
         arr = bus.getMaNV();
@@ -756,6 +756,8 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
                 tinhLuongNV();
             } catch (SQLException ex) {
                 ex.printStackTrace();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TraCuuNhanVien_QL.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         hide();

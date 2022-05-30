@@ -81,23 +81,25 @@ public class LuongDAO {
         return arr;
     }
     
-    public static boolean tinhLuong(Luong luong) throws SQLException {
-        Connection con = null;
+    public static boolean tinhLuong(Luong luong) throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionUtils.getMyConnection();
+        CallableStatement ps = null;
+        con.setAutoCommit(false);
         try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
+            String SQL = "{? = call INSERT_LUONG(?, ?, ?)}";
+
+            ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, java.sql.Types.INTEGER);
+            ps.setInt(3, luong.getThang());
+            ps.setInt(4, luong.getNam());
+            ps.setInt(2, luong.getMaNV());
+            ps.executeUpdate();
+            con.commit();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        String SQL = "{? = call INSERT_LUONG(?, ?, ?)}";
-        
-        CallableStatement ps = con.prepareCall(SQL);
-        ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setInt(3, luong.getThang());
-        ps.setInt(4, luong.getNam());
-        ps.setInt(2, luong.getMaNV());
-        ps.executeUpdate();
         int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     }

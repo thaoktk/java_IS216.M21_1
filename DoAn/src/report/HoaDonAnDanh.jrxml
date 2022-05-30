@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="700" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="97b46a28-ea5f-4abd-81cf-89dc4233013e">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="sohd" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select hd.*, cthd.*, nv.hoten as hoten_nhanvien, sp.tensp from 
+hoadon hd join cthd on hd.sohd = cthd.sohd 
+join nhanvien nv on hd.manv = nv.manv join sanpham sp on cthd.masp = sp.masp
+where hd.sohd = $P{sohd}]]>
+	</queryString>
+	<field name="SOHD" class="java.math.BigDecimal"/>
+	<field name="NGAYHD" class="java.sql.Timestamp"/>
+	<field name="TONGTIEN" class="java.math.BigDecimal"/>
+	<field name="MANV" class="java.math.BigDecimal"/>
+	<field name="MAKH" class="java.math.BigDecimal"/>
+	<field name="CHIETKHAU" class="java.math.BigDecimal"/>
+	<field name="TRIGIAHD" class="java.math.BigDecimal"/>
+	<field name="MASP" class="java.math.BigDecimal"/>
+	<field name="SOLUONG" class="java.math.BigDecimal"/>
+	<field name="HOTEN_NHANVIEN" class="java.lang.String"/>
+	<field name="TENSP" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<image>
+				<reportElement x="129" y="12" width="299" height="49" uuid="8f52153f-955d-4ad2-9d6d-50278dde2ddd"/>
+				<imageExpression><![CDATA["D:\\Downloads\\java\\DoAn\\src\\ImageText\\tag\\Tiệm hoa bình yên mau do.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="240" y="61" width="87" height="37" forecolor="#C46460" uuid="8b8a864a-a511-4ac9-93c3-e45fd93dae90"/>
+				<textElement>
+					<font fontName="Times New Roman" size="24"/>
+				</textElement>
+				<text><![CDATA[Hóa đơn]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="86" splitType="Stretch">
+			<staticText>
+				<reportElement x="303" y="1" width="93" height="30" uuid="ed822ecf-988b-442a-a46a-256bcbcd007f"/>
+				<textElement>
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<text><![CDATA[Chiết khấu:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="1" width="103" height="30" uuid="a9faa29f-1076-4c55-a526-b6bd55ba3bf1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<text><![CDATA[Tên NV lập:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="41" width="77" height="30" uuid="919e1e1d-1f0e-42f3-9e59-e30652450df8"/>
+				<textElement>
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<text><![CDATA[Tên KH:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="41" width="126" height="30" uuid="b3177549-6e83-45ff-a98c-0d5a8c2722c1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<text><![CDATA[Ngày hóa đơn:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="429" y="1" width="126" height="30" uuid="394ea2ca-8d5c-4654-aaac-841f47c86010"/>
+				<textElement>
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CHIETKHAU}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="1" width="189" height="30" uuid="9686e84c-81b9-463a-a527-f6899dc22c54"/>
+				<textElement>
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HOTEN_NHANVIEN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="429" y="41" width="126" height="30" uuid="746195d1-1832-4454-ba74-769aa0c2a52f"/>
+				<textElement>
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NGAYHD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="114" y="41" width="144" height="30" uuid="3b8737d3-58cc-4ab1-8f08-8499185a2438"/>
+				<textElement>
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<text><![CDATA[Ẩn danh]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="62" splitType="Stretch">
+			<line>
+				<reportElement x="-1" y="60" width="555" height="1" uuid="907ef90e-5f0a-4e62-b277-9ed63bb1035f"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="25" width="555" height="1" uuid="c7afa2fb-586f-4280-9dd7-ac8ee3ed8aed"/>
+			</line>
+			<staticText>
+				<reportElement x="456" y="35" width="98" height="26" uuid="2a4734c9-5e04-4323-a669-0ce5cb36faf7"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Số lượng]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="129" y="35" width="327" height="26" uuid="a4f65226-b9b9-4c5b-985c-d5d65b7610b9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Tên SP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="64" y="35" width="65" height="26" uuid="92a6aecd-6804-47d2-89ed-547963cd8043"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Mã SP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="35" width="65" height="26" uuid="f3334879-7cfb-455d-b39b-aa5c488db57e"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Số HD]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="-1" y="10" width="65" height="25" uuid="e0af68b1-cdd4-494f-841d-4607d3de69d9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SOHD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="129" y="11" width="327" height="25" uuid="86568806-2170-4240-bbd9-35952b37f13e"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TENSP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="456" y="11" width="98" height="25" uuid="ad4a2957-265c-47b6-aa78-3d0a46de2944"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SOLUONG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="11" width="65" height="25" uuid="2a3a8cc2-7a8f-4c72-b20f-39906d69ce64"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MASP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="456" y="15" width="98" height="30" uuid="59729e23-001f-402b-816c-6cf42783e974"/>
+				<textElement>
+					<font fontName="Times New Roman" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TRIGIAHD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="304" y="15" width="100" height="30" uuid="d94a6287-b1cb-47c8-ae23-84bfc96cd662"/>
+				<textElement>
+					<font fontName="Times New Roman" size="20"/>
+				</textElement>
+				<text><![CDATA[Trị giá:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="95">
+			<image>
+				<reportElement x="158" y="36" width="238" height="59" uuid="44244ffb-431b-40b7-90db-724cf0db8393"/>
+				<imageExpression><![CDATA["D:\\Downloads\\java\\DoAn\\src\\ImageText\\tag\\LỜI KẾT.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -27,7 +27,7 @@ public class KhuyenMaiBUS {
         return KhuyenMaiDAO.update(km);
     }
     
-    public static boolean deleteKM(String value) throws SQLException {
+    public static boolean deleteKM(String value) throws SQLException, ClassNotFoundException {
         return KhuyenMaiDAO.delete(value);
     }
     

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -575,6 +576,11 @@ public class SuaNhanVien_QL extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        String decimalPattern = "([0-9]*)\\.([0-9]*)"; 
+        if (Pattern.matches(decimalPattern, luongcb)) {
+            JOptionPane.showMessageDialog(this, "Số không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn cập nhật?", "Xác nhận",JOptionPane.YES_NO_OPTION );
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;

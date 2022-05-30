@@ -763,7 +763,7 @@ public class TraCuuSanPham_QL extends javax.swing.JFrame {
         }
     }
     public void loadSanPhamAll() {
-        String[] header = {"Mã SP", "Tên sản phẩm", "Giá", "Mã loại SP", "Màu sắc", "SL sẵn", "Ghi chú"};
+        String[] header = {"Mã SP", "Tên sản phẩm", "Giá", "Tên loại SP", "Màu sắc", "SL sẵn", "Ghi chú"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
         ArrayList<SanPham> arr = new ArrayList<SanPham>();
         arr = SanPhamBUS.getSanPhamAll();
@@ -774,13 +774,15 @@ public class TraCuuSanPham_QL extends javax.swing.JFrame {
             String tenSP = dt.getTenSP();
             long gia = dt.getGiaSP();
             int maloaiSP = dt.getMaLoaiSP();
+            String tenloaiSP = SanPhamBUS.getTenLSP(maloaiSP);
             String mausac = dt.getMauSac();
             int slsan = dt.getSlsan();
             String ghichu = dt.getGhiChu();
-            Object[] row = {maSP, tenSP, gia, maloaiSP, mausac, slsan, ghichu};
+            Object[] row = {maSP, tenSP, gia, tenloaiSP, mausac, slsan, ghichu};
             dtm.addRow(row);
         }
         jTable1.setModel(dtm);
+
     }
     /**
      * @param args the command line arguments

@@ -10,16 +10,27 @@ import BUS.KhachHangBUS;
 import BUS.KhuyenMaiBUS;
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
+import Connection.ConnectionUtils;
 import DTO.HoaDon;
 import DTO.KhuyenMai;
 import DTO.SanPham;
 import static View.SuaNhanVien_QL.isNumeric;
 import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -317,7 +328,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
         SLMua.setBackground(new java.awt.Color(249, 255, 254));
         SLMua.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         SLMua.setForeground(new java.awt.Color(0, 0, 0));
-        SLMua.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        SLMua.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         SLMua.setCaretColor(new java.awt.Color(0, 0, 0));
 
         AddSP.setBackground(new java.awt.Color(196, 100, 96));
@@ -444,7 +455,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(DelKM, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DelSP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(InHD, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tongTienHoaDon)
@@ -508,8 +519,13 @@ public class ThemHoaDon extends javax.swing.JFrame {
             }
         }
         
-        if (model.getValueAt(rowSelected, 1).toString().equals("Giảm 5% giá trị hóa đơn cho hóa đơn 5 triệu")) {
+        if (model.getValueAt(rowSelected, 1).toString().equals("Khuyến mãi cho đơn hàng trên 5 triệu")) {
             if (triGia < 5000000){
+                JOptionPane.showMessageDialog(this, "Chưa đạt giá trị đơn hàng tối thiểu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } else if (model.getValueAt(rowSelected, 1).toString().equals("Khuyến mãi cho đơn hàng trên 10 triệu")){
+            if (triGia < 10000000){
                 JOptionPane.showMessageDialog(this, "Chưa đạt giá trị đơn hàng tối thiểu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -518,7 +534,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
         Object [] rowCheck = null;
         for (int i = 0; i < arrKhuyenMai.size(); i++) {
             rowCheck = (Object[]) arrKhuyenMai.get(i);
-            int maKMCheck = (int) rowCheck[0];
+            int maKMCheck = Integer.parseInt(rowCheck[0].toString());
             if (maKMAdd == maKMCheck) {
                 JOptionPane.showMessageDialog(this, "Bạn đã thêm khuyến mãi này rồi!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -545,9 +561,8 @@ public class ThemHoaDon extends javax.swing.JFrame {
         String maLSP = model.getValueAt(rowSelected, 3).toString();
         String mauSac = (String) model.getValueAt(rowSelected, 4);
         slSan = model.getValueAt(rowSelected, 5).toString();
-        String ghiChu = String.valueOf(model.getValueAt(rowSelected, 6));
         String maSP = model.getValueAt(rowSelected, 0).toString();
-        Object [] row = {maSP, tenSP, gia, maLSP, mauSac, slSan, ghiChu};
+        Object [] row = {maSP, tenSP, gia, maLSP, mauSac, slSan};
         rowSP = row;
         
     }//GEN-LAST:event_TableSanPhamMouseClicked
@@ -560,6 +575,21 @@ public class ThemHoaDon extends javax.swing.JFrame {
             return;
         }
         
+        int rowSelected = TableSanPham.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) TableSanPham.getModel();
+        String ma = model.getValueAt(rowSelected, 0).toString();
+        int maSPAdd = Integer.parseInt(ma);
+        
+        Object [] rowCheck = null;
+        for (int i = 0; i < arrSanPham.size(); i++) {
+            rowCheck = (Object[]) arrSanPham.get(i);
+            int maSPCheck = Integer.parseInt(rowCheck[0].toString());
+            if (maSPAdd == maSPCheck) {
+                JOptionPane.showMessageDialog(this, "Bạn đã thêm sản phẩm này rồi!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        
         if (SLMua.getText().equals("")) {
             JOptionPane.showMessageDialog(this,"Số lượng mua không được để trống!","Lỗi",JOptionPane.ERROR_MESSAGE);
             return;
@@ -569,6 +599,12 @@ public class ThemHoaDon extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        String decimalPattern = "([0-9]*)\\.([0-9]*)"; 
+        if (Pattern.matches(decimalPattern, SLMua.getText())) {
+            JOptionPane.showMessageDialog(this, "Số không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
         
         int slSanSP = Integer.parseInt(slSan);
         int slMuaSP = Integer.parseInt(SLMua.getText());
@@ -582,10 +618,12 @@ public class ThemHoaDon extends javax.swing.JFrame {
             return;
         }
         
+        
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm sản phẩm này?", "Xác nhận",JOptionPane.YES_NO_OPTION );
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;
         }
+        
         rowSP[5] = SLMua.getText();
         arrSanPham.add(rowSP);
         themSanPham();
@@ -676,22 +714,53 @@ public class ThemHoaDon extends javax.swing.JFrame {
                         int soLuongMua = Integer.parseInt(rowSPHD[5].toString());
                         HoaDon cthd = new HoaDon(bus.getSoHD(), maNV, maKH, maSP, 0, soLuongMua, null, 0, 0, 0, null);
                         hoadonCTHD = bus.insertCTHD(cthd);
+                        if (!hoadonCTHD) {
+                            JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                            loadSanPhamAll();
+                            clearTB();
+                            tongTienHoaDon.setText("0 VNĐ");
+                            return;
+                        }
                     }
-                    for (int i = 0; i < arrKhuyenMai.size(); i++) {
-                        rowKMHD = (Object[]) arrKhuyenMai.get(i);
-                        int maKM = Integer.parseInt(rowKMHD[0].toString());
-                        HoaDon ctkm = new HoaDon(bus.getSoHD(), maNV, maKH, 0, maKM, 0, null, 0, 0, 0, null);
-                        hoadonCTKM = bus.insertCTKM(ctkm);
+                    if (arrKhuyenMai.size() > 0) {
+                        for (int i = 0; i < arrKhuyenMai.size(); i++) {
+                            rowKMHD = (Object[]) arrKhuyenMai.get(i);
+                            int maKM = Integer.parseInt(rowKMHD[0].toString());
+                            HoaDon ctkm = new HoaDon(bus.getSoHD(), maNV, maKH, 0, maKM, 0, null, 0, 0, 0, null);
+                            hoadonCTKM = bus.insertCTKM(ctkm);
+                            if (!hoadonCTKM) {
+                                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                loadSanPhamAll();
+                                clearTB();
+                                tongTienHoaDon.setText("0 VNĐ");
+                                return;
+                            }
+                        }
                     }
                     
+
                     if (hoadonCTHD) {
                         JOptionPane.showMessageDialog(this, "Đã tạo hóa đơn thành công!");
                         clearTB();
                         tongTienHoaDon.setText("0 VNĐ");
                         loadSanPhamAll();
+                        int sohd = bus.getSoHD();
+                        if (maKH != null) {
+                            LayReportKhacNull(sohd);
+                        } else {
+                            LayReportNull(sohd);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        loadSanPhamAll();
+                        return;
                     }
-                    
+
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                loadSanPhamAll();
+                return;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -711,7 +780,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
     }
     
     public void themSanPham() {
-        String[] header = {"Mã SP", "Tên sản phẩm", "Giá", "Mã loại SP", "Màu sắc", "SL mua", "Ghi chú"};
+        String[] header = {"Mã SP", "Tên sản phẩm", "Giá", "Mã loại SP", "Màu sắc", "SL mua"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
         Object[] row = null;
         for (int i = 0; i < arrSanPham.size(); i++) {
@@ -767,30 +836,34 @@ public class ThemHoaDon extends javax.swing.JFrame {
         float chietKhau = 0;
         
         Object[] rowSPHD = null, rowKMHD = null;
-        for (int i = 0; i < arrSanPham.size(); i++) {
-            rowSPHD = (Object[]) arrSanPham.get(i);
-            long gia = Integer.parseInt(rowSPHD[2].toString());
-            int soLuongMua = Integer.parseInt(rowSPHD[5].toString());
-            tongTien = tongTien + gia * soLuongMua;
+        if (arrSanPham.size() > 0) {
+            for (int i = 0; i < arrSanPham.size(); i++) {
+                rowSPHD = (Object[]) arrSanPham.get(i);
+                long gia = Long.parseLong(rowSPHD[2].toString());
+                int soLuongMua = Integer.parseInt(rowSPHD[5].toString());
+                tongTien = tongTien + gia * soLuongMua;
+            }
         }
-        for (int i = 0; i < arrKhuyenMai.size(); i++) {
-            rowKMHD = (Object[]) arrKhuyenMai.get(i);
-            float phanTramKhuyenMai = Float.parseFloat(rowKMHD[2].toString());
-            chietKhau = chietKhau + phanTramKhuyenMai;
+        if (arrKhuyenMai.size() > 0) {
+            for (int i = 0; i < arrKhuyenMai.size(); i++) {
+                rowKMHD = (Object[]) arrKhuyenMai.get(i);
+                float phanTramKhuyenMai = Float.parseFloat(rowKMHD[2].toString());
+                chietKhau = chietKhau + phanTramKhuyenMai;
+            }
         }
         if (maKH != null) {
             String maKHKhacNull = String.valueOf(maKH);
             int checkLoaiKH = KhachHangBUS.getLoaiKH(maKHKhacNull);
 
             switch (checkLoaiKH) {
+                case 1: 
+                    chietKhau = (chietKhau + 0);
+                    break;
                 case 2:
                     chietKhau = (float) (chietKhau + 0.05);
                     break;
                 case 3:
                     chietKhau = (float) (chietKhau + 0.1);
-                    break;
-                default:
-                    chietKhau = chietKhau + 0;
                     break;
             }
 
@@ -800,8 +873,39 @@ public class ThemHoaDon extends javax.swing.JFrame {
         }
         
         triGia = triGiaHoaDon;
-
         tongTienHoaDon.setText(String.valueOf(triGia) + " VNĐ");
+    }
+    
+    public void LayReportKhacNull(int a) throws SQLException, JRException {
+        int sohd = a;
+        Hashtable map = new Hashtable();
+        JasperReport report = JasperCompileManager.compileReport("src\\report\\HoaDon.jrxml");
+        
+        map.put("sohd", sohd);
+        try {
+            Connection con = ConnectionUtils.getMyConnection();
+            JasperPrint p = JasperFillManager.fillReport(report, map, con);
+            JasperViewer.viewReport(p, false);
+//            JasperExportManager.exportReportToPdfFile(p, maphieunhap);
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void LayReportNull(int a) throws SQLException, JRException {
+        int sohd = a;
+        Hashtable map = new Hashtable();
+        JasperReport report = JasperCompileManager.compileReport("src\\report\\HoaDonAnDanh.jrxml");
+        
+        map.put("sohd", sohd);
+        try {
+            Connection con = ConnectionUtils.getMyConnection();
+            JasperPrint p = JasperFillManager.fillReport(report, map, con);
+            JasperViewer.viewReport(p, false);
+//            JasperExportManager.exportReportToPdfFile(p, maphieunhap);
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
     /**
      * @param args the command line arguments

@@ -23,7 +23,7 @@ public class LuongBUS {
         return LuongDAO.getMaNV();
     }
     
-    public static boolean tinhLuong(Luong luong) throws SQLException {
+    public static boolean tinhLuong(Luong luong) throws SQLException, ClassNotFoundException {
         return LuongDAO.tinhLuong(luong);
     }
     

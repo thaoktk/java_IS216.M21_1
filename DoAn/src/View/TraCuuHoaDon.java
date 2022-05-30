@@ -617,7 +617,7 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
             int maNV = hd.getMaNV();
             int maKH = hd.getMaKH();
             String maKHnull = "null";
-            double tongtien = hd.getTongTien();
+            long tongtien = (long) hd.getTongTien();
             long trigia = (long) hd.getTriGia();
             String nghd = hd.toString(hd.getNgayHD());
             float chietkhau = hd.getChietKhau();
@@ -657,7 +657,7 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
             int maNV = hd.getMaNV();
             int maKH = hd.getMaKH();
             String maKHnull = "null";
-            double tongtien = hd.getTongTien();
+            long tongtien = (long) hd.getTongTien();
             long trigia = (long) hd.getTriGia();
             String nghd = hd.toString(hd.getNgayHD());
             float chietkhau = hd.getChietKhau();

@@ -36,6 +36,7 @@ public class LoaiSanPhamDAO {
         ps.setString(3, lsp.getGhiChu());
         ps.executeUpdate();
         int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     }

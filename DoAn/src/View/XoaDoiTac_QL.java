@@ -672,6 +672,7 @@ public class XoaDoiTac_QL extends javax.swing.JFrame {
                 loadDoiTacAll();
             } else {
                 JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                loadDoiTacAll();
                 return;
             }
         } catch (Exception e) {

@@ -509,30 +509,42 @@ public class ChamCong_NV extends javax.swing.JFrame {
 
     private void checkOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutActionPerformed
         // TODO add your handling code here:
+        int maNV = Integer.parseInt(user);
         try {
-            if (ChamCongBUS.updateCC(user)) {
+            if (ChamCongBUS.updateCC(maNV)) {
                 JOptionPane.showMessageDialog(this, "Check Out thành công");
                 checkButtonCheckOutOn = false;
                 setOnOffButton();
                 return;
+            } else {
+                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
             }
         } catch (SQLException ex) {
             Logger.getLogger(ChamCong_NV.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ChamCong_NV.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         
     }//GEN-LAST:event_checkOutActionPerformed
 
     private void checkInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInActionPerformed
         // TODO add your handling code here:
+        int maNV = Integer.parseInt(user);
         try {
-            if (ChamCongBUS.insertCC(user)) {
+            if (ChamCongBUS.insertCC(maNV)) {
                 JOptionPane.showMessageDialog(this, "Check In thành công");
                 checkButtonCheckInOn = false;
                 checkButtonCheckOutOn = true;
                 setOnOffButton();
                 return;
+            } else {
+                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
             }
         } catch (SQLException ex) {
+            Logger.getLogger(ChamCong_NV.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(ChamCong_NV.class.getName()).log(Level.SEVERE, null, ex);
         }
         

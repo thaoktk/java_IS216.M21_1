@@ -15,11 +15,11 @@ import java.util.ArrayList;
  * @author asus
  */
 public class ChamCongBUS {
-    public static boolean insertCC(String value) throws SQLException {
+    public static boolean insertCC(int value) throws SQLException, ClassNotFoundException {
         return ChamCongDAO.insert(value);
     }
     
-    public static boolean updateCC(String value) throws SQLException {
+    public static boolean updateCC(int value) throws SQLException, ClassNotFoundException {
         return ChamCongDAO.update(value);
     }
     

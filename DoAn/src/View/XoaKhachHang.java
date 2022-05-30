@@ -30,7 +30,7 @@ public class XoaKhachHang extends javax.swing.JFrame {
     /**
      * Creates new form XoaKhachHang
      */
-    String user, sdt;
+    String user, maKH;
     public XoaKhachHang(String a)throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
@@ -639,7 +639,7 @@ public class XoaKhachHang extends javax.swing.JFrame {
 
     private void DelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelActionPerformed
         // TODO add your handling code here:
-        if (sdt == null) {
+        if (maKH == null) {
             JOptionPane.showMessageDialog(this, "bạn chưa chọn khách hàng để xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -651,7 +651,7 @@ public class XoaKhachHang extends javax.swing.JFrame {
         try {
             KhachHangBUS bus = new KhachHangBUS();
 
-            if (bus.deleteKH(sdt)) {
+            if (bus.deleteKH(maKH)) {
                 JOptionPane.showMessageDialog(this, "Đã xóa thành công!");
                 loadKhachHangAll();
             } else {
@@ -668,7 +668,7 @@ public class XoaKhachHang extends javax.swing.JFrame {
         // TODO add your handling code here:
         int rowSelected = jTable1.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        sdt = (String) model.getValueAt(rowSelected, 3);
+        maKH = model.getValueAt(rowSelected, 0).toString();
     }//GEN-LAST:event_jTable1MouseClicked
 
     

@@ -110,6 +110,9 @@ ADD CONSTRAINT CHECK_SDT_KHACHHANG CHECK(LENGTH(SDT) = 10 AND (SDT LIKE '0%'));
 ALTER TABLE NHANVIEN
 ADD CONSTRAINT CHECK_CMND_NHANVIEN CHECK(LENGTH(CMND)= 9 OR LENGTH(CMND)= 12);
 
+--Số điện thoại của nhà cung cấp phải có 10 số và bắt đầu bằng số 0.
+ALTER TABLE NHACUNGCAP
+ADD CONSTRAINT CHECK_SDT_NHACUNGCAP CHECK(LENGTH(SDT) = 10 AND (SDT LIKE '0%'));
 /* DANH SÁCH TRIGGER */
 --Tong tien nhap cua mot phieu nhap phai bang tong cac gia nhap*soluong nhap.
 /*Khi insert, update mot CTPN thi Tong tien nhap cung thay doi*/

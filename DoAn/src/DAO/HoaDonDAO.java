@@ -52,27 +52,30 @@ public class HoaDonDAO {
         return arr;
     }
     
-    public static boolean insert(HoaDon hd) throws SQLException {
-        Connection con = null;
+    public static boolean insert(HoaDon hd) throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionUtils.getMyConnection();
+        CallableStatement ps = null;
+        con.setAutoCommit(false);
         try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
+            String SQL = "{? = call INSERT_HOADON(?, ?)}";
+
+            ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, java.sql.Types.INTEGER);
+            ps.setInt(2, hd.getMaNV());
+            if (hd.getMaKH() != null) {
+                ps.setInt(3, hd.getMaKH());
+            } else {
+                ps.setObject(3, hd.getMaKH());
+            }
+            ps.executeUpdate();
+            con.commit();
+        } catch (Exception ex) {
             ex.printStackTrace();
+            con.rollback();
         }
-
-        String SQL = "{? = call INSERT_HOADON(?, ?)}";
-        
-        CallableStatement ps = con.prepareCall(SQL);
-        ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setInt(2, hd.getMaNV());
-        if (hd.getMaKH() != null) {
-            ps.setInt(3, hd.getMaKH());
-        } else {
-            ps.setObject(3, hd.getMaKH());
-        }
-        ps.executeUpdate();
         int check = ps.getInt(1);
-
+        con.close();
+        
         return check > 0;
     }
     
@@ -102,23 +105,26 @@ public class HoaDonDAO {
         return soHD;
     }
     
-    public static boolean insertCTHD(HoaDon hd) throws SQLException {
-        Connection con = null;
+    public static boolean insertCTHD(HoaDon hd) throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionUtils.getMyConnection();
+        CallableStatement ps = null;
+        con.setAutoCommit(false);
         try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
+            String SQL = "{? = call INSERT_CTHD(?, ?, ?)}";
 
-        String SQL = "{? = call INSERT_CTHD(?, ?, ?)}";
-        
-        CallableStatement ps = con.prepareCall(SQL);
-        ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setInt(2, hd.getSoHD());
-        ps.setInt(3, hd.getMaSP());
-        ps.setInt(4, hd.getSoLuong());
-        ps.executeUpdate();
+            ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, java.sql.Types.INTEGER);
+            ps.setInt(2, hd.getSoHD());
+            ps.setInt(3, hd.getMaSP());
+            ps.setInt(4, hd.getSoLuong());
+            ps.executeUpdate();
+            con.commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            con.rollback();
+        }
         int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     } 
@@ -139,6 +145,7 @@ public class HoaDonDAO {
         ps.setInt(3, hd.getMaKM());
         ps.executeUpdate();
         int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     } 

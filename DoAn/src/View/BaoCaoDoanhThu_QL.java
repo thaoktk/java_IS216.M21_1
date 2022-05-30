@@ -7,13 +7,22 @@ package View;
 
 import BUS.DoanhThuBUS;
 import BUS.NhanVienBUS;
+import Connection.ConnectionUtils;
 import DTO.DoanhThu;
 import java.awt.HeadlessException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -70,20 +79,20 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         doanhThuThang = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        InDSThang = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         doanhThuNam = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        InDSNam = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         tienNhapThang = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        InTNThang = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         tienNhapNam = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        InTNNam = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         cbbThangDS = new javax.swing.JComboBox<>();
         jLabel20 = new javax.swing.JLabel();
@@ -92,7 +101,6 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         cbbThangNH = new javax.swing.JComboBox<>();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        Back2 = new javax.swing.JButton();
         FindDS = new javax.swing.JButton();
         FindNH = new javax.swing.JButton();
 
@@ -343,9 +351,14 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         doanhThuThang.setForeground(new java.awt.Color(196, 100, 96));
         doanhThuThang.setText("32.8M");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(57, 123, 84));
-        jLabel6.setText("    In");
+        InDSThang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        InDSThang.setForeground(new java.awt.Color(57, 123, 84));
+        InDSThang.setText("    In");
+        InDSThang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InDSThangMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -356,7 +369,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(InDSThang, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
@@ -371,7 +384,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(doanhThuThang))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel6)
+                .addComponent(InDSThang)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -386,9 +399,14 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         doanhThuNam.setForeground(new java.awt.Color(196, 100, 96));
         doanhThuNam.setText("370.5M");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(57, 123, 84));
-        jLabel9.setText("    In");
+        InDSNam.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        InDSNam.setForeground(new java.awt.Color(57, 123, 84));
+        InDSNam.setText("    In");
+        InDSNam.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InDSNamMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -397,10 +415,10 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
+                        .addComponent(InDSNam)
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(doanhThuNam)
@@ -414,7 +432,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(doanhThuNam))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel9)
+                .addComponent(InDSNam)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -433,9 +451,14 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         tienNhapThang.setForeground(new java.awt.Color(196, 100, 96));
         tienNhapThang.setText("32.8M");
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(57, 123, 84));
-        jLabel13.setText("    In");
+        InTNThang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        InTNThang.setForeground(new java.awt.Color(57, 123, 84));
+        InTNThang.setText("    In");
+        InTNThang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InTNThangMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -446,10 +469,10 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel13))
+                        .addComponent(InTNThang))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                         .addComponent(tienNhapThang)))
                 .addGap(23, 23, 23))
         );
@@ -461,7 +484,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(tienNhapThang))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel13)
+                .addComponent(InTNThang)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -476,9 +499,14 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         tienNhapNam.setForeground(new java.awt.Color(196, 100, 96));
         tienNhapNam.setText("370.5M");
 
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(57, 123, 84));
-        jLabel18.setText("     In");
+        InTNNam.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        InTNNam.setForeground(new java.awt.Color(57, 123, 84));
+        InTNNam.setText("     In");
+        InTNNam.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InTNNamMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -492,7 +520,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                     .addComponent(tienNhapNam)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
-                        .addComponent(jLabel18)))
+                        .addComponent(InTNNam)))
                 .addGap(26, 26, 26))
         );
         jPanel5Layout.setVerticalGroup(
@@ -503,7 +531,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                     .addComponent(jLabel14)
                     .addComponent(tienNhapNam))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel18)
+                .addComponent(InTNNam)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -546,21 +574,6 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(0, 0, 0));
         jLabel22.setText("Chọn năm");
-
-        Back2.setBackground(new java.awt.Color(249, 255, 254));
-        Back2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Back2.setForeground(new java.awt.Color(196, 100, 96));
-        Back2.setText("Quay lại");
-        Back2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
-        Back2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Back2.setFocusPainted(false);
-        Back2.setFocusable(false);
-        Back2.setRequestFocusEnabled(false);
-        Back2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Back2ActionPerformed(evt);
-            }
-        });
 
         FindDS.setBackground(new java.awt.Color(196, 100, 96));
         FindDS.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -624,20 +637,16 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                                         .addGap(50, 50, 50)
                                         .addComponent(FindDS, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jLabel10)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(101, 101, 101)
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
-                                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(65, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Back2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(101, 101, 101)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(65, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -682,9 +691,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addComponent(Back2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 760, 700));
@@ -830,12 +837,6 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         WelcomeScreen.main(null);
     }//GEN-LAST:event_jLabel4MouseClicked
 
-    private void Back2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back2ActionPerformed
-        // TODO add your handling code here:
-        hide();
-        DoanhThu_LuaChon_QL.main(user);
-    }//GEN-LAST:event_Back2ActionPerformed
-
     private void FindDSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindDSActionPerformed
         // TODO add your handling code here:
         loadDoanhThuTheoThang();
@@ -848,6 +849,119 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         loadTienNhapTheoNam();
     }//GEN-LAST:event_FindNHActionPerformed
 
+    private void InDSThangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InDSThangMouseClicked
+        // TODO add your handling code here:
+        int thang = Integer.parseInt(cbbThangDS.getSelectedItem().toString());
+        int nam = Integer.parseInt(cbbNamDS.getSelectedItem().toString());
+        try {
+            LayReportDoanhThuThang(thang, nam);
+        } catch (SQLException ex) {
+            Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_InDSThangMouseClicked
+
+    private void InDSNamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InDSNamMouseClicked
+        // TODO add your handling code here:
+        int nam = Integer.parseInt(cbbNamDS.getSelectedItem().toString());
+        try {
+            LayReportDoanhThuNam(nam);
+        } catch (SQLException ex) {
+            Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_InDSNamMouseClicked
+
+    private void InTNThangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InTNThangMouseClicked
+        // TODO add your handling code here:
+        int thang = Integer.parseInt(cbbThangNH.getSelectedItem().toString());
+        int nam = Integer.parseInt(cbbNamNH.getSelectedItem().toString());
+        try {
+            LayReportTienNhapThang(thang, nam);
+        } catch (SQLException ex) {
+            Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_InTNThangMouseClicked
+
+    private void InTNNamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InTNNamMouseClicked
+        // TODO add your handling code here:
+        int nam = Integer.parseInt(cbbNamNH.getSelectedItem().toString());
+        try {
+            LayReportTienNhapNam(nam);
+        } catch (SQLException ex) {
+            Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_InTNNamMouseClicked
+
+    public void LayReportDoanhThuThang(int a, int b) throws SQLException, JRException {
+        int thang = a;
+        int nam = b;
+        Hashtable map = new Hashtable();
+        JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoDoanhThuThang.jrxml");
+        
+        map.put("thang", thang);
+        map.put("nam", nam);
+        try {
+            Connection con = ConnectionUtils.getMyConnection();
+            JasperPrint p = JasperFillManager.fillReport(report, map, con);
+            JasperViewer.viewReport(p, false);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void LayReportDoanhThuNam(int a) throws SQLException, JRException {
+        int nam = a;
+        Hashtable map = new Hashtable();
+        JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoDoanhThuTheoNam.jrxml");
+        
+        map.put("nam", nam);
+        try {
+            Connection con = ConnectionUtils.getMyConnection();
+            JasperPrint p = JasperFillManager.fillReport(report, map, con);
+            JasperViewer.viewReport(p, false);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void LayReportTienNhapThang(int a, int b) throws SQLException, JRException {
+        int thang = a;
+        int nam = b;
+        Hashtable map = new Hashtable();
+        JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoTienNhapTheoThang.jrxml");
+        
+        map.put("thang", thang);
+        map.put("nam", nam);
+        try {
+            Connection con = ConnectionUtils.getMyConnection();
+            JasperPrint p = JasperFillManager.fillReport(report, map, con);
+            JasperViewer.viewReport(p, false);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void LayReportTienNhapNam(int a) throws SQLException, JRException {
+        int nam = a;
+        Hashtable map = new Hashtable();
+        JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoTienNhapNam.jrxml");
+        
+        map.put("nam", nam);
+        try {
+            Connection con = ConnectionUtils.getMyConnection();
+            JasperPrint p = JasperFillManager.fillReport(report, map, con);
+            JasperViewer.viewReport(p, false);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public void loadDoanhThuTheoThang() {
         int thang = Integer.parseInt(cbbThangDS.getSelectedItem().toString());
@@ -954,10 +1068,13 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Back2;
     private javax.swing.JButton ChamCongBtn;
     private javax.swing.JButton FindDS;
     private javax.swing.JButton FindNH;
+    private javax.swing.JLabel InDSNam;
+    private javax.swing.JLabel InDSThang;
+    private javax.swing.JLabel InTNNam;
+    private javax.swing.JLabel InTNThang;
     private javax.swing.JButton QLDSBtn;
     private javax.swing.JButton QLDTBtn;
     private javax.swing.JButton QLHDBtn;
@@ -976,11 +1093,9 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -988,9 +1103,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

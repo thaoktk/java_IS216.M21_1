@@ -650,6 +650,7 @@ public class XoaSanPham_QL extends javax.swing.JFrame {
                 loadSanPhamAll();
             } else {
                 JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                loadSanPhamAll();
                 return;
             }
         } catch (Exception e) {

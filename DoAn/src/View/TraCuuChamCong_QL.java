@@ -8,7 +8,6 @@ package View;
 import BUS.ChamCongBUS;
 import BUS.NhanVienBUS;
 import DTO.ChamCong;
-import DTO.NhanVien;
 import static View.TraCuuNhanVien_QL.isNumeric;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
@@ -621,7 +620,11 @@ public class TraCuuChamCong_QL extends javax.swing.JFrame {
             dt = arr.get(i);
             int maNV = dt.getMaNV();
             String checkin = dt.toString(dt.getCheckIn());
-            String checkout = dt.toString(dt.getCheckOut());
+            String checkout = "null";
+            if (dt.getCheckOut() != null) {
+                checkout = dt.toString(dt.getCheckOut());
+            }
+            
             double sogiolam = dt.getSoGioLamThem();
             Object[] row = {maNV, checkin, checkout, sogiolam};
             dtm.addRow(row);

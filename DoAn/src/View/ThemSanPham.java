@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -691,7 +692,7 @@ public class ThemSanPham extends javax.swing.JFrame {
         }
         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg","gif","png");
         fc.addChoosableFileFilter(filter);
-        fc.setDialogTitle("Chọn ảnh");
+        fc.setDialogTitle("Chọn ảnh sản phẩm");
         int result = fc.showOpenDialog(null);
         if(result == JFileChooser.APPROVE_OPTION){
             file = fc.getSelectedFile();
@@ -737,10 +738,17 @@ public class ThemSanPham extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        String decimalPattern = "([0-9]*)\\.([0-9]*)"; 
+        if (Pattern.matches(decimalPattern, slsan) || Pattern.matches(decimalPattern, gia)) {
+            JOptionPane.showMessageDialog(this, "Số không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
         if (Integer.parseInt(txtGia.getText()) <= 0) {
             JOptionPane.showMessageDialog(this, "Thông tin không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận",JOptionPane.YES_NO_OPTION );
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;

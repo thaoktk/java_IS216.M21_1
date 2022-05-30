@@ -25,41 +25,36 @@ import java.util.ArrayList;
  */
 public class ChamCongDAO {
 
-    public static boolean insert(String value) throws SQLException {
-        Connection con = null;
+    public static boolean insert(int value) throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionUtils.getMyConnection();
+        CallableStatement ps = null;
         try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
+            String SQL = "{? = call INSERT_CHAMCONG(?)}";
+
+            ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, java.sql.Types.INTEGER);
+            ps.setInt(2, value);
+            ps.executeUpdate();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        String SQL = "{? = call INSERT_CHAMCONG(?)}";
-        
-        CallableStatement ps = con.prepareCall(SQL);
-        ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setString(2, value);
-        ps.executeUpdate();
         int check = ps.getInt(1);
-
         return check > 0;
     }
 
-    public static boolean update(String value) throws SQLException {
-        Connection con = null;
+    public static boolean update(int value) throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionUtils.getMyConnection();
+        CallableStatement ps = null;
         try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
+            String SQL = "{? = call UPDATE_CHAMCONG(?)}";
+            ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, java.sql.Types.INTEGER);
+            ps.setInt(2, value);
+            ps.executeUpdate();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        String SQL = "{? = call UPDATE_CHAMCONG(?)}";
-
-        CallableStatement ps = con.prepareCall(SQL);
-        ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setString(2, value);
-        ps.executeUpdate();
         int check = ps.getInt(1);
-
         return check > 0;
     }
 
@@ -81,8 +76,10 @@ public class ChamCongDAO {
                 ChamCong km = new ChamCong();
                 km.setMaNV(rs.getInt("MANV"));
                 km.setSoGioLamThem(rs.getDouble("SOGIOLAM"));
-                if (rs.getDate("CHECKIN") != null && rs.getDate("CHECKOUT") != null) {
+                if (rs.getDate("CHECKIN") != null) {
                     km.setCheckIn(Instant.ofEpochMilli(rs.getDate("CHECKIN").getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime());
+                }
+                if (rs.getDate("CHECKOUT") != null) {
                     km.setCheckOut(Instant.ofEpochMilli(rs.getDate("CHECKOUT").getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime());
                 }
 
@@ -178,8 +175,10 @@ public class ChamCongDAO {
                 ChamCong temp = new ChamCong();
                 temp.setMaNV(rs.getInt("MANV"));
                 temp.setSoGioLamThem(rs.getDouble("SOGIOLAM"));
-                if (rs.getDate("CHECKIN") != null && rs.getDate("CHECKOUT") != null) {
+                if (rs.getDate("CHECKIN") != null) {
                     temp.setCheckIn(Instant.ofEpochMilli(rs.getDate("CHECKIN").getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime());
+                }
+                if (rs.getDate("CHECKOUT") != null) {
                     temp.setCheckOut(Instant.ofEpochMilli(rs.getDate("CHECKOUT").getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime());
                 }
 

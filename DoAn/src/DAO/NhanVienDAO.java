@@ -80,27 +80,30 @@ public class NhanVienDAO {
         ps.setString(11, nv.getGioiTinh());
         ps.executeUpdate();
         int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     }
 
-    public static boolean delete(String value) throws SQLException {
-        Connection con = null;
+    public static boolean delete(String value) throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionUtils.getMyConnection();
+        CallableStatement ps = null;
+        con.setAutoCommit(false);
         try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
+            String SQL = "{? = call DELETE_NHANVIEN(?)}";
+            ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, java.sql.Types.INTEGER);
+            ps.setString(2, value);
+            ps.executeUpdate();
+            con.commit();
+        } catch (Exception ex) {
             ex.printStackTrace();
+            con.rollback();
         }
-
-        String SQL = "{? = call DELETE_NHANVIEN(?)}";
-        
-        CallableStatement ps = con.prepareCall(SQL);
-        ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setString(2, value);
-        ps.executeUpdate();
         int check = ps.getInt(1);
-        
+        con.close();
         return check > 0;
+
     }
 
     public static ArrayList<NhanVien> getNhanVienAll() {

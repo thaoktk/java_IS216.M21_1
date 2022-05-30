@@ -37,48 +37,54 @@ public class DoiTacDAO {
         ps.setString(4, dt.getSDT());
         ps.executeUpdate();
         int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     }
 
-    public static boolean update(DoiTac dt) throws SQLException {
-        Connection con = null;
+    public static boolean update(DoiTac dt) throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionUtils.getMyConnection();
+        int check = 0;
+        CallableStatement ps = null;
+        con.setAutoCommit(false);
         try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
+            String SQL = "{? = call UPDATE_NHACUNGCAP(?, ?, ?, ?)}";
+
+            ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, java.sql.Types.INTEGER);
+            ps.setInt(2, dt.getMaDT());
+            ps.setString(3, dt.getTenDT());
+            ps.setString(4, dt.getDiaChi());
+            ps.setString(5, dt.getSDT());
+            ps.executeUpdate();
+            con.commit();
+            check = ps.getInt(1);
+        } catch (Exception ex) {
             ex.printStackTrace();
+            con.rollback();
         }
-
-        String SQL = "{? = call UPDATE_NHACUNGCAP(?, ?, ?, ?)}";
-
-        CallableStatement ps = con.prepareCall(SQL);
-        ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setInt(2, dt.getMaDT());
-        ps.setString(3, dt.getTenDT());
-        ps.setString(4, dt.getDiaChi());
-        ps.setString(5, dt.getSDT());
-        ps.executeUpdate();
-        int check = ps.getInt(1);
+        con.close();
 
         return check > 0;
     }
 
-    public static boolean delete(String value) throws SQLException {
-        Connection con = null;
+    public static boolean delete(String value) throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionUtils.getMyConnection();
+        CallableStatement ps = null;
+        con.setAutoCommit(false);
         try {
-            con = ConnectionUtils.getMyConnection();
-        } catch (ClassNotFoundException ex) {
+            String SQL = "{? = call DELETE_NHACUNGCAP(?)}";
+            ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, java.sql.Types.INTEGER);
+            ps.setString(2, value);
+            ps.executeUpdate();
+            con.commit();
+        } catch (Exception ex) {
             ex.printStackTrace();
+            con.rollback();
         }
-
-        String SQL = "{? = call DELETE_NHACUNGCAP(?)}";
-        
-        CallableStatement ps = con.prepareCall(SQL);
-        ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setString(2, value);
-        ps.executeUpdate();
         int check = ps.getInt(1);
-        
+        con.close();
         return check > 0;
     }
 

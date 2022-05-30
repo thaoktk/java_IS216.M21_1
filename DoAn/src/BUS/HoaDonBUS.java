@@ -19,7 +19,7 @@ public class HoaDonBUS {
         return HoaDonDAO.getHoaDonAll();
     }
     
-    public static boolean insertHD(HoaDon hd) throws SQLException {
+    public static boolean insertHD(HoaDon hd) throws SQLException, ClassNotFoundException {
         return HoaDonDAO.insert(hd);
     }
     
@@ -27,7 +27,7 @@ public class HoaDonBUS {
         return HoaDonDAO.getSoHD();
     }
     
-    public static boolean insertCTHD(HoaDon hd) throws SQLException {
+    public static boolean insertCTHD(HoaDon hd) throws SQLException, ClassNotFoundException {
         return HoaDonDAO.insertCTHD(hd);
     }
     

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="500" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d0fea38f-c74d-40bf-b920-fcb4aa580728">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nam" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select sum(tongtiennhap) as tiennhap, 
+EXTRACT(YEAR FROM ngaynhap) as nam from phieunhap
+where EXTRACT(YEAR FROM ngaynhap) = $P{nam}
+group by  EXTRACT(YEAR FROM ngaynhap)]]>
+	</queryString>
+	<field name="TIENNHAP" class="java.math.BigDecimal"/>
+	<field name="NAM" class="java.math.BigDecimal"/>
+	<group name="NAM">
+		<groupExpression><![CDATA[$F{NAM}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<image>
+				<reportElement x="143" y="0" width="277" height="40" uuid="2ae0c77c-339a-4323-9fdb-26c867b31a7d"/>
+				<imageExpression><![CDATA["D:\\Downloads\\java\\DoAn\\src\\ImageText\\tag\\Tiệm hoa bình yên mau do.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="159" y="53" width="238" height="26" forecolor="#C46460" uuid="80cb32e5-5aed-4eef-aa4f-95bc46717ca2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="20"/>
+				</textElement>
+				<text><![CDATA[Báo cáo tiền nhập theo năm]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="21" width="555" height="1" uuid="6ca1f4cc-3775-4884-8d54-669076c5e316"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="33" width="214" height="28" uuid="d1d06bcf-5863-4825-a9de-5d43cedd2ac8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<text><![CDATA[Năm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="214" y="33" width="341" height="28" uuid="0f3357f6-27e2-4efd-af0e-d31c58636146"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<text><![CDATA[Tổng tiền]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="60" width="555" height="1" uuid="2fe81381-f342-4006-86d9-665985b4f406"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="38" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="214" height="28" uuid="68c27d38-e6f2-4714-ae24-597fa98bec27"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="214" y="10" width="341" height="28" uuid="dbbcd9bc-20b9-48e8-9ae7-b32a471ed6e5"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIENNHAP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="94" splitType="Stretch">
+			<staticText>
+				<reportElement x="214" y="72" width="147" height="22" forecolor="#668D75" uuid="72f9f359-094b-4002-ad52-c91ea91afb2e"/>
+				<textElement>
+					<font fontName="Times New Roman" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[@butterdogsandcats]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="441" y="13" width="82" height="24" uuid="3ef5cd48-a6ef-42f2-b533-e3c799c90261"/>
+				<textElement>
+					<font fontName="Times New Roman" size="20"/>
+				</textElement>
+				<text><![CDATA[Người lập]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

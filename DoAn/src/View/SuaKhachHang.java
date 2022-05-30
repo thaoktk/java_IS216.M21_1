@@ -528,7 +528,7 @@ public class SuaKhachHang extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (!isNumeric(txtSDT.getText()) || !isNumeric(txtTichluy.getText())) {
+        if (!isNumeric(sdt)) {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
