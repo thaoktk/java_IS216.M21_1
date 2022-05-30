@@ -589,7 +589,7 @@ BEGIN
         
         SELECT SOLUONG INTO var_soluong
         FROM CTHD
-        WHERE MASP = cur_hd;
+        WHERE MASP = cur_hd AND SOHD = var_sohd;
         DBMS_OUTPUT.PUT_LINE('       ' ||var_tensp|| ' - ' ||var_soluong);
     END LOOP;
     DBMS_OUTPUT.PUT_LINE(N'Tổng tiền: '|| var_tongtien);
