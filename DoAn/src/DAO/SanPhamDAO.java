@@ -137,7 +137,7 @@ public class SanPhamDAO {
     }
 
     public static SanPham getChiTietSanPham(int value) {
-        String SQL = "SELECT * FROM SANPHAM WHERE MASP=?";
+        String SQL = "{ call GET_SANPHAM_CHITIET(?, ?) }";
         SanPham sp = new SanPham();
         try {
             Connection con = null;
@@ -147,9 +147,11 @@ public class SanPhamDAO {
                 ex.printStackTrace();
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setInt(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             if (rs.next()) {
                 SanPham temp = new SanPham();
                 temp.setMaSP(rs.getInt("MASP"));
@@ -184,23 +186,24 @@ public class SanPhamDAO {
             String SQL = null;
             switch (option) {
                 case "Mã SP":
-                    SQL = "SELECT * FROM SANPHAM WHERE MASP=?";
+                    SQL = "{ call GET_SANPHAM_MASP(?, ?) }";
                     break;
                 case "Tên SP":
-                    SQL = "SELECT * FROM SANPHAM WHERE TENSP=?";
+                    SQL = "{ call GET_SANPHAM_TENSP(?, ?) }";
                     break;
                 case "Màu sắc":
-                    SQL = "SELECT * FROM SANPHAM WHERE MAUSAC=?";
+                    SQL = "{ call GET_SANPHAM_MAUSAC(?, ?) }";
                     break;
                 case "Tên loại SP":
-                    SQL = "SELECT * FROM SANPHAM SP\n"
-                            + "WHERE MALOAISP = (SELECT MALOAISP FROM LOAISANPHAM WHERE TENLOAISP=?)";
+                    SQL = "{ call GET_SANPHAM_TENLOAISP(?, ?) }";
                     break;
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             while (rs.next()) {
                 SanPham temp = new SanPham();
                 temp.setMaSP(rs.getInt("MASP"));
@@ -222,7 +225,7 @@ public class SanPhamDAO {
     
     public static String getAnhSP(int value) {
         String anhSP = null;
-        String SQL = "SELECT ANHSP FROM SANPHAM WHERE MASP=?";
+        String SQL = "{ call GET_SANPHAM_MASP(?, ?) }";
         
         try {
             Connection con = null;
@@ -232,9 +235,11 @@ public class SanPhamDAO {
                 ex.printStackTrace();
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setInt(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             if (rs.next()) {
                 anhSP = rs.getString("ANHSP");
             }
@@ -249,7 +254,7 @@ public class SanPhamDAO {
     
     public static ArrayList<String> getTenLSP() {
         ArrayList<String> arr = new ArrayList<String>();
-        String SQL = "SELECT TENLOAISP FROM LOAISANPHAM ORDER BY MALOAISP";
+        String SQL = "{ call GET_LOAISANPHAM_ALL(?) }";
 
         try {
             Connection con = null;
@@ -259,8 +264,10 @@ public class SanPhamDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 String tenSP = rs.getString("TENLOAISP");
                 arr.add(tenSP);
@@ -275,7 +282,7 @@ public class SanPhamDAO {
     }
     
     public static int getMaLSP(String value) {
-        String SQL = "SELECT MALOAISP FROM LOAISANPHAM WHERE TENLOAISP=?";
+        String SQL = "{ call GET_LOAISANPHAM_TENLOAISP(?, ?) }";
         int maSP = 0;
         try {
             Connection con = null;
@@ -285,9 +292,11 @@ public class SanPhamDAO {
                 ex.printStackTrace();
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             if (rs.next()) {
                 maSP = rs.getInt("MALOAISP");
             }
@@ -301,7 +310,7 @@ public class SanPhamDAO {
     }
     
     public static String getTenLSP(int value) {
-        String SQL = "SELECT TENLOAISP FROM LOAISANPHAM WHERE MALOAISP=?";
+        String SQL = "{ call GET_LOAISANPHAM_MALOAISP(?, ?) }";
         String tenSP = null;
         try {
             Connection con = null;
@@ -311,9 +320,11 @@ public class SanPhamDAO {
                 ex.printStackTrace();
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setInt(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             if (rs.next()) {
                 tenSP = rs.getString("TENLOAISP");
             }
@@ -327,7 +338,7 @@ public class SanPhamDAO {
     }
     
     public static int getMaSP(String value) {
-        String SQL = "SELECT MASP FROM SANPHAM WHERE TENSP=?";
+        String SQL = "{ call GET_SANPHAM_TENSP(?, ?) }";
         int maSP = 0;
         try {
             Connection con = null;
@@ -337,9 +348,11 @@ public class SanPhamDAO {
                 ex.printStackTrace();
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             if (rs.next()) {
                 maSP = rs.getInt("MASP");
             }
@@ -354,7 +367,7 @@ public class SanPhamDAO {
     
     public static ArrayList<String> getTenSP() {
         ArrayList<String> arr = new ArrayList<String>();
-        String SQL = "SELECT TENSP FROM SANPHAM ORDER BY MASP";
+        String SQL = "{ call GET_SANPHAM_ALL(?) }";
 
         try {
             Connection con = null;
@@ -364,8 +377,10 @@ public class SanPhamDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 String tenSP = rs.getString("TENSP");
                 arr.add(tenSP);

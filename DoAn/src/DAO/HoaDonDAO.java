@@ -9,11 +9,10 @@ import Connection.ConnectionUtils;
 import DTO.HoaDon;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 public class HoaDonDAO {
     public static ArrayList<HoaDon> getHoaDonAll() {
         ArrayList<HoaDon> arr = new ArrayList<HoaDon>();
-        String SQL = "SELECT SOHD, MANV,MAKH,NGAYHD,TONGTIEN,CHIETKHAU,TRIGIAHD FROM HOADON ORDER BY SOHD";
+        String SQL = "{ call GET_HOADON_ALL(?) }";
         try {
             Connection con = null;
             try {
@@ -31,8 +30,10 @@ public class HoaDonDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 HoaDon hd = new HoaDon();
                 hd.setMaNV(rs.getInt("MANV"));
@@ -81,7 +82,7 @@ public class HoaDonDAO {
     
     public static int getSoHD() {
         int soHD = 0;
-        String SQL = "SELECT MAX(SOHD) FROM HOADON";
+        String SQL = "{ call GET_HOADON_SOHD_MAX(?) }";
 
         try {
             Connection con = null;
@@ -91,8 +92,10 @@ public class HoaDonDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             if (rs.next()) {
                 soHD = rs.getInt("MAX(SOHD)");
             }
@@ -162,19 +165,21 @@ public class HoaDonDAO {
             String SQL = null;
             switch (option) {
                 case "Số HD":
-                    SQL = "SELECT SOHD, MANV,MAKH,NGAYHD,TONGTIEN,CHIETKHAU,TRIGIAHD FROM HOADON WHERE SOHD=?";
+                    SQL = "{ call GET_HOADON_SOHD(?, ?) }";
                     break;
                 case "Mã NV":
-                    SQL = "SELECT SOHD, MANV,MAKH,NGAYHD,TONGTIEN,CHIETKHAU,TRIGIAHD FROM HOADON WHERE MANV=?";
+                    SQL = "{ call GET_HOADON_MANV(?, ?) }";
                     break;
                 case "Mã KH":
-                    SQL = "SELECT SOHD, MANV,MAKH,NGAYHD,TONGTIEN,CHIETKHAU,TRIGIAHD FROM HOADON WHERE MAKH=?";
+                    SQL = "{ call GET_HOADON_MAKH(?, ?) }";
                     break;
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             while (rs.next()) {
                 HoaDon hd = new HoaDon();
                 hd.setMaNV(rs.getInt("MANV"));

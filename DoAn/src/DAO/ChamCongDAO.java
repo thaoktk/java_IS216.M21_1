@@ -9,15 +9,14 @@ import Connection.ConnectionUtils;
 import DTO.ChamCong;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -60,7 +59,7 @@ public class ChamCongDAO {
 
     public static ArrayList<ChamCong> getChamCongAll() {
         ArrayList<ChamCong> arr = new ArrayList<ChamCong>();
-        String SQL = "SELECT MANV, CHECKIN, CHECKOUT, SOGIOLAM FROM CHAMCONG ORDER BY MANV, CHECKIN";
+        String SQL = "{ call GET_CHAMCONG_ALL(?) }";
 
         try {
             Connection con = null;
@@ -70,8 +69,10 @@ public class ChamCongDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 ChamCong km = new ChamCong();
                 km.setMaNV(rs.getInt("MANV"));
@@ -98,7 +99,7 @@ public class ChamCongDAO {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime CheckIn = null;
 
-        String SQL = "SELECT MAX(CHECKIN) FROM CHAMCONG WHERE MANV=?";
+        String SQL = "{ call GET_CHAMCONG_CHECKIN_MAX(?, ?) }";
         String ngaycheckIn = null;
         try {
             Connection con = null;
@@ -108,9 +109,11 @@ public class ChamCongDAO {
                 ex.printStackTrace();
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, user);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             if (rs.next()) {
                 CheckIn = Instant.ofEpochMilli(rs.getDate("MAX(CHECKIN)").getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
                 ngaycheckIn = CheckIn.format(dateFormat);
@@ -127,7 +130,7 @@ public class ChamCongDAO {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime CheckOut = null;
 
-        String SQL = "SELECT MAX(CHECKOUT) FROM CHAMCONG WHERE MANV=?";
+        String SQL = "{ call GET_CHAMCONG_CHECKOUT_MAX(?, ?) }";
         String ngaycheckOut = null;
         try {
             Connection con = null;
@@ -137,9 +140,11 @@ public class ChamCongDAO {
                 ex.printStackTrace();
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, user);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             if (rs.next()) {
                 CheckOut = Instant.ofEpochMilli(rs.getDate("MAX(CHECKOUT)").getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
                 ngaycheckOut = CheckOut.format(dateFormat);
@@ -164,13 +169,15 @@ public class ChamCongDAO {
             String SQL = null;
             switch (option) {
                 case "Mã NV":
-                    SQL = "SELECT MANV, CHECKIN, CHECKOUT, SOGIOLAM FROM CHAMCONG WHERE MANV=? ORDER BY MANV";
+                    SQL = "{ call GET_CHAMCONG_MANV(?, ?) }";
                     break;
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             while (rs.next()) {
                 ChamCong temp = new ChamCong();
                 temp.setMaNV(rs.getInt("MANV"));

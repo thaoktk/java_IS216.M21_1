@@ -9,14 +9,13 @@ import Connection.ConnectionUtils;
 import DTO.NhanVien;
 import View.LogIn;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.CallableStatement;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -108,7 +107,7 @@ public class NhanVienDAO {
 
     public static ArrayList<NhanVien> getNhanVienAll() {
         ArrayList<NhanVien> arr = new ArrayList<NhanVien>();
-        String SQL = "SELECT MANV, HOTEN, DIACHI, SDT, CMND, NGAYSINH, NGAYVL, LUONGCOBAN, CHUCVU, GIOITINH FROM NHANVIEN ORDER BY MANV";
+        String SQL = "{ call GET_NHANVIEN_ALL(?) }";
 
         try {
             Connection con = null;
@@ -118,8 +117,10 @@ public class NhanVienDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 NhanVien nv = new NhanVien();
                 nv.setMaNV(rs.getInt("MANV"));
@@ -155,22 +156,24 @@ public class NhanVienDAO {
             String SQL = null;
             switch (option) {
                 case "Mã NV":
-                    SQL = "SELECT MANV, HOTEN, DIACHI, SDT, CMND, NGAYSINH, NGAYVL, LUONGCOBAN, CHUCVU, GIOITINH FROM NHANVIEN WHERE MANV=?";
+                    SQL = "{ call GET_NHANVIEN_MANV(?, ?) }";
                     break;
                 case "Họ tên":
-                    SQL = "SELECT MANV, HOTEN, DIACHI, SDT, CMND, NGAYSINH, NGAYVL, LUONGCOBAN, CHUCVU, GIOITINH FROM NHANVIEN WHERE HOTEN=?";
+                    SQL = "{ call GET_NHANVIEN_HOTEN(?, ?) }";
                     break;
                 case "SĐT":
-                    SQL = "SELECT MANV, HOTEN, DIACHI, SDT, CMND, NGAYSINH, NGAYVL, LUONGCOBAN, CHUCVU, GIOITINH FROM NHANVIEN WHERE SDT=?";
+                    SQL = "{ call GET_NHANVIEN_SDT(?, ?) }";
                     break;
                 case "CMND":
-                    SQL = "SELECT MANV, HOTEN, DIACHI, SDT, CMND, NGAYSINH, NGAYVL, LUONGCOBAN, CHUCVU, GIOITINH FROM NHANVIEN WHERE CMND=?";
+                    SQL = "{ call GET_NHANVIEN_CMND(?, ?) }";
                     break;
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             while (rs.next()) {
                 NhanVien temp = new NhanVien();
                 temp.setMaNV(rs.getInt("MANV"));
@@ -204,11 +207,12 @@ public class NhanVienDAO {
                 Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            String SQL = "SELECT CHUCVU FROM NHANVIEN\n"
-                    + "WHERE MANV=?";
-            PreparedStatement ps = con.prepareStatement(SQL);
+            String SQL = "{ call GET_NHANVIEN_MANV(?, ?) }";
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             if (rs.next()) {
                 chucVu = rs.getString("CHUCVU");
             }
@@ -226,12 +230,13 @@ public class NhanVienDAO {
             ex.printStackTrace();
         }
 
-        String SQL = "SELECT MANV, CMND FROM NHANVIEN\n"
-                + "WHERE MANV=? and CMND=?";
-        PreparedStatement ps = con.prepareStatement(SQL);
+        String SQL = "{ call GET_NHANVIEN_MANV_CMND(?, ?, ?) }";
+        CallableStatement ps = con.prepareCall(SQL);
         ps.setString(1, username);
         ps.setString(2, password);
-        ResultSet rs = ps.executeQuery();
+        ps.registerOutParameter(3, OracleTypes.CURSOR);
+        ps.execute();
+        ResultSet rs = (ResultSet) ps.getObject(3);
         if (rs.next()) {
             return true;
         } else {

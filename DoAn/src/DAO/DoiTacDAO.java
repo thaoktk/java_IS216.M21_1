@@ -9,11 +9,10 @@ import Connection.ConnectionUtils;
 import DTO.DoiTac;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -90,7 +89,7 @@ public class DoiTacDAO {
 
     public static ArrayList<DoiTac> getDoiTacAll() {
         ArrayList<DoiTac> arr = new ArrayList<DoiTac>();
-        String SQL = "SELECT MANCC, TENNCC, DIACHI, SDT FROM NHACUNGCAP ORDER BY MANCC";
+        String SQL = "{ call GET_NHACUNGCAP_ALL(?) }";
 
         try {
             Connection con = null;
@@ -100,8 +99,10 @@ public class DoiTacDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 DoiTac dt = new DoiTac();
                 dt.setMaDT(rs.getInt("MANCC"));
@@ -131,19 +132,21 @@ public class DoiTacDAO {
             String SQL = null;
             switch (option) {
                 case "Mã NCC":
-                    SQL = "SELECT MANCC, TENNCC, DIACHI, SDT FROM NHACUNGCAP WHERE MANCC=?";
+                    SQL = "{ call GET_NHACUNGCAP_MANCC(?, ?) }";
                     break;
                 case "Tên NCC":
-                    SQL = "SELECT MANCC, TENNCC, DIACHI, SDT FROM NHACUNGCAP WHERE TENNCC=?";
+                    SQL = "{ call GET_NHACUNGCAP_TENNCC(?, ?) }";
                     break;
                 case "SĐT":
-                    SQL = "SELECT MANCC, TENNCC, DIACHI, SDT FROM NHACUNGCAP WHERE SDT=?";
+                    SQL = "{ call GET_NHACUNGCAP_SDT(?, ?) }";
                     break;
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             while (rs.next()) {
                 DoiTac temp = new DoiTac();
                 temp.setMaDT(rs.getInt("MANCC"));
@@ -162,7 +165,7 @@ public class DoiTacDAO {
     
     public static ArrayList<String> getTenDT() {
         ArrayList<String> arr = new ArrayList<String>();
-        String SQL = "SELECT TENNCC FROM NHACUNGCAP ORDER BY MANCC";
+        String SQL = "{ call GET_NHACUNGCAP_ALL(?) }";
 
         try {
             Connection con = null;
@@ -172,8 +175,10 @@ public class DoiTacDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 String tenDT = rs.getString("TENNCC");
                 arr.add(tenDT);
@@ -188,7 +193,7 @@ public class DoiTacDAO {
     }
     
     public static int getMaDT(String value) {
-        String SQL = "SELECT MANCC FROM NHACUNGCAP WHERE TENNCC=?";
+        String SQL = "{ call GET_NHACUNGCAP_TENNCC(?, ?) }";
         int maDT = 0;
         try {
             Connection con = null;
@@ -198,9 +203,11 @@ public class DoiTacDAO {
                 ex.printStackTrace();
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             if (rs.next()) {
                 maDT = rs.getInt("MANCC");
             }

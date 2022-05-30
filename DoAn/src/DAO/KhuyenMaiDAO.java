@@ -9,13 +9,12 @@ import Connection.ConnectionUtils;
 import DTO.KhuyenMai;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -108,7 +107,7 @@ public class KhuyenMaiDAO {
 
     public static ArrayList<KhuyenMai> getKhuyenMaiAll() {
         ArrayList<KhuyenMai> arr = new ArrayList<KhuyenMai>();
-        String SQL = "SELECT MAKM, TENKM, PHANTRAM, NGAYBD, NGAYKT FROM KHUYENMAI ORDER BY MAKM";
+        String SQL = "{ call GET_KHUYENMAI_ALL(?) }";
 
         try {
             Connection con = null;
@@ -118,8 +117,10 @@ public class KhuyenMaiDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 KhuyenMai km = new KhuyenMai();
                 km.setMaKM(rs.getInt("MAKM"));
@@ -143,8 +144,7 @@ public class KhuyenMaiDAO {
     
     public static ArrayList<KhuyenMai> getKhuyenMaiHopLeAll() {
         ArrayList<KhuyenMai> arr = new ArrayList<KhuyenMai>();
-        String SQL = "SELECT MAKM, TENKM, PHANTRAM, NGAYBD, NGAYKT FROM KHUYENMAI WHERE NGAYBD <= SYSDATE AND "
-                + "NGAYKT >= SYSDATE OR NGAYBD IS NULL ORDER BY MAKM";
+        String SQL = "{ call GET_KHUYENMAI_HOPLE(?) }";
 
         try {
             Connection con = null;
@@ -154,8 +154,10 @@ public class KhuyenMaiDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 KhuyenMai km = new KhuyenMai();
                 km.setMaKM(rs.getInt("MAKM"));
@@ -189,19 +191,21 @@ public class KhuyenMaiDAO {
             String SQL = null;
             switch (option) {
                 case "Mã KM":
-                    SQL = "SELECT MAKM, TENKM, PHANTRAM, NGAYBD, NGAYKT FROM KHUYENMAI WHERE MAKM=?";
+                    SQL = "{ call GET_KHUYENMAI_MAKM(?, ?) }";
                     break;
                 case "Tên KM":
-                    SQL = "SELECT MAKM, TENKM, PHANTRAM, NGAYBD, NGAYKT FROM KHUYENMAI WHERE TENKM=?";
+                    SQL = "{ call GET_KHUYENMAI_TENKM(?, ?) }";
                     break;
                 case "Phần trăm":
-                    SQL = "SELECT MAKM, TENKM, PHANTRAM, NGAYBD, NGAYKT FROM KHUYENMAI WHERE PHANTRAM=?";
+                    SQL = "{ call GET_KHUYENMAI_PHANTRAM(?, ?) }";
                     break;
             }
 
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             while (rs.next()) {
                 KhuyenMai temp = new KhuyenMai();
                 temp.setMaKM(rs.getInt("MAKM"));

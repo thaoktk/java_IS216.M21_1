@@ -9,11 +9,10 @@ import Connection.ConnectionUtils;
 import DTO.LoaiSanPham;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -43,7 +42,7 @@ public class LoaiSanPhamDAO {
     
     public static ArrayList<LoaiSanPham> getLoaiSanPhamAll() {
         ArrayList<LoaiSanPham> arr = new ArrayList<LoaiSanPham>();
-        String SQL = "SELECT MALOAISP, TENLOAISP, GHICHU FROM LOAISANPHAM ORDER BY MALOAISP";
+        String SQL = "{ call GET_LOAISANPHAM_ALL(?) }";
 
         try {
             Connection con = null;
@@ -53,8 +52,10 @@ public class LoaiSanPhamDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 LoaiSanPham sp = new LoaiSanPham();
                 sp.setMaLoaiSP(rs.getInt("MALOAISP"));
@@ -72,7 +73,7 @@ public class LoaiSanPhamDAO {
     }
     public static ArrayList<Integer> getMaLoaiSanPhamAll() {
         ArrayList<Integer> arr = new ArrayList<Integer>();
-        String SQL = "SELECT MALOAISP FROM LOAISANPHAM ORDER BY MALOAISP";
+        String SQL = "{ call GET_LOAISANPHAM_ALL(?) }";
 
         try {
             Connection con = null;
@@ -82,8 +83,10 @@ public class LoaiSanPhamDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 int maSP = rs.getInt("MALOAISP");
                 arr.add(maSP);

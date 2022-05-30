@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.CallableStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 public class DoanhThuDAO {
     public static ArrayList<Integer> getThangDoanhSo() {
         ArrayList<Integer> arr = new ArrayList<Integer>();
-        String SQL = "SELECT DISTINCT(EXTRACT( MONTH FROM NGAYHD )) AS MONTH FROM HOADON";
+        String SQL = "{ call GET_THANG_DOANHTHU(?) }";
         try {
             Connection con = null;
             try {
@@ -30,8 +31,10 @@ public class DoanhThuDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 int thang = rs.getInt("MONTH");
                 arr.add(thang);
@@ -47,7 +50,7 @@ public class DoanhThuDAO {
     
     public static ArrayList<Integer> getNamDoanhSo() {
         ArrayList<Integer> arr = new ArrayList<Integer>();
-        String SQL = "SELECT DISTINCT(EXTRACT( YEAR FROM NGAYHD )) AS YEAR FROM HOADON";
+        String SQL = "{ call GET_NAM_DOANHTHU(?) }";
         try {
             Connection con = null;
             try {
@@ -56,8 +59,10 @@ public class DoanhThuDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 int nam = rs.getInt("YEAR");
                 arr.add(nam);
@@ -73,7 +78,7 @@ public class DoanhThuDAO {
     
     public static ArrayList<Integer> getThangNhapHang() {
         ArrayList<Integer> arr = new ArrayList<Integer>();
-        String SQL = "SELECT DISTINCT(EXTRACT( MONTH FROM NGAYNHAP )) AS MONTH FROM PHIEUNHAP";
+        String SQL = "{ call GET_THANG_NHAPHANG(?) }";
         try {
             Connection con = null;
             try {
@@ -82,8 +87,10 @@ public class DoanhThuDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 int thang = rs.getInt("MONTH");
                 arr.add(thang);
@@ -99,7 +106,7 @@ public class DoanhThuDAO {
     
     public static ArrayList<Integer> getNamNhapHang() {
         ArrayList<Integer> arr = new ArrayList<Integer>();
-        String SQL = "SELECT DISTINCT(EXTRACT( YEAR FROM NGAYNHAP )) AS YEAR FROM PHIEUNHAP";
+        String SQL = "{ call GET_NAM_NHAPHANG(?) }";
         try {
             Connection con = null;
             try {
@@ -108,8 +115,10 @@ public class DoanhThuDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 int nam = rs.getInt("YEAR");
                 arr.add(nam);

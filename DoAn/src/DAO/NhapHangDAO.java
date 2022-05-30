@@ -9,11 +9,10 @@ import Connection.ConnectionUtils;
 import DTO.NhapHang;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -22,12 +21,13 @@ import java.util.ArrayList;
 public class NhapHangDAO {
     public static ArrayList<NhapHang> getNhapHangAll() {
         ArrayList<NhapHang> arr = new ArrayList<NhapHang>();
-        String SQL = "SELECT PN.MAPHIEUNHAP, MANCC, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
-                + " WHERE PN.MAPHIEUNHAP = CTPN.MAPHIEUNHAP ORDER BY PN.MAPHIEUNHAP";
+        String SQL = "{ call GET_PHIEUNHAP_ALL(?) }";
 
         try (Connection con = ConnectionUtils.getMyConnection()) {
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             while (rs.next()) {
                 NhapHang kh = new NhapHang();
                 kh.setMaPN(rs.getInt("MAPHIEUNHAP"));
@@ -53,22 +53,21 @@ public class NhapHangDAO {
         String SQL = null;
         switch (option) {
             case "Mã PN":
-                SQL = "SELECT PN.MAPHIEUNHAP, MANCC, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
-                + " WHERE PN.MAPHIEUNHAP = CTPN.MAPHIEUNHAP AND PN.MAPHIEUNHAP=?";
+                SQL = "{ call GET_PHIEUNHAP_MAPN(?, ?) }";
                 break;
             case "Mã NV":
-                SQL = "SELECT PN.MAPHIEUNHAP, MANCC, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
-                + " WHERE PN.MAPHIEUNHAP = CTPN.MAPHIEUNHAP AND MANV=?";
+                SQL = "{ call GET_PHIEUNHAP_MANV(?, ?) }";
                 break;
             case "Mã SP":
-                SQL = "SELECT PN.MAPHIEUNHAP, MANCC, NGAYNHAP, MANV, TONGTIENNHAP, MASP, SLNHAP, GIANHAP FROM PHIEUNHAP PN, CTPN"
-                + " WHERE PN.MAPHIEUNHAP = CTPN.MAPHIEUNHAP AND MASP=?";
+                SQL = "{ call GET_PHIEUNHAP_MASP(?, ?) }";
                 break;
         }
         try (Connection con = ConnectionUtils.getMyConnection()) {
-            PreparedStatement ps = con.prepareStatement(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             while (rs.next()) {
                 NhapHang kh = new NhapHang();
                 kh.setMaPN(rs.getInt("MAPHIEUNHAP"));
@@ -139,7 +138,7 @@ public class NhapHangDAO {
     
     public static int getMaPN() {
         int maPN = 0;
-        String SQL = "SELECT MAX(MAPHIEUNHAP) FROM PHIEUNHAP";
+        String SQL = "{ call GET_PHIEUNHAP_MAPHIEUNHAP_MAX(?) }";
 
         try {
             Connection con = null;
@@ -149,8 +148,10 @@ public class NhapHangDAO {
                 ex.printStackTrace();
             }
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(1);
             if (rs.next()) {
                 maPN = rs.getInt("MAX(MAPHIEUNHAP)");
             }
