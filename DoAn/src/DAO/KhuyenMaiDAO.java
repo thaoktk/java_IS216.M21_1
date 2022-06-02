@@ -225,4 +225,42 @@ public class KhuyenMaiDAO {
 
         return arr;
     }
+    
+    public static ArrayList<KhuyenMai> getKhuyenMaiHoaDon(String value) {
+        ArrayList<KhuyenMai> arr = new ArrayList<KhuyenMai>();
+        String SQL = "{ call GET_KHUYENMAI_HOADON(?, ?) }";
+
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.setString(1, value);
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
+            while (rs.next()) {
+                KhuyenMai km = new KhuyenMai();
+                km.setMaKM(rs.getInt("MAKM"));
+                km.setTenKM(rs.getString("TENKM"));
+                km.setPhanTram(rs.getFloat("PHANTRAM"));
+                if (rs.getDate("NGAYBD") != null && rs.getDate("NGAYKT") != null) {
+                    km.setNgBD(Instant.ofEpochMilli(rs.getDate("NGAYBD").getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime());
+                    km.setNgKT(Instant.ofEpochMilli(rs.getDate("NGAYKT").getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime());
+                }
+
+                arr.add(km);
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return arr;
+    }
 }

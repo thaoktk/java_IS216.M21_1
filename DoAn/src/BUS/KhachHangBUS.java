@@ -42,4 +42,8 @@ public class KhachHangBUS {
     public static String getNgaySinh(String value) {
         return KhachHangDAO.getNgaySinh(value);
     }
+    
+    public static String getTenKH(String value) {
+        return KhachHangDAO.getTenKH(value);
+    }
 }

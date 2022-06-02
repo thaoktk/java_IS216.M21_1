@@ -198,4 +198,37 @@ public class HoaDonDAO {
         }
         return arr;
     }
+    
+    public static HoaDon getChiTietHoaDon(int value) {
+        HoaDon hd = new HoaDon();
+        String SQL = "{ call GET_HOADON_SOHD(?, ?) }";
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.setInt(1, value);
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
+            if (rs.next()) {
+                hd.setMaNV(rs.getInt("MANV"));
+                hd.setSoHD(rs.getInt("SOHD"));
+                hd.setMaKH(rs.getInt("MAKH"));
+                hd.setChietKhau(rs.getFloat("CHIETKHAU"));
+                hd.setTongTien(rs.getDouble("TONGTIEN"));
+                hd.setTriGia(rs.getDouble("TRIGIAHD"));
+                hd.setNgayHD(rs.getDate("NGAYHD").toLocalDate());
+            }
+            
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return hd;
+    }
 }

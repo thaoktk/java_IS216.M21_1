@@ -42,4 +42,8 @@ public class NhanVienBUS {
     public static boolean Login(String username, String password) throws SQLException {
         return NhanVienDAO.Login(username, password);
     }
+    
+    public static String getTenNV(String value) {
+        return NhanVienDAO.getTenNV(value);
+    }
 }

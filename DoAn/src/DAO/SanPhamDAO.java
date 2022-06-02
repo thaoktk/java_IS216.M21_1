@@ -394,4 +394,64 @@ public class SanPhamDAO {
         return arr;
     }
     
+    public static int getSoLuong(String value) {
+        String SQL = "{ call GET_SANPHAM_SOLUONG(?, ?) }";
+        int Soluong = 0;
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.setString(1, value);
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
+            if (rs.next()) {
+                Soluong = rs.getInt("SOLUONG");
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return Soluong;
+    }
+    
+    public static ArrayList<SanPham> getSanPhamHoaDon(String value)  {
+        ArrayList<SanPham> arr = new ArrayList<SanPham>();
+        String SQL = "{ call GET_SANPHAM_HOADON(?, ?) }";
+
+        Connection con = null;
+        try {
+            con = ConnectionUtils.getMyConnection();
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.setString(1, value);
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
+            while (rs.next()) {
+                SanPham sp = new SanPham();
+                sp.setMaSP(rs.getInt("MASP"));
+                sp.setTenSP(rs.getString("TENSP"));
+                sp.setGiaSP(rs.getLong("GIA"));
+                sp.setMaLoaiSP(rs.getInt("MALOAISP"));
+                sp.setMauSac(rs.getString("MAUSAC"));
+                sp.setSlsan(rs.getInt("SOLUONG"));
+                sp.setGhiChu(rs.getString("GHICHU"));
+                arr.add(sp);
+            }
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return arr;
+    }
 }

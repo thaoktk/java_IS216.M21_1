@@ -38,4 +38,8 @@ public class KhuyenMaiBUS {
     public static ArrayList<KhuyenMai> getKhuyenMaiHopLeAll() {
         return KhuyenMaiDAO.getKhuyenMaiHopLeAll();
     }
+    
+    public static ArrayList<KhuyenMai> getKhuyenMaiHoaDon(String value) {
+        return KhuyenMaiDAO.getKhuyenMaiHoaDon(value);
+    }
 }

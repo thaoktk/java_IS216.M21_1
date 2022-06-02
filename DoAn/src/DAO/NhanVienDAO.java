@@ -243,4 +243,31 @@ public class NhanVienDAO {
             return false;
         }
     }
+    
+    public static String getTenNV(String value) {
+        String tenNV = null;
+        String SQL = "{ call GET_NHANVIEN_MANV(?, ?) }";
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.setString(1, value);
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
+            if (rs.next()) {
+                tenNV = rs.getString("HOTEN");
+            }
+            
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return tenNV;
+    }
 }

@@ -24,6 +24,7 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
      * Creates new form TraCuuHoaDon
      */
     String user;
+    int soHD;
     public TraCuuHoaDon(String a) throws HeadlessException{
         initComponents();
         setLocationRelativeTo(null);
@@ -50,7 +51,8 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         Find = new javax.swing.JButton();
-        Add = new javax.swing.JButton();
+        Detail = new javax.swing.JButton();
+        Add1 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
@@ -151,6 +153,11 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.setShowGrid(true);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         Find.setBackground(new java.awt.Color(196, 100, 96));
@@ -168,18 +175,34 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
             }
         });
 
-        Add.setBackground(new java.awt.Color(196, 100, 96));
-        Add.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Add.setForeground(new java.awt.Color(255, 255, 255));
-        Add.setText("Thêm");
-        Add.setBorder(null);
-        Add.setBorderPainted(false);
-        Add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Add.setFocusPainted(false);
-        Add.setRequestFocusEnabled(false);
-        Add.addActionListener(new java.awt.event.ActionListener() {
+        Detail.setBackground(new java.awt.Color(196, 100, 96));
+        Detail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Detail.setForeground(new java.awt.Color(255, 255, 255));
+        Detail.setText("Xem chi tiết");
+        Detail.setBorder(null);
+        Detail.setBorderPainted(false);
+        Detail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Detail.setEnabled(false);
+        Detail.setFocusPainted(false);
+        Detail.setRequestFocusEnabled(false);
+        Detail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddActionPerformed(evt);
+                DetailActionPerformed(evt);
+            }
+        });
+
+        Add1.setBackground(new java.awt.Color(196, 100, 96));
+        Add1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Add1.setForeground(new java.awt.Color(255, 255, 255));
+        Add1.setText("Thêm");
+        Add1.setBorder(null);
+        Add1.setBorderPainted(false);
+        Add1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Add1.setFocusPainted(false);
+        Add1.setRequestFocusEnabled(false);
+        Add1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Add1ActionPerformed(evt);
             }
         });
 
@@ -203,15 +226,18 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
                         .addGap(112, 112, 112))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4)))
                         .addGap(20, 20, 20))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Detail, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(Add1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,9 +259,11 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
                     .addComponent(Find, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Detail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Add1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 760, 690));
@@ -478,11 +506,11 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
         WelcomeScreen.main(null);
     }//GEN-LAST:event_jLabel4MouseClicked
 
-    private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
+    private void DetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DetailActionPerformed
         // TODO add your handling code here:
         hide();
-        ThemHoaDon.main(user, null);
-    }//GEN-LAST:event_AddActionPerformed
+        ChiTietHoaDon.main(user, soHD);
+    }//GEN-LAST:event_DetailActionPerformed
 
     private void QLNVBtn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QLNVBtn5ActionPerformed
         // TODO add your handling code here:
@@ -605,6 +633,26 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_FindActionPerformed
 
+    private void Add1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add1ActionPerformed
+        // TODO add your handling code here:
+        hide();
+        ThemHoaDon.main(user, null);
+    }//GEN-LAST:event_Add1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        if (jTable1.isFocusable()) {
+            Detail.setEnabled(true);
+        } else {
+            Detail.setEnabled(false);
+        }
+        
+        int rowSelected = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String ma = model.getValueAt(rowSelected, 0).toString();
+        soHD = Integer.parseInt(ma);
+    }//GEN-LAST:event_jTable1MouseClicked
+
     public void loadHoaDonAll() {
         String[] header = {"Số HD", "Mã NV", "Mã KH", "Ngày hóa đơn", "Tổng tiền", "Chiết khấu", "Trị giá"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
@@ -713,8 +761,9 @@ public class TraCuuHoaDon extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Add;
+    private javax.swing.JButton Add1;
     private javax.swing.JButton ChamCongBtn;
+    private javax.swing.JButton Detail;
     private javax.swing.JButton Find;
     private javax.swing.JButton QLDSBtn;
     private javax.swing.JButton QLDTBtn;

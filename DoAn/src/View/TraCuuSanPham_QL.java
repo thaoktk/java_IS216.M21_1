@@ -30,11 +30,6 @@ public class TraCuuSanPham_QL extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.user = a;
         loadSanPhamAll();
-        if (checkChucVu() == 4 ){
-            AddLSP.setEnabled(false);
-            Del.setEnabled(false);
-            Edit.setEnabled(false);
-        }
     }
 
     /**

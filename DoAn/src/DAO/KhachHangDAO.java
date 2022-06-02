@@ -184,11 +184,12 @@ public class KhachHangDAO {
                 ex.printStackTrace();
             }
 
-            String SQL = "SELECT LOAIKH FROM KHACHHANG\n"
-                    + "WHERE MAKH=?";
-            PreparedStatement ps = con.prepareStatement(SQL);
+            String SQL = "{ call GET_KHACHHANG_BY_MAKH(?, ?) }";
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             if (rs.next()) {
                 loaiKH = rs.getString("LOAIKH");
             }
@@ -216,11 +217,12 @@ public class KhachHangDAO {
                 ex.printStackTrace();
             }
 
-            String SQL = "SELECT NGAYSINH FROM KHACHHANG\n"
-                    + "WHERE MAKH=?";
-            PreparedStatement ps = con.prepareStatement(SQL);
+            String SQL = "{ call GET_KHACHHANG_BY_MAKH(?, ?) }";
+            CallableStatement ps = con.prepareCall(SQL);
             ps.setString(1, value);
-            ResultSet rs = ps.executeQuery();
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
             if (rs.next()) {
                 DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM");
                 ngaySinh = dateFormat.format(rs.getDate("NGAYSINH").toLocalDate());
@@ -230,5 +232,32 @@ public class KhachHangDAO {
             ex.printStackTrace();
         }
         return ngaySinh;
+    }
+    
+    public static String getTenKH(String value) {
+        String tenKH = null;
+        String SQL = "{ call GET_KHACHHANG_BY_MAKH(?, ?) }";
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.setString(1, value);
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
+            if (rs.next()) {
+                tenKH = rs.getString("HOTEN");
+            }
+            
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return tenKH;
     }
 }

@@ -38,4 +38,8 @@ public class HoaDonBUS {
     public static ArrayList<HoaDon> timHoaDon(String option, String value) {
         return HoaDonDAO.timHoaDon(option, value);
     }
+    
+    public static HoaDon getChiTietHoaDon(int value) {
+        return HoaDonDAO.getChiTietHoaDon(value);
+    }
 }
