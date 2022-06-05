@@ -35,7 +35,7 @@ where hd.sohd = $P{sohd}]]>
 		<band height="115" splitType="Stretch">
 			<image>
 				<reportElement x="130" y="11" width="299" height="49" uuid="69e12438-fc21-4add-a21a-5f8b98b3d607"/>
-				<imageExpression><![CDATA["D:\\Downloads\\java\\DoAn\\src\\ImageText\\tag\\Tiệm hoa bình yên mau do.png"]]></imageExpression>
+				<imageExpression><![CDATA["src\\ImageText\\tag\\Tiệm hoa bình yên mau do.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="233" y="60" width="87" height="37" forecolor="#C46460" uuid="1bf3f3f5-91b0-4022-bc3d-625c0df52cc8"/>

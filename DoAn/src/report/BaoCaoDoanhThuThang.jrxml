@@ -31,7 +31,7 @@ group by EXTRACT(MONTH FROM NGAYHD), EXTRACT(YEAR FROM NGAYHD)]]>
 		<band height="103" splitType="Stretch">
 			<image>
 				<reportElement x="140" y="0" width="284" height="44" uuid="c7d08ca0-5b58-49c7-9fea-e97dae9afa44"/>
-				<imageExpression><![CDATA["D:\\Downloads\\java\\DoAn\\src\\ImageText\\tag\\Tiệm hoa bình yên mau do.png"]]></imageExpression>
+				<imageExpression><![CDATA["src\\ImageText\\tag\\Tiệm hoa bình yên mau do.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="154" y="60" width="247" height="26" forecolor="#C46460" uuid="6360a3a0-6520-4e61-813f-8484e42e4907"/>
@@ -108,7 +108,7 @@ group by EXTRACT(MONTH FROM NGAYHD), EXTRACT(YEAR FROM NGAYHD)]]>
 				<text><![CDATA[@butterdogsandcats]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="454" y="12" width="82" height="24" uuid="887ef636-289b-4491-8a12-4f945ee1a2b9"/>
+				<reportElement x="454" y="0" width="82" height="24" uuid="887ef636-289b-4491-8a12-4f945ee1a2b9"/>
 				<textElement>
 					<font fontName="Times New Roman" size="20"/>
 				</textElement>

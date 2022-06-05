@@ -41,7 +41,7 @@ where PN.MAPHIEUNHAP = $P{Maphieunhap}]]>
 		<band height="105" splitType="Stretch">
 			<image>
 				<reportElement x="128" y="0" width="322" height="48" uuid="e7470050-de90-4a8a-8d87-e7e87927e274"/>
-				<imageExpression><![CDATA["D:\\Downloads\\java\\DoAn\\src\\ImageText\\tag\\Tiệm hoa bình yên mau do.png"]]></imageExpression>
+				<imageExpression><![CDATA["src\\ImageText\\tag\\Tiệm hoa bình yên mau do.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="215" y="48" width="160" height="37" forecolor="#C46460" uuid="55dcc2ff-2037-4e7b-8f45-25a22d2111fd"/>
