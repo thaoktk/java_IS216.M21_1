@@ -159,10 +159,10 @@ public class ThemNhapHang extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
 
+        txtSLNhap.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSLNhap.setBackground(new java.awt.Color(249, 255, 254));
         txtSLNhap.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtSLNhap.setCaretColor(new java.awt.Color(0, 0, 0));
-        txtSLNhap.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSLNhap.setForeground(new java.awt.Color(0, 0, 0));
         txtSLNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,10 +174,10 @@ public class ThemNhapHang extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
 
+        txtGiaNhap.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtGiaNhap.setBackground(new java.awt.Color(249, 255, 254));
         txtGiaNhap.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtGiaNhap.setCaretColor(new java.awt.Color(0, 0, 0));
-        txtGiaNhap.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtGiaNhap.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel14.setText("Giá nhập");
@@ -222,6 +222,11 @@ public class ThemNhapHang extends javax.swing.JFrame {
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.setShowGrid(true);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         AddIntoTable.setText("Thêm");
@@ -248,6 +253,11 @@ public class ThemNhapHang extends javax.swing.JFrame {
         cbbTenNCC.setFocusable(false);
         cbbTenNCC.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbbTenNCC.setForeground(new java.awt.Color(0, 0, 0));
+        cbbTenNCC.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbTenNCCItemStateChanged(evt);
+            }
+        });
 
         Del.setText("Xóa");
         Del.setBackground(new java.awt.Color(249, 255, 254));
@@ -480,13 +490,13 @@ public class ThemNhapHang extends javax.swing.JFrame {
             }
         });
 
-        ChamCongBtn.setBackground(new java.awt.Color(231, 238, 237));
-        ChamCongBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        ChamCongBtn.setForeground(new java.awt.Color(196, 100, 96));
         ChamCongBtn.setText("Chấm công");
+        ChamCongBtn.setBackground(new java.awt.Color(231, 238, 237));
         ChamCongBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         ChamCongBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ChamCongBtn.setFocusPainted(false);
+        ChamCongBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ChamCongBtn.setForeground(new java.awt.Color(196, 100, 96));
         ChamCongBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ChamCongBtnActionPerformed(evt);
@@ -877,6 +887,14 @@ public class ThemNhapHang extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ChamCongBtnActionPerformed
 
+    private void cbbTenNCCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbTenNCCItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbTenNCCItemStateChanged
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
     public void loadTable() {
         String[] header = {"Mã NV","Tên NCC", "Tên SP", "Ngày nhập", "SL nhập", "Giá nhập"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
@@ -910,7 +928,6 @@ public class ThemNhapHang extends javax.swing.JFrame {
             Connection con = ConnectionUtils.getMyConnection();
             JasperPrint p = JasperFillManager.fillReport(report, map, con);
             JasperViewer.viewReport(p, false);
-//            JasperExportManager.exportReportToPdfFile(p, maphieunhap);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
         }

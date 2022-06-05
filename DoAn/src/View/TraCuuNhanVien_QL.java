@@ -61,7 +61,8 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
         Find = new javax.swing.JButton();
         Add = new javax.swing.JButton();
         Edit = new javax.swing.JButton();
-        Salary = new javax.swing.JButton();
+        TinhSalary = new javax.swing.JButton();
+        DetailSalary = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -224,18 +225,33 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
             }
         });
 
-        Salary.setBackground(new java.awt.Color(196, 100, 96));
-        Salary.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Salary.setForeground(new java.awt.Color(255, 255, 255));
-        Salary.setText("Tính lương");
-        Salary.setBorder(null);
-        Salary.setBorderPainted(false);
-        Salary.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Salary.setFocusPainted(false);
-        Salary.setRequestFocusEnabled(false);
-        Salary.addActionListener(new java.awt.event.ActionListener() {
+        TinhSalary.setBackground(new java.awt.Color(196, 100, 96));
+        TinhSalary.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TinhSalary.setForeground(new java.awt.Color(255, 255, 255));
+        TinhSalary.setText("Tính lương");
+        TinhSalary.setBorder(null);
+        TinhSalary.setBorderPainted(false);
+        TinhSalary.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TinhSalary.setFocusPainted(false);
+        TinhSalary.setRequestFocusEnabled(false);
+        TinhSalary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SalaryActionPerformed(evt);
+                TinhSalaryActionPerformed(evt);
+            }
+        });
+
+        DetailSalary.setBackground(new java.awt.Color(196, 100, 96));
+        DetailSalary.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        DetailSalary.setForeground(new java.awt.Color(255, 255, 255));
+        DetailSalary.setText("Xem lương");
+        DetailSalary.setBorder(null);
+        DetailSalary.setBorderPainted(false);
+        DetailSalary.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DetailSalary.setFocusPainted(false);
+        DetailSalary.setRequestFocusEnabled(false);
+        DetailSalary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DetailSalaryActionPerformed(evt);
             }
         });
 
@@ -260,9 +276,11 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(Salary, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(107, 107, 107)
+                                .addComponent(TinhSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(DetailSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -300,7 +318,8 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
                     .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Del, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Salary, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TinhSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DetailSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(134, Short.MAX_VALUE))
         );
 
@@ -747,7 +766,7 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
         }
     }
     
-    private void SalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalaryActionPerformed
+    private void TinhSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TinhSalaryActionPerformed
         // TODO add your handling code here:
         LuongBUS bus = new LuongBUS();
         int thangLuong = bus.getThangLuong();
@@ -759,10 +778,16 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(TraCuuNhanVien_QL.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            TinhSalary.setEnabled(false);
         }
+    }//GEN-LAST:event_TinhSalaryActionPerformed
+
+    private void DetailSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DetailSalaryActionPerformed
+        // TODO add your handling code here:
         hide();
         TraCuuLuong_QL.main(user);
-    }//GEN-LAST:event_SalaryActionPerformed
+    }//GEN-LAST:event_DetailSalaryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -830,6 +855,7 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
     private javax.swing.JButton Add;
     private javax.swing.JButton ChamCongBtn;
     private javax.swing.JButton Del;
+    private javax.swing.JButton DetailSalary;
     private javax.swing.JButton Edit;
     private javax.swing.JButton Find;
     private javax.swing.JButton QLDSBtn;
@@ -840,7 +866,7 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
     private javax.swing.JButton QLNHBtn;
     private javax.swing.JButton QLNVBtn;
     private javax.swing.JButton QLSPBtn;
-    private javax.swing.JButton Salary;
+    private javax.swing.JButton TinhSalary;
     private javax.swing.JComboBox<String> cbb_search;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
