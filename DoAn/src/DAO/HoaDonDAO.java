@@ -111,7 +111,6 @@ public class HoaDonDAO {
     public static boolean insertCTHD(HoaDon hd) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionUtils.getMyConnection();
         CallableStatement ps = null;
-        con.setAutoCommit(false);
         try {
             String SQL = "{? = call INSERT_CTHD(?, ?, ?)}";
 
@@ -121,10 +120,8 @@ public class HoaDonDAO {
             ps.setInt(3, hd.getMaSP());
             ps.setInt(4, hd.getSoLuong());
             ps.executeUpdate();
-            con.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
-            con.rollback();
         }
         int check = ps.getInt(1);
         con.close();

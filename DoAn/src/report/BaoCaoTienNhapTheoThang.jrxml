@@ -3,17 +3,13 @@
 	<property name="ireport.zoom" value="1.7715610000000013"/>
 	<property name="ireport.x" value="21"/>
 	<property name="ireport.y" value="108"/>
-	<parameter name="thang" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<parameter name="nam" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select sum(tongtiennhap) as tiennhap, EXTRACT(MONTH FROM ngaynhap) as thang, 
 EXTRACT(YEAR FROM ngaynhap) as nam from phieunhap
-where EXTRACT(MONTH FROM ngaynhap) = $P{thang}
-and EXTRACT(YEAR FROM ngaynhap) = $P{nam}
+where EXTRACT(YEAR FROM ngaynhap) = $P{nam}
 group by EXTRACT(MONTH FROM ngaynhap), EXTRACT(YEAR FROM ngaynhap)]]>
 	</queryString>
 	<field name="TIENNHAP" class="java.math.BigDecimal"/>

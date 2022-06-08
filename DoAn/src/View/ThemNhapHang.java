@@ -753,9 +753,10 @@ public class ThemNhapHang extends javax.swing.JFrame {
             int maNV = Integer.parseInt(user);
             int maDT = busDT.getMaDT(firstRow[1].toString());
             NhapHang kh = new NhapHang(ma, maNV, 0, maDT, 0, ldNgNhap, 0, 0);
-            
+
             if (busNH.insertNH(kh)) {
                 if (busNH.getMaPN() != 0) {
+                    ma = busNH.getMaPN();
                     Object[] row = null;
                     boolean nhaphangCTPN = false;
                     for (int i = 0; i < arrObj.size(); i++) {

@@ -747,10 +747,11 @@ public class TraCuuSanPham_QL extends javax.swing.JFrame {
             String tenSP = dt.getTenSP();
             long gia = dt.getGiaSP();
             int maloaiSP = dt.getMaLoaiSP();
+            String tenloaiSP = SanPhamBUS.getTenLSP(maloaiSP);
             String mausac = dt.getMauSac();
             int slsan = dt.getSlsan();
             String ghichu = dt.getGhiChu();
-            Object[] row = {maSP, tenSP, gia, maloaiSP, mausac, slsan, ghichu};
+            Object[] row = {maSP, tenSP, gia, tenloaiSP, mausac, slsan, ghichu};
             SearchTable.addRow(row);
         }
         if (arr.size() <= 0) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="676b7def-77ef-440a-b80c-f2375b1d5169">
-	<property name="ireport.zoom" value="1.4641000000000008"/>
+	<property name="ireport.zoom" value="1.610510000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="246"/>
 	<parameter name="sohd" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -139,9 +139,6 @@ where hd.sohd = $P{sohd}]]>
 			<line>
 				<reportElement x="0" y="25" width="555" height="1" uuid="2edbd248-dda0-432b-921d-115678cf40e8"/>
 			</line>
-			<line>
-				<reportElement x="0" y="60" width="555" height="1" uuid="46e42a9e-2742-47b0-b942-fdc27efa417d"/>
-			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -174,6 +171,9 @@ where hd.sohd = $P{sohd}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SOLUONG}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="46e42a9e-2742-47b0-b942-fdc27efa417d"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>

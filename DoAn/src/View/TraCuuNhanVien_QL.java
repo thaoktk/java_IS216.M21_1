@@ -773,6 +773,7 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
         if (thangLuong != thang) {
             try {
                 tinhLuongNV();
+                JOptionPane.showMessageDialog(this, "Tính lương thành công!");
             } catch (SQLException ex) {
                 ex.printStackTrace();
             } catch (ClassNotFoundException ex) {

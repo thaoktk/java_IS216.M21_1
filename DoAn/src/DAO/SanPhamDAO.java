@@ -7,6 +7,7 @@ package DAO;
 
 import Connection.ConnectionUtils;
 import DTO.SanPham;
+import java.sql.Statement;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -82,8 +83,13 @@ public class SanPhamDAO {
         return false;
     }
 
-    public static boolean delete(String value) throws SQLException, ClassNotFoundException {
-        Connection con = ConnectionUtils.getMyConnection();
+    public static boolean delete(String value) throws SQLException {
+        Connection con = null;
+        try {
+            con = ConnectionUtils.getMyConnection();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         CallableStatement ps = null;
         con.setAutoCommit(false);
         try {

@@ -706,13 +706,14 @@ public class ThemHoaDon extends javax.swing.JFrame {
             
             if (bus.insertHD(hd)) {
                 if (bus.getSoHD() != 0) {
+                    soHD = bus.getSoHD();
                     Object[] rowSPHD = null, rowKMHD = null;
                     boolean hoadonCTHD = false, hoadonCTKM = false;
                     for (int i = 0; i < arrSanPham.size(); i++) {
                         rowSPHD = (Object[]) arrSanPham.get(i);
                         int maSP = Integer.parseInt(rowSPHD[0].toString());
                         int soLuongMua = Integer.parseInt(rowSPHD[5].toString());
-                        HoaDon cthd = new HoaDon(bus.getSoHD(), maNV, maKH, maSP, 0, soLuongMua, null, 0, 0, 0, null);
+                        HoaDon cthd = new HoaDon(soHD, maNV, maKH, maSP, 0, soLuongMua, null, 0, 0, 0, null);
                         hoadonCTHD = bus.insertCTHD(cthd);
                         if (!hoadonCTHD) {
                             JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);

@@ -342,14 +342,17 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(249, 255, 254));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Tháng");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 19, -1, -1));
 
         doanhThuThang.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         doanhThuThang.setForeground(new java.awt.Color(196, 100, 96));
         doanhThuThang.setText("32.8M");
+        jPanel1.add(doanhThuThang, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
 
         InDSThang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         InDSThang.setForeground(new java.awt.Color(57, 123, 84));
@@ -359,45 +362,21 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                 InDSThangMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(InDSThang, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
-                        .addComponent(doanhThuThang)))
-                .addGap(23, 23, 23))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(doanhThuThang))
-                .addGap(18, 18, 18)
-                .addComponent(InDSThang)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel1.add(InDSThang, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 41, -1));
 
         jPanel3.setBackground(new java.awt.Color(249, 255, 254));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Năm");
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 19, -1, -1));
 
         doanhThuNam.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         doanhThuNam.setForeground(new java.awt.Color(196, 100, 96));
         doanhThuNam.setText("370.5M");
+        jPanel3.add(doanhThuNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, -1, -1));
 
         InDSNam.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         InDSNam.setForeground(new java.awt.Color(57, 123, 84));
@@ -407,34 +386,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                 InDSNamMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(InDSNam)
-                        .addGap(23, 23, 23))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(doanhThuNam)
-                        .addGap(32, 32, 32))))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(doanhThuNam))
-                .addGap(18, 18, 18)
-                .addComponent(InDSNam)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel3.add(InDSNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 60, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(196, 100, 96));
@@ -442,14 +394,17 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(249, 255, 254));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Tháng");
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 19, -1, -1));
 
         tienNhapThang.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         tienNhapThang.setForeground(new java.awt.Color(196, 100, 96));
         tienNhapThang.setText("32.8M");
+        jPanel4.add(tienNhapThang, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, -1));
 
         InTNThang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         InTNThang.setForeground(new java.awt.Color(57, 123, 84));
@@ -459,45 +414,21 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                 InTNThangMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(InTNThang))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
-                        .addComponent(tienNhapThang)))
-                .addGap(23, 23, 23))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(tienNhapThang))
-                .addGap(18, 18, 18)
-                .addComponent(InTNThang)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel4.add(InTNThang, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, -1, -1));
 
         jPanel5.setBackground(new java.awt.Color(249, 255, 254));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Năm");
+        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 19, -1, -1));
 
         tienNhapNam.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         tienNhapNam.setForeground(new java.awt.Color(196, 100, 96));
         tienNhapNam.setText("370.5M");
+        jPanel5.add(tienNhapNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         InTNNam.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         InTNNam.setForeground(new java.awt.Color(57, 123, 84));
@@ -507,33 +438,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                 InTNNamMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tienNhapNam)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(InTNNam)))
-                .addGap(26, 26, 26))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(tienNhapNam))
-                .addGap(18, 18, 18)
-                .addComponent(InTNNam)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel5.add(InTNNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, -1, -1));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(0, 0, 0));
@@ -636,17 +541,19 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                                         .addComponent(cbbNamDS, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(50, 50, 50)
                                         .addComponent(FindDS, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jLabel10)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(101, 101, 101)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(65, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80))))
+                            .addComponent(jLabel10))
+                        .addContainerGap(178, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(51, 51, 51))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -671,9 +578,9 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                             .addComponent(cbbNamDS, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel10)
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -689,9 +596,9 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
                             .addComponent(FindNH, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(97, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 760, 700));
@@ -900,12 +807,10 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
     }//GEN-LAST:event_InTNNamMouseClicked
 
     public void LayReportDoanhThuThang(int a, int b) throws SQLException, JRException {
-        int thang = a;
         int nam = b;
         Hashtable map = new Hashtable();
         JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoDoanhThuThang.jrxml");
         
-        map.put("thang", thang);
         map.put("nam", nam);
         try {
             Connection con = ConnectionUtils.getMyConnection();
@@ -917,11 +822,9 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
     }
     
     public void LayReportDoanhThuNam(int a) throws SQLException, JRException {
-        int nam = a;
         Hashtable map = new Hashtable();
         JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoDoanhThuTheoNam.jrxml");
         
-        map.put("nam", nam);
         try {
             Connection con = ConnectionUtils.getMyConnection();
             JasperPrint p = JasperFillManager.fillReport(report, map, con);
@@ -932,12 +835,10 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
     }
     
     public void LayReportTienNhapThang(int a, int b) throws SQLException, JRException {
-        int thang = a;
         int nam = b;
         Hashtable map = new Hashtable();
         JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoTienNhapTheoThang.jrxml");
         
-        map.put("thang", thang);
         map.put("nam", nam);
         try {
             Connection con = ConnectionUtils.getMyConnection();
@@ -949,11 +850,9 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
     }
     
     public void LayReportTienNhapNam(int a) throws SQLException, JRException {
-        int nam = a;
         Hashtable map = new Hashtable();
         JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoTienNhapNam.jrxml");
         
-        map.put("nam", nam);
         try {
             Connection con = ConnectionUtils.getMyConnection();
             JasperPrint p = JasperFillManager.fillReport(report, map, con);

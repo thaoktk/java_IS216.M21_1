@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="700" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="97b46a28-ea5f-4abd-81cf-89dc4233013e">
 	<property name="ireport.zoom" value="1.6105100000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="205"/>
 	<parameter name="sohd" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -104,9 +104,6 @@ where hd.sohd = $P{sohd}]]>
 	<columnHeader>
 		<band height="62" splitType="Stretch">
 			<line>
-				<reportElement x="-1" y="60" width="555" height="1" uuid="907ef90e-5f0a-4e62-b277-9ed63bb1035f"/>
-			</line>
-			<line>
 				<reportElement x="-1" y="25" width="555" height="1" uuid="c7afa2fb-586f-4280-9dd7-ac8ee3ed8aed"/>
 			</line>
 			<staticText>
@@ -140,7 +137,7 @@ where hd.sohd = $P{sohd}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="36" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<textField>
 				<reportElement x="-1" y="10" width="65" height="25" uuid="e0af68b1-cdd4-494f-841d-4607d3de69d9"/>
 				<textElement>
@@ -169,6 +166,9 @@ where hd.sohd = $P{sohd}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MASP}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="-1" y="0" width="555" height="1" uuid="907ef90e-5f0a-4e62-b277-9ed63bb1035f"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
