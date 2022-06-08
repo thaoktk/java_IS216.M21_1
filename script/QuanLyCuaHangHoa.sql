@@ -644,7 +644,7 @@ BEGIN
         
         SELECT SOLUONG INTO var_soluong
         FROM CTHD
-        WHERE MASP = cur_hd;
+        WHERE MASP = cur_hd AND SOHD = var_sohd;
         DBMS_OUTPUT.PUT_LINE('       ' ||var_tensp|| ' - ' ||var_soluong);
     END LOOP;
     DBMS_OUTPUT.PUT_LINE(N'Tổng tiền: '|| var_tongtien);
@@ -774,7 +774,7 @@ BEGIN
     MAUSAC = var_mausac, SLSAN = var_slsan, GHICHU = var_ghichu, ANHSP = var_anh
     WHERE MASP = var_masp;
     LOCK TABLE SANPHAM IN EXCLUSIVE MODE;
-    DBMS_LOCK.SLEEP(5);
+    DBMS_LOCK.SLEEP(10);
     COMMIT;
     RETURN 1;
 EXCEPTION
@@ -782,21 +782,8 @@ EXCEPTION
         RETURN 0;
 END;
 /
-<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
--- mở sqlplus để chạy dòng này
-GRANT execute ON DBMS_LOCK TO c##QLCH_HOA;
-/*Function insert HOADON*/ 
---     SET TRANSACTION ISOLATION LEVEL Read committed;
---    INSERT INTO DATVE VALUES(Mave_seq9.nextval, in_makh, in_manv, in_lichchieu, in_maghe, v_gia, v_date, in_hinhthuc, in_thanhtoan);
---        LOCK TABLE DATVE IN EXCLUSIVE MODE;
---    
---    SLEEP(10);
---    COMMIT;
--- 
-=======
 --GRANT execute ON DBMS_LOCK TO user_qlch;
 
->>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
 CREATE OR REPLACE FUNCTION INSERT_HOADON(var_manv HOADON.MANV%TYPE,var_makh HOADON.MAKH%TYPE) RETURN NUMBER
 AS
     var_loaikh KHACHHANG.LOAIKH%TYPE;
@@ -824,11 +811,7 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
-/
-=======
 
->>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
 /*Function insert PHIEUNHAP*/
 CREATE OR REPLACE FUNCTION INSERT_PHIEUNHAP(var_mancc PHIEUNHAP.MANCC%TYPE, var_ngaynhap PHIEUNHAP.NGAYNHAP%TYPE,var_manv PHIEUNHAP.MANV%TYPE) 
 RETURN NUMBER AS
@@ -1138,28 +1121,6 @@ EXCEPTION
         RETURN 0;
 END;
 /
-<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
-
---Khi thêm một tháng lương cho nhân viên thì lương của nhân viên đó vào tháng đó tự cập nhật.
-SET DEFINE OFF;
-CREATE OR REPLACE TRIGGER TRIGGER_INSERT_LUONG
-BEFORE INSERT ON LUONG
-FOR EACH ROW
-DECLARE 
-    var_luongcoban NHANVIEN.LUONGCOBAN%TYPE;
-BEGIN
-    SELECT LUONGCOBAN INTO var_luongcoban
-    FROM NHANVIEN
-    WHERE MANV = :NEW.MANV; 
-
-    :NEW.SOGIOLAMTC := TinhSoGioLamTieuChuan(:NEW.THANG, :NEW.NAM);
-    :NEW.SOGIOLAMTT := TinhSoGioLamThucTe(:NEW.THANG, :NEW.NAM, :NEW.MANV);
-    :NEW.LUONG := (var_luongcoban/:NEW.SOGIOLAMTC)*:NEW.SOGIOLAMTT;
-END;
-/
-COMMIT;
-=======
->>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
 
 --Xóa dòng dữ liệu bảng SANPHAM
 CREATE OR REPLACE FUNCTION DELETE_SANPHAM(var_khoachinh NUMBER) RETURN NUMBER
@@ -1223,11 +1184,8 @@ EXCEPTION
         RETURN 0;
 END;
 /
-<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
-=======
 
 /*============== PROCEDURE GET DỮ LIỆU - HỖ TRỢ XỬ LÝ ĐỒNG THỜI ==============*/
->>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
 --BẢNG KHÁCH HÀNG
 CREATE OR REPLACE PROCEDURE GET_KHACHHANG_ALL(cursor OUT SYS_REFCURSOR)
 AS
@@ -1301,15 +1259,6 @@ BEGIN
 END;
 /
 --BẢNG SẢN PHẨM
-CREATE OR REPLACE PROCEDURE GET_SANPHAM_NHAPHANG(cursor OUT SYS_REFCURSOR)
-AS
-BEGIN
-    OPEN cursor FOR
-    SELECT s.* FROM SANPHAM s, CTPN 
-    WHERE (s.MASP = CTPN.MASP);
-END;
-/
-
 CREATE OR REPLACE PROCEDURE GET_SANPHAM_ALL(cursor OUT SYS_REFCURSOR)
 AS
 BEGIN
@@ -1545,10 +1494,7 @@ BEGIN
     COMMIT;
 END;
 /
-<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
-=======
 
->>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
 --BẢNG NHÀ CUNG CẤP
 CREATE OR REPLACE PROCEDURE GET_NHACUNGCAP_ALL(cursor OUT SYS_REFCURSOR)
 AS
@@ -1733,9 +1679,6 @@ BEGIN
     SELECT DISTINCT(EXTRACT( YEAR FROM NGAYNHAP )) AS YEAR FROM PHIEUNHAP;
     COMMIT;
 END;
-<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
-/
-=======
 /
 
 COMMIT;
@@ -1752,4 +1695,3 @@ COMMIT;
 
 
 
->>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
