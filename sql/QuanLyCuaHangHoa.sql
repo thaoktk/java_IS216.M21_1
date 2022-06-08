@@ -1,4 +1,4 @@
---------------- DELETE BANG ---------------
+-------------------------------- XÓA BẢNG -------------------------------
 DROP TABLE KHACHHANG;
 DROP TABLE HOADON;
 DROP TABLE KHUYENMAI;
@@ -13,7 +13,22 @@ DROP TABLE LOAISANPHAM;
 DROP TABLE LUONG;
 DROP TABLE CHAMCONG;
 
---------------- XÓA CÁC SEQUENCE ---------------
+------------------------------ XEM BẢNG -------------------------------
+SELECT * FROM KHACHHANG;
+SELECT * FROM HOADON;
+SELECT * FROM KHUYENMAI;
+SELECT * FROM NHACUNGCAP;
+SELECT * FROM NHANVIEN;
+SELECT * FROM SANPHAM;
+SELECT * FROM PHIEUNHAP;
+SELECT * FROM CTHD;
+SELECT * FROM CTKM;
+SELECT * FROM CTPN;
+SELECT * FROM LOAISANPHAM;
+SELECT * FROM LUONG;
+SELECT * FROM CHAMCONG;
+
+------------------------------ XÓA SEQUENCE -------------------------------
 DROP SEQUENCE SEQ1_MAKH;
 DROP SEQUENCE SEQ2_MASP;
 DROP SEQUENCE SEQ3_MAPHIEUNHAP;
@@ -53,8 +68,8 @@ ALTER TABLE SANPHAM DROP CONSTRAINT FK_SANPHAM_LOAISP_13;
 ALTER TABLE LUONG DROP CONSTRAINT FK_LUONG_NHANVIEN_14;
 ALTER TABLE PHIEUNHAP DROP CONSTRAINT FK_PHIEUNHAP_NCC_15;
 
------------------------ CAC RANG BUOC TOAN VEN ------------------------------
---Co 3 loai khach hang: Binh thuong, Than thiet, VIP.
+/* ======================== CAC RANG BUOC TOAN VEN ======================== */
+--Co 3 loai khach hang: Moi, Than thiet, VIP.
 ALTER TABLE KHACHHANG
 ADD CONSTRAINT CHECK_LOAIKH CHECK(LOAIKH IN('Moi', 'Than thiet', 'VIP'));
 
@@ -106,13 +121,14 @@ ADD CONSTRAINT CHECK_SDT_NHANVIEN CHECK(LENGTH(SDT) = 10 AND (SDT LIKE '0%'));
 ALTER TABLE KHACHHANG
 ADD CONSTRAINT CHECK_SDT_KHACHHANG CHECK(LENGTH(SDT) = 10 AND (SDT LIKE '0%'));
 
+--Số điện thoại của nhà cung cấp phải có 10 số và bắt đầu bằng số 0.
+ALTER TABLE NHACUNGCAP
+ADD CONSTRAINT CHECK_SDT_NHACUNGCAP CHECK(LENGTH(SDT) = 10 AND (SDT LIKE '0%'));
+
 --CMND của nhân viên là số cmnd có 9 số hoặc cccd có 12 số.
 ALTER TABLE NHANVIEN
 ADD CONSTRAINT CHECK_CMND_NHANVIEN CHECK(LENGTH(CMND)= 9 OR LENGTH(CMND)= 12);
 
---Số điện thoại của nhà cung cấp phải có 10 số và bắt đầu bằng số 0.
-ALTER TABLE NHACUNGCAP
-ADD CONSTRAINT CHECK_SDT_NHACUNGCAP CHECK(LENGTH(SDT) = 10 AND (SDT LIKE '0%'));
 /* DANH SÁCH TRIGGER */
 --Tong tien nhap cua mot phieu nhap phai bang tong cac gia nhap*soluong nhap.
 /*Khi insert, update mot CTPN thi Tong tien nhap cung thay doi*/
@@ -125,8 +141,12 @@ BEGIN
     UPDATE PHIEUNHAP
     SET TONGTIENNHAP = TONGTIENNHAP + (:NEW.SLNHAP * :NEW.GIANHAP)
     WHERE MAPHIEUNHAP = :NEW.MAPHIEUNHAP;
+    
+    UPDATE SANPHAM
+    SET SLSAN = SLSAN + :NEW.SLNHAP
+    WHERE MASP = :NEW.MASP;
 END;
-/
+
 /*Khi delete, update mot CTPN thi Tong tien nhap cung thay doi*/
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_TIENNHAP_DELETE_UPDATE_CTPN
@@ -137,8 +157,12 @@ BEGIN
     UPDATE PHIEUNHAP
     SET TONGTIENNHAP = TONGTIENNHAP - (:OLD.SLNHAP * :OLD.GIANHAP)
     WHERE MAPHIEUNHAP = :OLD.MAPHIEUNHAP;
+    
+    UPDATE SANPHAM
+    SET SLSAN = SLSAN - :OLD.SLNHAP
+    WHERE MASP = :OLD.MASP;
 END;
-/
+
 --Tong tien cua mot hoa don là tong thanh tien (soluong*gia) cua cac chi tiet thuoc hoa don do.
 /*Khi insert, update mot CTHD thi Tong tien cua hoa don cung thay doi*/
 SET DEFINE OFF;
@@ -155,8 +179,13 @@ BEGIN
     UPDATE HOADON
     SET TONGTIEN = TONGTIEN + (:NEW.SOLUONG * var_giaban)
     WHERE SOHD = :NEW.SOHD;
+    
+    UPDATE SANPHAM
+    SET SLSAN = SLSAN - :NEW.SOLUONG
+    WHERE MASP = :NEW.MASP;
 END;
 /
+
 /*Khi delete, update mot CTHD thi Tong tien cua hoa don cung thay doi*/
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_TONGTIEN_DELETE_UPDATE_CTHD
@@ -172,9 +201,14 @@ BEGIN
     UPDATE HOADON
     SET TONGTIEN = TONGTIEN - (:OLD.SOLUONG * var_giaban)
     WHERE SOHD = :OLD.SOHD;
+    
+    UPDATE SANPHAM
+    SET SLSAN = SLSAN + :OLD.SOLUONG
+    WHERE MASP = :OLD.MASP;
 END;
 /
---Chiet khau cua hoa don la tong so tien duoc giam cua khach hang
+
+--Phần trăm các khuyến mãi cho một hóa đơn được cộng vào chiết khấu của hóa đơn đó.
 /*Khi insert, update mot CTKM thi chiet khau cua hoa don cung thay doi*/
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_CHIETKHAU_INSERT_UPDATE_CTKM
@@ -192,6 +226,7 @@ BEGIN
     WHERE SOHD = :NEW.SOHD;
 END;
 /
+
 /*Khi delete, update mot CTKM thi chiet khau cua hoa don cung thay doi*/
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_CHIETKHAU_DELETE_UPDATE_CTKM
@@ -209,6 +244,7 @@ BEGIN
     WHERE SOHD = :OLD.SOHD;
 END;
 /
+
 --Ngay ban hang (NGHD) cua mot nhan vien phai lon hon hoac bang ngay nhan vien do vao lam.
 /*Bang HOADON*/
 SET DEFINE OFF;
@@ -224,11 +260,10 @@ BEGIN
     
     IF(:NEW.NGAYHD < var_ngayvl) THEN
         RAISE_APPLICATION_ERROR(-20000,'Ngay ban hang truoc ngay vao lam cua nhan vien.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('THANH CONG!');
     END IF;
 END;
 /
+
 /*Bang NHANVIEN*/
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_NGAYHD_NGAYVL_NHANVIEN
@@ -252,12 +287,11 @@ BEGIN
         
         IF(:NEW.NGAYVL > var_ngayhd) THEN
             RAISE_APPLICATION_ERROR(-20000,'Ngay ban hang truoc ngay vao lam cua nhan vien.');
-        ELSE
-            DBMS_OUTPUT.PUT_LINE('THANH CONG!');
         END IF;
     END LOOP;
 END;
 /
+
 --Ngay mua hang (NGHD) cua mot khach hang thanh vien se lon hon hoac bang ngay khach hang do dang ky thanh vien (NGDK). 
 /*Bang HOADON*/
 SET DEFINE OFF;
@@ -273,8 +307,6 @@ BEGIN
     
     IF(:NEW.NGAYHD < var_ngaydk) THEN
         RAISE_APPLICATION_ERROR(-20000,'Ngay mua hang truoc ngay dang ky thanh vien cua khach hang.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('THANH CONG!');
     END IF;
 
 EXCEPTION 
@@ -282,6 +314,7 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('Khach hang nay chua dang ky lam khach hang thanh vien!');
 END;
 /
+
 /*Bang KHACHHANG*/
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_NGAYHD_NGAYDK_KHACHHANG
@@ -305,16 +338,14 @@ BEGIN
         
         IF(:NEW.NGAYDK > var_ngayhd) THEN
             RAISE_APPLICATION_ERROR(-20000,'Ngay mua hang truoc ngay dang ky thanh vien cua khach hang.');
-        ELSE
-            DBMS_OUTPUT.PUT_LINE('THANH CONG!');
         END IF;
     END LOOP;
 END;
 /
 --Tich luy cua mot khach hang la tong tri gia cac hoa don ma khach hang thanh vien do da mua. Dong thoi cap nhat loai khach hang
 --Cap nhat loai KH:
---	+ Tich luy tu <10000000 la khach hang binh thuong
---	+ Tich luy tu >10000000 - 30000000 la khach hang thuong xuyen.
+--	+ Tich luy tu <10000000 la khach hang mới
+--	+ Tich luy tu >10000000 - 30000000 la khach hang thân thiết.
 --	+ Tich luy >30000000 la khach hang VIP.
 /*Khi insert, update mot hoa don thi tich luy cua khach hang so huu hoa don do cung thay doi*/
 SET DEFINE OFF;
@@ -348,6 +379,7 @@ BEGIN
     END IF;
 END;
 /
+
 /*Khi delete, update mot hoa don thi tich luy cua khach hang so huu hoa don do cung thay doi*/
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_TICHLUY_DELETE_UPDATE_HOADON
@@ -380,6 +412,7 @@ BEGIN
     END IF;
 END;
 /
+
 --So luong ban ra tai mot thoi diem cua san pham trong CTHD phai nho hon hoac bang so luong co san cua san pham do tai thoi diem do, 
 --neu nhu ban thanh cong thi so luong san cua san pham do cung thay doi.
 SET DEFINE OFF;
@@ -397,13 +430,10 @@ BEGIN
         RAISE_APPLICATION_ERROR(-20000, 'San pham khong du so luong co san!');
     ELSIF(:NEW.SOLUONG <= 0) THEN
         RAISE_APPLICATION_ERROR(-20000, 'Loi nhap so luong!');
-    ELSE
-        UPDATE SANPHAM
-        SET SLSAN = SLSAN - :NEW.SOLUONG
-        WHERE MASP = :NEW.MASP;
     END IF;
 END;
 /
+
 --tri gia cua mot hoa don thay doi khi tong tien hoac chiet khau cua hoa don do thay doi.
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_THAYDOITIEN_HOADON
@@ -414,6 +444,7 @@ BEGIN
     :NEW.TRIGIAHD := :NEW.TONGTIEN - :NEW.TONGTIEN * :NEW.CHIETKHAU;
 END;
 /
+
 --Khi them mot hoa don thi ngay hoa don la ngay hien tai
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_INSERT_NGAYHD_HOADON
@@ -434,6 +465,7 @@ BEGIN
     :NEW.NGAYDK := SYSDATE;
 END;
 /
+
 --Không thể update thời điểm checkin của một chấm công
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_UPDATE_CHECKIN
@@ -444,24 +476,44 @@ BEGIN
     RAISE_APPLICATION_ERROR(-20000, 'Không được sửa checkin!');
 END;
 /
---Trong mot cham cong, khi update thoi diem checkout thì thoi diem checkin va checkout cua mot cham cong phai cung mot ngay, so gio lam them cung thay doi.
+
+--Trong mot cham cong, khi update thoi diem checkout thì so gio lam cung thay doi.
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_UPDATE_CHECKOUT 
-before UPDATE of checkout ON CHAMCONG
+BEFORE UPDATE OF CHECKOUT ON CHAMCONG
 FOR EACH ROW
 DECLARE
-    var_sogiolam CHAMCONG.SOGIOLAM%TYPE;
+    var_sogiolam NUMBER;
     var_ngaycuoituan DATE;
 BEGIN   
     var_sogiolam := (TO_DATE(to_char(:NEW.CHECKOUT, 'DD/MM/YYYY HH24:MI:SS'),'DD/MM/YYYY HH24:MI:SS') - TO_DATE(to_char(:NEW.CHECKIN, 'DD/MM/YYYY HH24:MI:SS'),'DD/MM/YYYY HH24:MI:SS')) * 24;
-    
+        
     var_ngaycuoituan := NEXT_DAY(:NEW.CHECKOUT,'SATURDAY');
-    IF(TO_DATE(var_ngaycuoituan,'DD/MM/YYYY HH24:MI:SS') - TO_DATE(:NEW.CHECKOUT,'DD/MM/YYYY HH24:MI:SS') = 7
-    or TO_DATE(var_ngaycuoituan,'DD/MM/YYYY HH24:MI:SS') - TO_DATE(:NEW.CHECKOUT,'DD/MM/YYYY HH24:MI:SS') = 6) THEN
+    IF(TO_DATE(var_ngaycuoituan,'DD/MM/YYYY HH24:MI:SS') - TO_DATE(:NEW.CHECKOUT,'DD/MM/YYYY HH24:MI:SS') = 7 
+       OR TO_DATE(var_ngaycuoituan,'DD/MM/YYYY HH24:MI:SS') - TO_DATE(:NEW.CHECKOUT,'DD/MM/YYYY HH24:MI:SS') = 6) 
+    THEN
         :NEW.SOGIOLAM := var_sogiolam * 2;
     ELSE
         :NEW.SOGIOLAM := var_sogiolam;
     END IF;
+END;
+/
+
+--Khi thêm một tháng lương cho nhân viên thì lương của nhân viên đó vào tháng đó tự cập nhật.
+SET DEFINE OFF;
+CREATE OR REPLACE TRIGGER TRIGGER_INSERT_LUONG
+BEFORE INSERT ON LUONG
+FOR EACH ROW
+DECLARE 
+    var_luongcoban NHANVIEN.LUONGCOBAN%TYPE;
+BEGIN
+    SELECT LUONGCOBAN INTO var_luongcoban
+    FROM NHANVIEN
+    WHERE MANV = :NEW.MANV; 
+
+    :NEW.SOGIOLAMTC := TinhSoGioLamTieuChuan(:NEW.THANG, :NEW.NAM);
+    :NEW.SOGIOLAMTT := TinhSoGioLamThucTe(:NEW.THANG, :NEW.NAM, :NEW.MANV);
+    :NEW.LUONG := (var_luongcoban/:NEW.SOGIOLAMTC)*:NEW.SOGIOLAMTT;
 END;
 /
 
@@ -499,6 +551,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(N'=============================================================');
 END;
 /
+
 --Hien thi thong tin nhan vien
 CREATE OR REPLACE PROCEDURE HienThiThongTinNhanVien(var_cmnd NHANVIEN.CMND%TYPE)
 AS
@@ -530,6 +583,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(N'============================================================='); 
 END;
 /
+
 --Hien thi thong tin san pham
 CREATE OR REPLACE PROCEDURE THONGTINSANPHAM(var_tensp SANPHAM.TENSP%TYPE)
 AS
@@ -554,6 +608,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(N'============================================================='); 
 END;
 /
+
 --Hien thi hoa don
 CREATE OR REPLACE PROCEDURE HienThiThongTinHoaDon(var_sohd HOADON.SOHD%TYPE)
 AS
@@ -598,10 +653,11 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(N'============================================================='); 
 END;
 /
+
 --test
 SET SERVEROUTPUT ON;
 BEGIN
-    HienThiThongTinHoaDon(5);
+    HienThiThongTinHoaDon(163);
 END;
 /
 --Thống kê doanh thu theo tháng
@@ -616,6 +672,12 @@ BEGIN
     RETURN var_doanhthu;
 END;
 /
+/*TEST*/
+SET SERVEROUTPUT ON;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Doanh thu tháng 5/2022 = ' || ThongKeDoanhThuThang(5, 2022));
+END;
+/
 --Thống kê doanh thu theo năm
 CREATE OR REPLACE FUNCTION ThongKeDoanhThuNam(var_nam NUMBER) RETURN NUMBER
 AS
@@ -626,6 +688,12 @@ BEGIN
     WHERE EXTRACT(YEAR FROM NGAYHD) = var_nam;
     
     RETURN var_doanhthu;
+END;
+/
+/*TEST*/
+SET SERVEROUTPUT ON;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Doanh thu năm 2022 = ' || ThongKeDoanhThuNam(2022));
 END;
 /
 --Thống kê tiền nhập theo tháng
@@ -640,6 +708,7 @@ BEGIN
     RETURN var_tiennhap;
 END;
 /
+
 --Thống kê tiền nhập theo năm
 CREATE OR REPLACE FUNCTION ThongKeTienNhapNam(var_nam NUMBER) RETURN NUMBER
 AS
@@ -652,48 +721,7 @@ BEGIN
     RETURN var_tiennhap;
 END;
 /
---Thống kê tiền nhập từng sản phẩm theo tháng
-CREATE OR REPLACE PROCEDURE ThongKeTienNhapSPThang(var_thang NUMBER, var_nam NUMBER, var_masp OUT SANPHAM.MASP%TYPE,
-var_tensp OUT SANPHAM.TENSP%TYPE, var_tongtiennhap OUT NUMBER)
-AS
-    var_tiennhapsp NUMBER;
-    cur_pn CTPN.MAPHIEUNHAP%TYPE;
-    CURSOR cur IS SELECT MAPHIEUNHAP
-                FROM PHIEUNHAP
-                WHERE EXTRACT(MONTH FROM NGAYNHAP) = var_thang AND EXTRACT(YEAR FROM NGAYNHAP) = var_nam;
-BEGIN
-    OPEN cur;
-    LOOP
-        FETCH cur INTO cur_pn;
-        EXIT WHEN cur%NOTFOUND;
-        SELECT C.MASP, S.TENSP, SUM(SLNHAP*GIANHAP) INTO var_masp,var_tensp,var_tongtiennhap
-        FROM CTPN C JOIN SANPHAM S ON C.MASP = S.MASP
-        WHERE MAPHIEUNHAP = cur_pn
-        GROUP BY C.MASP, S.TENSP;
-    END LOOP;
-END;
-/
---Thống kê tiền nhập từng sản phẩm theo năm
-CREATE OR REPLACE PROCEDURE ThongKeTienNhapSPNam(var_nam NUMBER, var_masp OUT SANPHAM.MASP%TYPE,
-var_tensp OUT SANPHAM.TENSP%TYPE, var_tongtiennhap OUT NUMBER)
-AS
-    var_tiennhapsp NUMBER;
-    cur_pn CTPN.MAPHIEUNHAP%TYPE;
-    CURSOR cur IS SELECT MAPHIEUNHAP
-                FROM PHIEUNHAP
-                WHERE EXTRACT(YEAR FROM NGAYNHAP) = var_nam;
-BEGIN
-    OPEN cur;
-    LOOP
-        FETCH cur INTO cur_pn;
-        EXIT WHEN cur%NOTFOUND;
-        SELECT C.MASP, S.TENSP, SUM(SLNHAP*GIANHAP) INTO var_masp,var_tensp,var_tongtiennhap
-        FROM CTPN C JOIN SANPHAM S ON C.MASP = S.MASP
-        WHERE MAPHIEUNHAP = cur_pn
-        GROUP BY C.MASP, S.TENSP;
-    END LOOP;
-END;
-/
+
 ----------------- CAC FUNCTION INSERT -----------------
 /*Function insert KHACHHANG*/
 CREATE OR REPLACE FUNCTION INSERT_KHACHHANG(var_hoten IN KHACHHANG.HOTEN%TYPE, var_sdt KHACHHANG.SDT%TYPE,var_diachi KHACHHANG.DIACHI%TYPE,
@@ -707,7 +735,7 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
+
 /*Function update KHACHHANG*/
 CREATE OR REPLACE FUNCTION UPDATE_KHACHHANG(var_makh KHACHHANG.MAKH%TYPE, var_hoten IN KHACHHANG.HOTEN%TYPE, var_sdt KHACHHANG.SDT%TYPE,var_diachi KHACHHANG.DIACHI%TYPE,
 var_ngaysinh KHACHHANG.NGAYSINH%TYPE, var_ghichu KHACHHANG.GHICHU%TYPE,var_gioitinh KHACHHANG.GIOITINH%TYPE) RETURN NUMBER AS
@@ -721,7 +749,7 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
+
 /*Function insert SANPHAM*/
 CREATE OR REPLACE FUNCTION INSERT_SANPHAM(var_tensp SANPHAM.TENSP%TYPE,var_gia SANPHAM.GIA%TYPE, var_maloaisp  SANPHAM.MALOAISP%TYPE,
 var_mausac SANPHAM.MAUSAC%TYPE, var_slsan SANPHAM.SLSAN%TYPE, var_ghichu SANPHAM.GHICHU%TYPE, var_anh SANPHAM.ANHSP%TYPE) RETURN NUMBER AS
@@ -735,6 +763,7 @@ EXCEPTION
         RETURN 0;
 END;
 /
+
 /*Function update SANPHAM*/
 CREATE OR REPLACE FUNCTION UPDATE_SANPHAM(var_masp SANPHAM.MASP%TYPE, var_tensp SANPHAM.TENSP%TYPE,var_gia SANPHAM.GIA%TYPE, var_maloaisp  SANPHAM.MALOAISP%TYPE,
 var_mausac SANPHAM.MAUSAC%TYPE, var_slsan SANPHAM.SLSAN%TYPE, var_ghichu SANPHAM.GHICHU%TYPE, var_anh SANPHAM.ANHSP%TYPE) RETURN NUMBER AS
@@ -753,6 +782,7 @@ EXCEPTION
         RETURN 0;
 END;
 /
+<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
 -- mở sqlplus để chạy dòng này
 GRANT execute ON DBMS_LOCK TO c##QLCH_HOA;
 /*Function insert HOADON*/ 
@@ -763,6 +793,10 @@ GRANT execute ON DBMS_LOCK TO c##QLCH_HOA;
 --    SLEEP(10);
 --    COMMIT;
 -- 
+=======
+--GRANT execute ON DBMS_LOCK TO user_qlch;
+
+>>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
 CREATE OR REPLACE FUNCTION INSERT_HOADON(var_manv HOADON.MANV%TYPE,var_makh HOADON.MAKH%TYPE) RETURN NUMBER
 AS
     var_loaikh KHACHHANG.LOAIKH%TYPE;
@@ -790,7 +824,11 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
+<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
 /
+=======
+
+>>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
 /*Function insert PHIEUNHAP*/
 CREATE OR REPLACE FUNCTION INSERT_PHIEUNHAP(var_mancc PHIEUNHAP.MANCC%TYPE, var_ngaynhap PHIEUNHAP.NGAYNHAP%TYPE,var_manv PHIEUNHAP.MANV%TYPE) 
 RETURN NUMBER AS
@@ -803,7 +841,7 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
+
 /*Function UPDATE PHIEUNHAP*/
 CREATE OR REPLACE FUNCTION UPDATE_PHIEUNHAP(var_mpn PHIEUNHAP.MAPHIEUNHAP%TYPE, var_mancc PHIEUNHAP.MANCC%TYPE, 
 var_ngaynhap PHIEUNHAP.NGAYNHAP%TYPE,var_manv PHIEUNHAP.MANV%TYPE) RETURN NUMBER AS
@@ -817,7 +855,7 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
+
 /*Function insert NHANVIEN*/
 CREATE OR REPLACE FUNCTION INSERT_NHANVIEN(var_hoten NHANVIEN.HOTEN%TYPE,var_diachi NHANVIEN.DIACHI%TYPE, var_sdt NHANVIEN.SDT%TYPE,
 var_cmnd NHANVIEN.CMND%TYPE, var_ngaysinh NHANVIEN.NGAYSINH%TYPE, var_ngayvl NHANVIEN.NGAYVL%TYPE, var_luongcoban NHANVIEN.LUONGCOBAN%TYPE,
@@ -831,7 +869,7 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
+
 /*Function update NHANVIEN*/
 CREATE OR REPLACE FUNCTION UPDATE_NHANVIEN(var_manv NHANVIEN.MANV%TYPE, var_hoten NHANVIEN.HOTEN%TYPE,var_diachi NHANVIEN.DIACHI%TYPE, var_sdt NHANVIEN.SDT%TYPE,
 var_cmnd NHANVIEN.CMND%TYPE, var_ngaysinh NHANVIEN.NGAYSINH%TYPE, var_ngayvl NHANVIEN.NGAYVL%TYPE, var_luongcoban NHANVIEN.LUONGCOBAN%TYPE,
@@ -848,7 +886,7 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
+
 /*Function insert NHACUNGCAP*/
 CREATE OR REPLACE FUNCTION INSERT_NHACUNGCAP(var_tenncc NHACUNGCAP.TENNCC%TYPE,var_diachi NHACUNGCAP.DIACHI%TYPE, var_sdt NHACUNGCAP.SDT%TYPE)
 RETURN NUMBER AS
@@ -861,7 +899,7 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
+
 /*Function UPDATE NHACUNGCAP*/
 CREATE OR REPLACE FUNCTION UPDATE_NHACUNGCAP(var_mancc NHACUNGCAP.MANCC%TYPE, var_tenncc NHACUNGCAP.TENNCC%TYPE,var_diachi NHACUNGCAP.DIACHI%TYPE, var_sdt NHACUNGCAP.SDT%TYPE)
 RETURN NUMBER AS
@@ -875,23 +913,21 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
 
 /*function insert CTHD*/
 CREATE OR REPLACE FUNCTION INSERT_CTHD(var_sohd CTHD.SOHD%TYPE,var_masp CTHD.MASP%TYPE, var_soluong CTHD.SOLUONG%TYPE) RETURN NUMBER AS
 BEGIN
     INSERT INTO CTHD(SOHD,MASP,SOLUONG) VALUES(var_sohd, var_masp, var_soluong);
+
     COMMIT;
     RETURN 1;
 EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
-begin
-    dbms_output.put_line(INSERT_CTHD(13, 7,6));
-end;
-/
+
+SELECT * FROM CTHD;
+
 /*Function insert CTPN*/
 CREATE OR REPLACE FUNCTION INSERT_CTPN(var_masp CTPN.MASP%TYPE,var_maphieunhap CTPN.MAPHIEUNHAP%TYPE, var_slnhap CTPN.SLNHAP%TYPE,
 var_gianhap CTPN.GIANHAP%TYPE) RETURN NUMBER AS
@@ -904,7 +940,7 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
+
 /*Function insert KHUYENMAI*/
 CREATE OR REPLACE FUNCTION INSERT_KHUYENMAI(var_tenkm KHUYENMAI.TENKM%TYPE,var_phantram KHUYENMAI.PHANTRAM%TYPE, var_ngaybd KHUYENMAI.NGAYBD%TYPE,
 var_ngaykt KHUYENMAI.NGAYKT%TYPE) RETURN NUMBER AS
@@ -918,6 +954,7 @@ EXCEPTION
         RETURN 0;
 END;
 /
+
 /*Function update KHUYENMAI*/
 CREATE OR REPLACE FUNCTION UPDATE_KHUYENMAI(var_makm KHUYENMAI.MAKM%TYPE, var_tenkm KHUYENMAI.TENKM%TYPE,var_phantram KHUYENMAI.PHANTRAM%TYPE, var_ngaybd KHUYENMAI.NGAYBD%TYPE,
 var_ngaykt KHUYENMAI.NGAYKT%TYPE) RETURN NUMBER AS
@@ -925,6 +962,7 @@ BEGIN
     UPDATE KHUYENMAI 
     SET TENKM = var_tenkm, PHANTRAM = var_phantram, NGAYBD = var_ngaybd, NGAYKT = var_ngaykt
     WHERE MAKM = var_makm;
+    
     COMMIT;
     RETURN 1;
 EXCEPTION
@@ -932,6 +970,7 @@ EXCEPTION
         RETURN 0;
 END;
 /
+
 /*Function insert CTKM*/
 CREATE OR REPLACE FUNCTION INSERT_CTKM(var_sohd CTKM.SOHD%TYPE,var_makm CTKM.MAKM%TYPE) RETURN NUMBER AS
 BEGIN
@@ -943,6 +982,7 @@ EXCEPTION
         RETURN 0;
 END;
 /
+
 /*Function insert LOAISANPHAM*/
 CREATE OR REPLACE FUNCTION INSERT_LOAISANPHAM(var_tenloaisp LOAISANPHAM.TENLOAISP%TYPE,var_ghichu LOAISANPHAM.GHICHU%TYPE) RETURN NUMBER AS
 BEGIN
@@ -955,6 +995,7 @@ EXCEPTION
         RETURN 0;
 END;
 /
+
 /*Function update LOAISANPHAM*/
 CREATE OR REPLACE FUNCTION UPDATE_LOAISANPHAM(var_maloaisp LOAISANPHAM.MALOAISP%TYPE, 
 var_tenloaisp LOAISANPHAM.TENLOAISP%TYPE,var_ghichu LOAISANPHAM.GHICHU%TYPE) RETURN NUMBER AS
@@ -969,6 +1010,7 @@ EXCEPTION
         RETURN 0;
 END;
 /
+
 /*Function insert CHAMCONG*/
 CREATE OR REPLACE FUNCTION INSERT_CHAMCONG(var_manv CHAMCONG.MANV%TYPE) RETURN NUMBER
 AS
@@ -982,19 +1024,14 @@ EXCEPTION
 END;
 /
 
-begin
-    dbms_output.put_line(INsert_chamcong(3));
-end;
-/
-set serveroutput on;
 /*Function update checkout CHAMCONG*/
-SET DEFINE OFF;
 CREATE OR REPLACE FUNCTION UPDATE_CHAMCONG(var_manv CHAMCONG.MANV%TYPE)
 RETURN NUMBER AS
     var_checkout CHAMCONG.CHECKOUT%TYPE;
 BEGIN
     SELECT SYSDATE INTO var_checkout
     FROM DUAL;
+    
     UPDATE CHAMCONG
     SET CHECKOUT = var_checkout
     WHERE MANV = var_manv 
@@ -1007,6 +1044,7 @@ EXCEPTION
         RETURN 0;
 END;
 /
+
 --Tính lương tháng X cho nhân viên.
 /*FUNCTION: Tính số ngày tối đa của tháng*/
 CREATE OR REPLACE FUNCTION SoNgayToiDaCuaThang(var_thang NUMBER, var_nam NUMBER) RETURN NUMBER
@@ -1019,21 +1057,20 @@ BEGIN
     RETURN var_ngaycuoi;
 END;
 /
+
 /*FUNCTION: Tính số ngày cuối tuần trong tháng*/
 CREATE OR REPLACE FUNCTION SoNgayCuoiTuanTrongThang(var_thang NUMBER, var_nam NUMBER) RETURN NUMBER
 AS
     var_dem NUMBER :=0;
     var_temp DATE;
     var_ngay DATE;
-    var_ngaytoida NUMBER;
 BEGIN
-    var_ngaytoida := SoNgayToiDaCuaThang(var_thang,var_nam);
     var_ngay := to_date('1/'|| var_thang || '/' || var_nam,'DD/MM/YYYY HH24:MI:SS');
     var_temp := NEXT_DAY(var_ngay, 'SATURDAY');
     IF(TO_DATE(var_temp,'DD/MM/YYYY HH24:MI:SS') - var_ngay = 7 ) THEN
-        var_dem := var_dem +2;
+        var_dem := var_dem + 2;
     ELSIF(TO_DATE(var_temp,'DD/MM/YYYY HH24:MI:SS') - var_ngay = 6) THEN
-        var_dem := var_dem +1;
+        var_dem := var_dem + 1;
     END IF;
     
     WHILE(EXTRACT(MONTH FROM var_temp) = var_thang)
@@ -1049,6 +1086,7 @@ BEGIN
     RETURN var_dem;
 END;
 /
+
 /*FUNCTION: tính số giờ làm tiêu chuẩn trong tháng X một nhân viên phải làm*/
 CREATE OR REPLACE FUNCTION TinhSoGioLamTieuChuan(var_thang LUONG.THANG%TYPE, var_nam LUONG.NAM%TYPE)
 RETURN NUMBER
@@ -1062,12 +1100,15 @@ BEGIN
     RETURN (var_songaytrongthang - var_songaycuoituan)*9.5; --giờ làm tiêu chuẩn là từ 7h sáng đến 4h30 chiều.
 END;
 /
+
+set serveroutput on;
 begin
     dbms_output.put_line(SoNgayToiDaCuaThang(7,2022));
     dbms_output.put_line(SoNgayCuoiTuanTrongThang(7,2022));
     dbms_output.put_line(TinhSoGioLamTieuChuan(7,2022));
 end;
 /
+
 /*FUNCTION: tính số giờ làm thực tế mà nhân viên đó đi làm trong tháng X*/
 CREATE OR REPLACE FUNCTION TinhSoGioLamThucTe(var_thang LUONG.THANG%TYPE, var_nam LUONG.NAM%TYPE, var_manv NHANVIEN.MANV%TYPE)
 RETURN NUMBER
@@ -1084,6 +1125,7 @@ EXCEPTION
         RETURN 0;
 END;
 /
+
 /*Function INSERT LUONG*/
 CREATE OR REPLACE FUNCTION INSERT_LUONG(var_manv LUONG.MANV%TYPE, var_thang LUONG.THANG%TYPE, var_nam LUONG.NAM%TYPE)
 RETURN NUMBER AS
@@ -1096,6 +1138,7 @@ EXCEPTION
         RETURN 0;
 END;
 /
+<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
 
 --Khi thêm một tháng lương cho nhân viên thì lương của nhân viên đó vào tháng đó tự cập nhật.
 SET DEFINE OFF;
@@ -1115,60 +1158,51 @@ BEGIN
 END;
 /
 COMMIT;
+=======
+>>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
 
 --Xóa dòng dữ liệu bảng SANPHAM
-CREATE OR REPLACE FUNCTION DELETE_SANPHAM(VAR_KHOACHINH NUMBER) RETURN NUMBER
+CREATE OR REPLACE FUNCTION DELETE_SANPHAM(var_khoachinh NUMBER) RETURN NUMBER
 AS
 BEGIN
-    DELETE FROM SANPHAM WHERE MASP = VAR_KHOACHINH;
-    IF (SQL%ROWCOUNT = 0) THEN
-        RETURN 0;
-END IF;
-COMMIT;
+    DELETE FROM SANPHAM WHERE MASP = var_khoachinh;
+    COMMIT;
     RETURN 1;
 EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
 /
+
 --Xóa dòng dữ liệu bảng KHACHHANG
-CREATE OR REPLACE FUNCTION DELETE_KHACHHANG(VAR_KHOACHINH NUMBER) RETURN NUMBER
+CREATE OR REPLACE FUNCTION DELETE_KHACHHANG(var_khoachinh NUMBER) RETURN NUMBER
 AS
 BEGIN
-    DELETE FROM KHACHHANG WHERE MAKH = VAR_KHOACHINH;
-    IF (SQL%ROWCOUNT = 0) THEN
-        RETURN 0;
-    END IF;
+    DELETE FROM KHACHHANG WHERE MAKH = var_khoachinh;
     COMMIT;
     RETURN 1;
 EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
+
 --Xóa dòng dữ liệu bảng KHUYENMAI
-CREATE OR REPLACE FUNCTION DELETE_KHUYENMAI(VAR_KHOACHINH NUMBER) RETURN NUMBER
+CREATE OR REPLACE FUNCTION DELETE_KHUYENMAI(var_khoachinh NUMBER) RETURN NUMBER
 AS
 BEGIN
-    DELETE FROM KHUYENMAI WHERE MAKM = VAR_KHOACHINH;
-    IF (SQL%ROWCOUNT = 0) THEN
-        RETURN 0;
-    END IF;
+    DELETE FROM KHUYENMAI WHERE MAKM = var_khoachinh;
     COMMIT;
     RETURN 1;
 EXCEPTION
     WHEN OTHERS THEN
         RETURN 0;
 END;
-/
+
 --Xóa dòng dữ liệu bảng NHACUNGCAP
-CREATE OR REPLACE FUNCTION DELETE_NHACUNGCAP(VAR_KHOACHINH NUMBER)RETURN NUMBER
+CREATE OR REPLACE FUNCTION DELETE_NHACUNGCAP(var_khoachinh NUMBER)RETURN NUMBER
 AS
 BEGIN
-    DELETE FROM NHACUNGCAP WHERE MANCC = VAR_KHOACHINH;
-    IF (SQL%ROWCOUNT = 0) THEN
-        RETURN 0;
-    END IF;
+    DELETE FROM NHACUNGCAP WHERE MANCC = var_khoachinh;
     COMMIT;
     RETURN 1;
 EXCEPTION
@@ -1176,14 +1210,12 @@ EXCEPTION
         RETURN 0;
 END;
 /
+
 --Xóa dòng dữ liệu bảng NHANVIEN
-CREATE OR REPLACE FUNCTION DELETE_NHANVIEN(VAR_KHOACHINH NUMBER)RETURN NUMBER
+CREATE OR REPLACE FUNCTION DELETE_NHANVIEN(var_khoachinh NUMBER)RETURN NUMBER
 AS
 BEGIN
-    DELETE FROM NHANVIEN WHERE MANV = VAR_KHOACHINH;
-    IF (SQL%ROWCOUNT = 0) THEN
-        RETURN 0;
-    END IF;
+    DELETE FROM NHANVIEN WHERE MANV = var_khoachinh;
     COMMIT;
     RETURN 1;
 EXCEPTION
@@ -1191,6 +1223,11 @@ EXCEPTION
         RETURN 0;
 END;
 /
+<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
+=======
+
+/*============== PROCEDURE GET DỮ LIỆU - HỖ TRỢ XỬ LÝ ĐỒNG THỜI ==============*/
+>>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
 --BẢNG KHÁCH HÀNG
 CREATE OR REPLACE PROCEDURE GET_KHACHHANG_ALL(cursor OUT SYS_REFCURSOR)
 AS
@@ -1205,6 +1242,12 @@ BEGIN
     COMMIT;
 END;
 /
+/*TEST*/
+SET SERVEROUTPUT ON;
+var usercur refcursor;
+exec GET_KHACHHANG_ALL(:usercur);
+print usercur;
+
 CREATE OR REPLACE PROCEDURE GET_KHACHHANG_BY_MAKH(var_makh IN KHACHHANG.MAKH%TYPE, cursor OUT SYS_REFCURSOR)
 AS
 BEGIN
@@ -1493,6 +1536,10 @@ BEGIN
     COMMIT;
 END;
 /
+<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
+=======
+
+>>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
 --BẢNG NHÀ CUNG CẤP
 CREATE OR REPLACE PROCEDURE GET_NHACUNGCAP_ALL(cursor OUT SYS_REFCURSOR)
 AS
@@ -1677,4 +1724,23 @@ BEGIN
     SELECT DISTINCT(EXTRACT( YEAR FROM NGAYNHAP )) AS YEAR FROM PHIEUNHAP;
     COMMIT;
 END;
+<<<<<<< Updated upstream:sql/QuanLyCuaHangHoa.sql
 /
+=======
+/
+
+COMMIT;
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes:script/QuanLyCuaHangHoa.sql
