@@ -34,4 +34,7 @@ public class LuongBUS {
         return LuongDAO.getThangLuong();
     }
     
+    public static boolean deleteLuong() throws SQLException, ClassNotFoundException {
+        return LuongDAO.deleteLuong();
+    }
 }

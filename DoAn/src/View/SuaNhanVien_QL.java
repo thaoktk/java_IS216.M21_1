@@ -572,15 +572,24 @@ public class SuaNhanVien_QL extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (!isNumeric(txtCMND.getText()) || !isNumeric(txtSDT.getText()) || !isNumeric(txtLuongCB.getText())) {
-            JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         String decimalPattern = "([0-9]*)\\.([0-9]*)"; 
         if (Pattern.matches(decimalPattern, luongcb)) {
             JOptionPane.showMessageDialog(this, "Số không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         } 
+        if (!isNumeric(txtCMND.getText()) || !isNumeric(txtSDT.getText()) || !isNumeric(txtLuongCB.getText())) {
+            JOptionPane.showMessageDialog(this, "CMND/SĐT/Lương cơ bản phải là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (isNumeric(hoten)) {
+            JOptionPane.showMessageDialog(this, "Họ tên không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (Integer.parseInt(luongcb) <= 0) {
+            JOptionPane.showMessageDialog(this, "Lương không được nhỏ hơn 0!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn cập nhật?", "Xác nhận",JOptionPane.YES_NO_OPTION );
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;

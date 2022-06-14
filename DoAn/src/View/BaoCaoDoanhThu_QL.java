@@ -10,6 +10,7 @@ import BUS.NhanVienBUS;
 import Connection.ConnectionUtils;
 import DTO.DoanhThu;
 import java.awt.HeadlessException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -837,12 +840,15 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
     public void LayReportTienNhapThang(int a, int b) throws SQLException, JRException {
         int nam = b;
         Hashtable map = new Hashtable();
-        JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoTienNhapTheoThang.jrxml");
         
         map.put("nam", nam);
         try {
             Connection con = ConnectionUtils.getMyConnection();
-            JasperPrint p = JasperFillManager.fillReport(report, map, con);
+            InputStream url = getClass().getResourceAsStream("/report/BaoCaoTienNhapTheoThang.jasper");
+            JasperDesign ds = JRXmlLoader.load(url);
+
+            JasperReport report = JasperCompileManager.compileReport(ds);
+            JasperPrint p = JasperFillManager.fillReport(url, map, con);
             JasperViewer.viewReport(p, false);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);

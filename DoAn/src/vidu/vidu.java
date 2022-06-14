@@ -6,51 +6,17 @@
 package vidu;
 
 import BUS.DoanhThuBUS;
-import BUS.DoiTacBUS;
-import BUS.NhanVienBUS;
-import BUS.NhapHangBUS;
-import BUS.SanPhamBUS;
 import Connection.ConnectionUtils;
-import DTO.NhapHang;
 import View.BaoCaoDoanhThu_QL;
-import View.ChamCong_NV;
-import View.ChamCong_QL;
-import View.Chung;
-import View.DoanhThu_KhongTruyCap_NV;
-import View.DoiTac_KhongTruyCap_NV;
-import View.HoaDon_KhongTruyCap_NV;
-import View.KhachHang_KhongTruyCap_NV;
-import View.KhuyenMai_KhongTruyCap_NV;
-import View.NhanVien_KhongTruyCap_NV;
-import View.SanPham_KhongTruyCap_NV;
-import View.ThemSanPham;
-import View.TraCuuDoiTac_QL;
-import View.TraCuuHoaDon;
-import View.TraCuuHoaDon_NV;
-import View.TraCuuKhachHang;
-import View.TraCuuKhachHang_NV;
-import View.TraCuuKhuyenMai_NV;
-import View.TraCuuKhuyenMai_QL;
-import View.TraCuuNhanVien_QL;
-import View.TraCuuNhapHang;
-import View.TraCuuSanPham_NV;
-import View.TraCuuSanPham_QL;
-import View.WelcomeScreen;
-import static View.SuaNhanVien_QL.isNumeric;
 import View.ThemNhapHang;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -83,6 +49,7 @@ public class vidu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         cbbThangDS = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
@@ -95,6 +62,8 @@ public class vidu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtMaPN = new javax.swing.JTextField();
         AddIntoTable = new javax.swing.JButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Thêm nhập hàng");
@@ -194,6 +163,10 @@ public class vidu extends javax.swing.JFrame {
             }
         });
 
+        jRadioButton1.setText("jRadioButton1");
+
+        jRadioButton2.setText("jRadioButton2");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -220,7 +193,11 @@ public class vidu extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addGap(42, 42, 42)
                                 .addComponent(txtMaPN, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(487, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(114, 114, 114))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,8 +212,15 @@ public class vidu extends javax.swing.JFrame {
                         .addComponent(jLabel20)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbbNamDS)))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton1)
+                            .addComponent(jRadioButton2))))
                 .addGap(89, 89, 89)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -359,6 +343,7 @@ public class vidu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddIntoTable;
     private javax.swing.JLabel InDSThang;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbNamDS;
     private javax.swing.JComboBox<String> cbbThangDS;
     private javax.swing.JLabel doanhThuThang;
@@ -368,6 +353,8 @@ public class vidu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTextField txtMaPN;
     // End of variables declaration//GEN-END:variables
 }

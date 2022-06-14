@@ -372,6 +372,10 @@ public class SuaKhuyenMai_QL extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (isNumeric(tenKM)) {
+            JOptionPane.showMessageDialog(this, "Tên KM không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (dateTimePickerNgBD.getDateTimePermissive() != null && dateTimePickerNgKT.getDateTimePermissive() != null) {
             ngbd = dateTimePickerNgBD.getDateTimePermissive().format(dateFormat);
             ngkt = dateTimePickerNgKT.getDateTimePermissive().format(dateFormat);

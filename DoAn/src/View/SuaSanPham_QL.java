@@ -9,6 +9,7 @@ import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
 import Connection.ConnectionUtils;
 import DTO.SanPham;
+import static View.SuaNhanVien_QL.isNumeric;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
@@ -537,14 +538,18 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (isNumeric(tenSP)) {
+            JOptionPane.showMessageDialog(this, "Tên SP không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String decimalPattern = "([0-9]*)\\.([0-9]*)"; 
         if (Pattern.matches(decimalPattern, slsan) || Pattern.matches(decimalPattern, gia)) {
             JOptionPane.showMessageDialog(this, "Số không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        if (Integer.parseInt(gia) <= 0 || Integer.parseInt(slsan) <= 0) {
-            JOptionPane.showMessageDialog(this, "Thông tin không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        if (Integer.parseInt(gia) <= 0) {
+            JOptionPane.showMessageDialog(this, "Giá không được nhỏ hơn 0!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         

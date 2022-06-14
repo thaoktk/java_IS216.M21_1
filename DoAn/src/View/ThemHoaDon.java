@@ -16,6 +16,7 @@ import DTO.KhuyenMai;
 import DTO.SanPham;
 import static View.SuaNhanVien_QL.isNumeric;
 import java.awt.HeadlessException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -30,6 +31,8 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -887,7 +890,6 @@ public class ThemHoaDon extends javax.swing.JFrame {
             Connection con = ConnectionUtils.getMyConnection();
             JasperPrint p = JasperFillManager.fillReport(report, map, con);
             JasperViewer.viewReport(p, false);
-//            JasperExportManager.exportReportToPdfFile(p, maphieunhap);
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
@@ -896,14 +898,16 @@ public class ThemHoaDon extends javax.swing.JFrame {
     public void LayReportNull(int a) throws SQLException, JRException {
         int sohd = a;
         Hashtable map = new Hashtable();
-        JasperReport report = JasperCompileManager.compileReport("src\\report\\HoaDonAnDanh.jrxml");
         
         map.put("sohd", sohd);
         try {
             Connection con = ConnectionUtils.getMyConnection();
+            InputStream url = getClass().getResourceAsStream("/report/HoaDonAnDanh.jrxml");
+            JasperDesign ds = JRXmlLoader.load(url);
+            
+        JasperReport report = JasperCompileManager.compileReport(ds);
             JasperPrint p = JasperFillManager.fillReport(report, map, con);
             JasperViewer.viewReport(p, false);
-//            JasperExportManager.exportReportToPdfFile(p, maphieunhap);
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }

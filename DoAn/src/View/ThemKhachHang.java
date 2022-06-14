@@ -630,12 +630,16 @@ public class ThemKhachHang extends javax.swing.JFrame {
         String ngsinh = String.format("%1$td/%1$tm/%1$tY", datePickerNgSinh.getDate());
         String gioitinh = (String) cbbGioiTinh.getSelectedItem();
         String ghichu = txtGhichu.getText();
-        if (hoten.equals("") || diaChi.equals("") || sdt.equals("") || ngsinh.equals("") || gioitinh.equals("")) {
+        if (hoten.equals("") || diaChi.equals("") || sdt.equals("") || ngsinh.equals("null/null/null") || gioitinh.equals("")) {
             JOptionPane.showMessageDialog(this, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (!isNumeric(txtSDT.getText())) {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (isNumeric(hoten)) {
+            JOptionPane.showMessageDialog(this, "Họ tên không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận",JOptionPane.YES_NO_OPTION );

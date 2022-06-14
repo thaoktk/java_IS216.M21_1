@@ -581,6 +581,10 @@ public class ThemDoiTac_QL extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (isNumeric(tenNCC)) {
+            JOptionPane.showMessageDialog(this, "Tên NCC không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận",JOptionPane.YES_NO_OPTION );
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;

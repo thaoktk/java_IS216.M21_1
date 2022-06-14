@@ -30,13 +30,14 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
     String user;
     int thang = 0, nam = 0;
     boolean tinhLuongThanhCong;
+
     public TraCuuNhanVien_QL(String a) throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
         this.user = a;
         loadNhanVienAll();
         loadThangNam();
-        
+
     }
 
     /**
@@ -754,7 +755,7 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
         thang = now.getMonthValue();
         nam = now.getYear();
     }
-    
+
     public void tinhLuongNV() throws SQLException, ClassNotFoundException {
         LuongBUS bus = new LuongBUS();
         ArrayList<Integer> arr = new ArrayList<Integer>();
@@ -765,22 +766,18 @@ public class TraCuuNhanVien_QL extends javax.swing.JFrame {
             tinhLuongThanhCong = bus.tinhLuong(luong);
         }
     }
-    
+
     private void TinhSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TinhSalaryActionPerformed
         // TODO add your handling code here:
         LuongBUS bus = new LuongBUS();
-        int thangLuong = bus.getThangLuong();
-        if (thangLuong != thang) {
-            try {
-                tinhLuongNV();
-                JOptionPane.showMessageDialog(this, "Tính lương thành công!");
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(TraCuuNhanVien_QL.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            TinhSalary.setEnabled(false);
+        try {
+            bus.deleteLuong();
+            tinhLuongNV();
+            JOptionPane.showMessageDialog(this, "Tính lương thành công!");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TraCuuNhanVien_QL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_TinhSalaryActionPerformed
 

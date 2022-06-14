@@ -606,6 +606,9 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
         txtTenLSP.setText("");
         txtGhichu.setText("");
     }
+    public static boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
     
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
@@ -613,6 +616,10 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
         String ghichu = txtGhichu.getText();
         if (tenLSP.equals("")) {
             JOptionPane.showMessageDialog(this, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (isNumeric(tenLSP)) {
+            JOptionPane.showMessageDialog(this, "Tên LSP không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận",JOptionPane.YES_NO_OPTION );

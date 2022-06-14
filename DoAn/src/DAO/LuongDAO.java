@@ -13,12 +13,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import oracle.jdbc.OracleTypes;
+import java.sql.Statement;
 
 /**
  *
  * @author asus
  */
 public class LuongDAO {
+
     public static ArrayList<Luong> getLuongAll() {
         ArrayList<Luong> arr = new ArrayList<Luong>();
         String SQL = "{ call GET_LUONG_ALL(?) }";
@@ -54,7 +56,7 @@ public class LuongDAO {
 
         return arr;
     }
-    
+
     public static ArrayList<Integer> getMaNV() {
         ArrayList<Integer> arr = new ArrayList<Integer>();
         String SQL = "{ call GET_NHANVIEN_ALL(?) }";
@@ -83,7 +85,7 @@ public class LuongDAO {
 
         return arr;
     }
-    
+
     public static boolean tinhLuong(Luong luong) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionUtils.getMyConnection();
         CallableStatement ps = null;
@@ -106,7 +108,17 @@ public class LuongDAO {
 
         return check > 0;
     }
-    
+
+    public static boolean deleteLuong() throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionUtils.getMyConnection();
+        Statement ps = null;
+        String SQL = "DELETE FROM LUONG WHERE THANG = (EXTRACT(MONTH FROM SYSDATE)) AND NAM = (EXTRACT(YEAR FROM SYSDATE))";
+        ps = con.createStatement();
+        int check = ps.executeUpdate(SQL);
+        con.close();
+        return check > 0;
+    }
+
     public static ArrayList<Luong> timLuong(String option, String value) {
         ArrayList<Luong> arr = new ArrayList<Luong>();
         try {
@@ -142,7 +154,7 @@ public class LuongDAO {
                 km.setSoGioLamTT(rs.getDouble("SOGIOLAMTT"));
                 km.setSoGioLamTC(rs.getDouble("SOGIOLAMTC"));
                 km.setLuong(rs.getDouble("LUONG"));
-                
+
                 arr.add(km);
             }
             con.close();
@@ -152,7 +164,7 @@ public class LuongDAO {
 
         return arr;
     }
-    
+
     public static int getThangLuong() {
         int thang = 0;
         String SQL = "{ call GET_LUONG_THANG_MAX(?) }";
@@ -177,7 +189,7 @@ public class LuongDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
         return thang;
     }
 }

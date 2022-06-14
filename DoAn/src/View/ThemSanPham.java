@@ -738,7 +738,10 @@ public class ThemSanPham extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+        if (isNumeric(tenSP)) {
+            JOptionPane.showMessageDialog(this, "Tên SP không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String decimalPattern = "([0-9]*)\\.([0-9]*)"; 
         if (Pattern.matches(decimalPattern, slsan) || Pattern.matches(decimalPattern, gia)) {
             JOptionPane.showMessageDialog(this, "Số không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);

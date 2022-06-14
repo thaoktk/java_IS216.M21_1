@@ -708,20 +708,28 @@ public class ThemNhanVien_QL extends javax.swing.JFrame {
         String chucvu = (String) cbbChucVu.getSelectedItem();
         String ngvl = String.format("%1$td/%1$tm/%1$tY", datePickerNgVL.getDate());
         String luongcb = txtLuongCB.getText();
-        if (hoten.equals("") || diaChi.equals("") || cmnd.equals("") || sdt.equals("") || ngsinh.equals("") || 
-                gioitinh.equals("") || chucvu.equals("") || ngvl.equals("") || luongcb.equals("")) {
-            JOptionPane.showMessageDialog(this, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!isNumeric(txtCMND.getText()) || !isNumeric(txtSDT.getText()) || !isNumeric(txtLuongCB.getText())) {
-            JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        if (hoten.equals("") || diaChi.equals("") || cmnd.equals("") || sdt.equals("") || ngsinh.equals("null/null/null") || 
+                gioitinh.equals("") || chucvu.equals("") || ngvl.equals("null/null/null") || luongcb.equals("")) {
+            JOptionPane.showMessageDialog(this, "Thông tin không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String decimalPattern = "([0-9]*)\\.([0-9]*)"; 
         if (Pattern.matches(decimalPattern, luongcb)) {
-            JOptionPane.showMessageDialog(this, "Số không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Lương không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         } 
+        if (isNumeric(hoten)) {
+            JOptionPane.showMessageDialog(this, "Họ tên không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (Integer.parseInt(luongcb) <= 0) {
+            JOptionPane.showMessageDialog(this, "Lương không được nhỏ hơn 0!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!isNumeric(txtCMND.getText()) || !isNumeric(txtSDT.getText()) || !isNumeric(txtLuongCB.getText())) {
+            JOptionPane.showMessageDialog(this, "CMND/SĐT/Lương cơ bản phải là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận",JOptionPane.YES_NO_OPTION );
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;
