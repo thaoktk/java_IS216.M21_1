@@ -32,12 +32,61 @@ public class NhapHangDAO {
                 NhapHang kh = new NhapHang();
                 kh.setMaPN(rs.getInt("MAPHIEUNHAP"));
                 kh.setMaNCC(rs.getInt("MANCC"));
-                kh.setMaSP(rs.getInt("MASP"));
                 kh.setMaNV(rs.getInt("MANV"));
                 kh.setTongTienNhap(rs.getDouble("TONGTIENNHAP"));
                 kh.setNgayNhap(rs.getDate("NGAYNHAP").toLocalDate());
+                arr.add(kh);
+            }
+            con.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return arr;
+    }
+    
+    public static ArrayList<NhapHang> getSPNhapHangAll(String value) {
+        ArrayList<NhapHang> arr = new ArrayList<NhapHang>();
+        String SQL = "{ call GET_CTPN_ALL(?, ?) }";
+
+        try (Connection con = ConnectionUtils.getMyConnection()) {
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.setString(1, value);
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
+            while (rs.next()) {
+                NhapHang kh = new NhapHang();
+                kh.setMaSP(rs.getInt("MASP"));
                 kh.setSlNhap(rs.getInt("SLNHAP"));
-                kh.setGiaNhap(rs.getDouble("GIANHAP"));
+                kh.setGiaNhap(rs.getLong("GIANHAP"));
+                arr.add(kh);
+            }
+            con.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return arr;
+    }
+    
+    public static ArrayList<NhapHang> getSanPhamNhapHang(String value) {
+        ArrayList<NhapHang> arr = new ArrayList<NhapHang>();
+        String SQL = "{ call GET_PHIEUNHAP_MAPN(?, ?) }";
+
+        try (Connection con = ConnectionUtils.getMyConnection()) {
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.setString(1, value);
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
+            while (rs.next()) {
+                NhapHang kh = new NhapHang();
+                kh.setMaPN(rs.getInt("MAPHIEUNHAP"));
+                kh.setMaNCC(rs.getInt("MANCC"));
+                kh.setMaNV(rs.getInt("MANV"));
+                kh.setTongTienNhap(rs.getDouble("TONGTIENNHAP"));
+                kh.setNgayNhap(rs.getDate("NGAYNHAP").toLocalDate());
                 arr.add(kh);
             }
             con.close();
@@ -58,9 +107,6 @@ public class NhapHangDAO {
             case "Mã NV":
                 SQL = "{ call GET_PHIEUNHAP_MANV(?, ?) }";
                 break;
-            case "Mã SP":
-                SQL = "{ call GET_PHIEUNHAP_MASP(?, ?) }";
-                break;
         }
         try (Connection con = ConnectionUtils.getMyConnection()) {
             CallableStatement ps = con.prepareCall(SQL);
@@ -72,12 +118,9 @@ public class NhapHangDAO {
                 NhapHang kh = new NhapHang();
                 kh.setMaPN(rs.getInt("MAPHIEUNHAP"));
                 kh.setMaNCC(rs.getInt("MANCC"));
-                kh.setMaSP(rs.getInt("MASP"));
                 kh.setMaNV(rs.getInt("MANV"));
                 kh.setTongTienNhap(rs.getDouble("TONGTIENNHAP"));
                 kh.setNgayNhap(rs.getDate("NGAYNHAP").toLocalDate());
-                kh.setSlNhap(rs.getInt("SLNHAP"));
-                kh.setGiaNhap(rs.getDouble("GIANHAP"));
                 arr.add(kh);
             }
 
@@ -97,14 +140,11 @@ public class NhapHangDAO {
             ex.printStackTrace();
         }
 
-        String NgN = nh.toString(nh.getNgayNhap());
-
-        String SQL = "{? = call INSERT_PHIEUNHAP(?, to_date(?,'dd/mm/yyyy'), ?)}";
+        String SQL = "{? = call INSERT_PHIEUNHAP(?, ?)}";
 
         CallableStatement ps = con.prepareCall(SQL);
         ps.registerOutParameter(1, java.sql.Types.INTEGER);
-        ps.setInt(4, nh.getMaNV());
-        ps.setString(3, NgN);
+        ps.setInt(3, nh.getMaNV());
         ps.setInt(2, nh.getMaNCC());
         ps.executeUpdate();
         int check = ps.getInt(1);
@@ -163,4 +203,6 @@ public class NhapHangDAO {
 
         return maPN;
     }
+    
+    
 }

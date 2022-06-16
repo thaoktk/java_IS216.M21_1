@@ -219,4 +219,32 @@ public class DoiTacDAO {
 
         return maDT;
     }
+    
+    public static String getTenDT(String value) {
+        String SQL = "{ call GET_NHACUNGCAP_MANCC(?, ?) }";
+        String tenDT = null;
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.setString(1, value);
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
+            if (rs.next()) {
+                tenDT = rs.getString("TENNCC");
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return tenDT;
+    }
 }

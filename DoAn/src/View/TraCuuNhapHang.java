@@ -5,8 +5,10 @@
  */
 package View;
 
+import BUS.DoiTacBUS;
 import BUS.NhanVienBUS;
 import BUS.NhapHangBUS;
+import BUS.SanPhamBUS;
 import DTO.NhapHang;
 import static View.TraCuuNhanVien_QL.isNumeric;
 import java.awt.HeadlessException;
@@ -24,7 +26,9 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
      * Creates new form TraCuuNhapHang_QL
      */
     String user;
-    public TraCuuNhapHang(String a)throws HeadlessException {
+    String maPN;
+
+    public TraCuuNhapHang(String a) throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
         this.user = a;
@@ -51,6 +55,8 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         Find = new javax.swing.JButton();
         Add = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
@@ -90,7 +96,7 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
         cbb_search.setBackground(new java.awt.Color(249, 255, 254));
         cbb_search.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbb_search.setForeground(new java.awt.Color(0, 0, 0));
-        cbb_search.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã PN", "Mã NV", "Mã SP" }));
+        cbb_search.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã PN", "Mã NV" }));
         cbb_search.setFocusable(false);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -108,35 +114,35 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
         jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Mã PN", "Mã SP", "Mã NV", "SL nhập", "Giá nhập", "Ngày nhập", "Tổng tiền nhập"
+                "Mã PN", "Tên NV", "Ngày nhập", "Tổng tiền nhập"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Long.class, java.lang.Double.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.Long.class, java.lang.Double.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -151,16 +157,21 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.setShowGrid(true);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        Find.setText("Tìm");
         Find.setBackground(new java.awt.Color(196, 100, 96));
+        Find.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Find.setForeground(new java.awt.Color(255, 255, 255));
+        Find.setText("Tìm");
         Find.setBorder(null);
         Find.setBorderPainted(false);
         Find.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Find.setFocusPainted(false);
-        Find.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Find.setForeground(new java.awt.Color(255, 255, 255));
         Find.setRequestFocusEnabled(false);
         Find.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,20 +179,61 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
             }
         });
 
-        Add.setText("Tạo phiếu nhập");
         Add.setBackground(new java.awt.Color(196, 100, 96));
+        Add.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Add.setForeground(new java.awt.Color(255, 255, 255));
+        Add.setText("Tạo phiếu nhập");
         Add.setBorder(null);
         Add.setBorderPainted(false);
         Add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Add.setFocusPainted(false);
-        Add.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Add.setForeground(new java.awt.Color(255, 255, 255));
         Add.setRequestFocusEnabled(false);
         Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddActionPerformed(evt);
             }
         });
+
+        jTable2.setBackground(new java.awt.Color(180, 222, 197));
+        jTable2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable2.setForeground(new java.awt.Color(0, 0, 0));
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã SP", "Tên SP", "SL nhập", "Giá nhập"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Long.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.setSelectionBackground(new java.awt.Color(196, 100, 96));
+        jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable2.setShowGrid(true);
+        jTable2.getTableHeader().setReorderingAllowed(false);
+        jTable2.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTable2AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -203,6 +255,7 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
                         .addGap(112, 112, 112))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
@@ -231,11 +284,13 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
                             .addComponent(txtSearch)
                             .addComponent(cbb_search, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)))
                     .addComponent(Find, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 770, 690));
@@ -249,26 +304,26 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageText/tag/Chung.png"))); // NOI18N
 
-        QLNVBtn5.setText("Nhân viên");
         QLNVBtn5.setBackground(new java.awt.Color(231, 238, 237));
+        QLNVBtn5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLNVBtn5.setForeground(new java.awt.Color(196, 100, 96));
+        QLNVBtn5.setText("Nhân viên");
         QLNVBtn5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLNVBtn5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLNVBtn5.setFocusPainted(false);
-        QLNVBtn5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLNVBtn5.setForeground(new java.awt.Color(196, 100, 96));
         QLNVBtn5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLNVBtn5ActionPerformed(evt);
             }
         });
 
-        ChungBtn.setText("Chung");
         ChungBtn.setBackground(new java.awt.Color(231, 238, 237));
+        ChungBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ChungBtn.setForeground(new java.awt.Color(196, 100, 96));
+        ChungBtn.setText("Chung");
         ChungBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         ChungBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ChungBtn.setFocusPainted(false);
-        ChungBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        ChungBtn.setForeground(new java.awt.Color(196, 100, 96));
         ChungBtn.setRequestFocusEnabled(false);
         ChungBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,99 +331,99 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
             }
         });
 
-        QLSPBtn.setText("Sản phẩm");
         QLSPBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLSPBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLSPBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLSPBtn.setText("Sản phẩm");
         QLSPBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLSPBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLSPBtn.setFocusPainted(false);
-        QLSPBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLSPBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLSPBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLSPBtnActionPerformed(evt);
             }
         });
 
-        QLKHBtn.setText("Khách hàng");
         QLKHBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLKHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLKHBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLKHBtn.setText("Khách hàng");
         QLKHBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLKHBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLKHBtn.setFocusPainted(false);
-        QLKHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLKHBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLKHBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLKHBtnActionPerformed(evt);
             }
         });
 
-        QLDTBtn.setText("Đối tác");
         QLDTBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLDTBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLDTBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLDTBtn.setText("Đối tác");
         QLDTBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLDTBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLDTBtn.setFocusPainted(false);
-        QLDTBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLDTBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLDTBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLDTBtnActionPerformed(evt);
             }
         });
 
-        QLKMBtn.setText("Khuyến mãi");
         QLKMBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLKMBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLKMBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLKMBtn.setText("Khuyến mãi");
         QLKMBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLKMBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLKMBtn.setFocusPainted(false);
-        QLKMBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLKMBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLKMBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLKMBtnActionPerformed(evt);
             }
         });
 
-        QLNHBtn.setText("Nhập hàng");
         QLNHBtn.setBackground(new java.awt.Color(196, 100, 96));
+        QLNHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLNHBtn.setForeground(new java.awt.Color(255, 255, 255));
+        QLNHBtn.setText("Nhập hàng");
         QLNHBtn.setBorder(null);
         QLNHBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLNHBtn.setFocusPainted(false);
-        QLNHBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLNHBtn.setForeground(new java.awt.Color(255, 255, 255));
 
-        QLHDBtn.setText("Hóa đơn");
         QLHDBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLHDBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLHDBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLHDBtn.setText("Hóa đơn");
         QLHDBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLHDBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLHDBtn.setFocusPainted(false);
-        QLHDBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLHDBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLHDBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLHDBtnActionPerformed(evt);
             }
         });
 
-        QLDSBtn.setText("Doanh thu");
         QLDSBtn.setBackground(new java.awt.Color(231, 238, 237));
+        QLDSBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        QLDSBtn.setForeground(new java.awt.Color(196, 100, 96));
+        QLDSBtn.setText("Doanh thu");
         QLDSBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         QLDSBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLDSBtn.setFocusPainted(false);
-        QLDSBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        QLDSBtn.setForeground(new java.awt.Color(196, 100, 96));
         QLDSBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QLDSBtnActionPerformed(evt);
             }
         });
 
-        ChamCongBtn.setText("Chấm công");
         ChamCongBtn.setBackground(new java.awt.Color(231, 238, 237));
+        ChamCongBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ChamCongBtn.setForeground(new java.awt.Color(196, 100, 96));
+        ChamCongBtn.setText("Chấm công");
         ChamCongBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(196, 100, 96), 1, true));
         ChamCongBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ChamCongBtn.setFocusPainted(false);
-        ChamCongBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        ChamCongBtn.setForeground(new java.awt.Color(196, 100, 96));
         ChamCongBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ChamCongBtnActionPerformed(evt);
@@ -518,14 +573,14 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
         switch (checkChucVu()) {
             case 1:
             case 2:
-            TraCuuKhachHang.main(user);
-            break;
+                TraCuuKhachHang.main(user);
+                break;
             case 3:
-            TraCuuKhachHang_NV.main(user);
-            break;
+                TraCuuKhachHang_NV.main(user);
+                break;
             default:
-            KhachHang_KhongTruyCap_NV.main(user);
-            break;
+                KhachHang_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLKHBtnActionPerformed
 
@@ -544,14 +599,14 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
         hide();
         switch (checkChucVu()) {
             case 1:
-            TraCuuKhuyenMai_QL.main(user);
-            break;
+                TraCuuKhuyenMai_QL.main(user);
+                break;
             case 2:
-            TraCuuKhuyenMai_NV.main(user);
-            break;
+                TraCuuKhuyenMai_NV.main(user);
+                break;
             default:
-            KhuyenMai_KhongTruyCap_NV.main(user);
-            break;
+                KhuyenMai_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLKMBtnActionPerformed
 
@@ -561,14 +616,14 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
         switch (checkChucVu()) {
             case 1:
             case 2:
-            TraCuuHoaDon.main(user);
-            break;
+                TraCuuHoaDon.main(user);
+                break;
             case 3:
-            TraCuuHoaDon_NV.main(user);
-            break;
+                TraCuuHoaDon_NV.main(user);
+                break;
             default:
-            HoaDon_KhongTruyCap_NV.main(user);
-            break;
+                HoaDon_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLHDBtnActionPerformed
 
@@ -608,33 +663,63 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_FindActionPerformed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int rowSelected = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        maPN = model.getValueAt(rowSelected, 0).toString();
+        loadSPNhapHang();
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable2AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable2AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable2AncestorAdded
+
     public void loadNhapHangAll() {
-        String[] header = {"Mã PN", "Mã NV", "Mã SP", "Mã NCC", "Ngày nhập", "SL nhập", "Giá nhập", "Tổng tiền nhập"};
+        String[] header = {"Mã PN", "Tên NV", "Tên NCC", "Ngày nhập", "Tổng tiền nhập"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
         ArrayList<NhapHang> arr = new ArrayList<NhapHang>();
         arr = NhapHangBUS.getNhapHangAll();
         NhapHang kh = new NhapHang();
         for (int i = 0; i < arr.size(); i++) {
             kh = arr.get(i);
-            int maPN = kh.getMaPN();
+            int maPNAll = kh.getMaPN();
             int maNV = kh.getMaNV();
-            int maSP = kh.getMaSP();
+            String tenNV = NhanVienBUS.getTenNV(String.valueOf(maNV));
             int maDT = kh.getMaNCC();
+            String tenDT = DoiTacBUS.getTenDT(String.valueOf(maDT));
             String ngnhap = kh.toString(kh.getNgayNhap());
-            int slnhap = kh.getSlNhap();
-            long gianhap = kh.getGiaNhap();
             long tongtien = kh.getTongTienNhap();
-            Object[] row = {maPN, maNV, maSP, maDT, ngnhap, slnhap, gianhap, tongtien};
+            Object[] row = {maPNAll, tenNV, tenDT, ngnhap, tongtien};
             dtm.addRow(row);
         }
         jTable1.setModel(dtm);
     }
-    
+
+    public void loadSPNhapHang() {
+        String[] header = {"Mã SP", "Tên SP", "Sl nhập", "Giá nhập"};
+        DefaultTableModel dtm = new DefaultTableModel(header, 0);
+        ArrayList<NhapHang> arr = new ArrayList<NhapHang>();
+        arr = NhapHangBUS.getSPNhapHangAll(maPN);
+        NhapHang kh = new NhapHang();
+        for (int i = 0; i < arr.size(); i++) {
+            kh = arr.get(i);
+            int maSP = kh.getMaSP();
+            String tenSP = SanPhamBUS.getTenSP(maSP);
+            int slnhap = kh.getSlNhap();
+            long gianhap = kh.getGiaNhap();
+            Object[] row = {maSP, tenSP, slnhap, gianhap};
+            dtm.addRow(row);
+        }
+        jTable2.setModel(dtm);
+    }
+
     public void FindNhapHang() {
-        DefaultTableModel SearchTable = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel SearchTable1 = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel SearchTable2 = (DefaultTableModel) jTable2.getModel();
         String option = (String) cbb_search.getSelectedItem();
         String search = txtSearch.getText();
-        SearchTable.setRowCount(0);
+        SearchTable1.setRowCount(0);
 
         if (option.equals("Mã PN") || option.equals("Mã NV") || option.equals("Mã SP")) {
             if (!isNumeric(txtSearch.getText())) {
@@ -643,27 +728,29 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
             }
         }
 
-        ArrayList<NhapHang> arr = new ArrayList<NhapHang>();
-        arr = NhapHangBUS.timNhapHang(option, search);
+        ArrayList<NhapHang> arrPN = new ArrayList<NhapHang>();
+        arrPN = NhapHangBUS.timNhapHang(option, search);
         NhapHang kh = new NhapHang();
-        for (int i = 0; i < arr.size(); i++) {
-            kh = arr.get(i);
-            int maPN = kh.getMaPN();
+        int maPNAll = 0;
+        for (int i = 0; i < arrPN.size(); i++) {
+            kh = arrPN.get(i);
+            maPNAll = kh.getMaPN();
             int maNV = kh.getMaNV();
-            int maSP = kh.getMaSP();
+            String tenNV = NhanVienBUS.getTenNV(String.valueOf(maNV));
             int maDT = kh.getMaNCC();
+            String tenDT = DoiTacBUS.getTenDT(String.valueOf(maDT));
             String ngnhap = kh.toString(kh.getNgayNhap());
-            int slnhap = kh.getSlNhap();
-            long gianhap = kh.getGiaNhap();
             long tongtien = kh.getTongTienNhap();
-            Object[] row = {maPN, maNV, maSP, maDT, ngnhap, slnhap, gianhap, tongtien};
-            SearchTable.addRow(row);
+            Object[] row = {maPNAll, tenNV, tenDT, ngnhap, tongtien};
+            SearchTable1.addRow(row);
         }
-        if (arr.size() <= 0) {
+        loadSPNhapHang();
+        if (arrPN.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Thông tin tìm kiếm không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
 
     }
+
     /**
      * @param args the command line arguments
      */
@@ -722,8 +809,10 @@ public class TraCuuNhapHang extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

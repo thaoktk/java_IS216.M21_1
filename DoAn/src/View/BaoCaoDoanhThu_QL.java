@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,8 +37,8 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
     /**
      * Creates new form BaoCaoDoanhThu_QL
      */
-    
     String user;
+
     public BaoCaoDoanhThu_QL(String a) throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
@@ -622,7 +623,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             return 4;
         }
     }
-    
+
     private void QLNVBtn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QLNVBtn5ActionPerformed
         // TODO add your handling code here:
         hide();
@@ -645,15 +646,15 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         switch (checkChucVu()) {
             case 1:
             case 4:
-            TraCuuSanPham_QL.main(user);
-            break;
+                TraCuuSanPham_QL.main(user);
+                break;
             case 2:
             case 3:
-            TraCuuSanPham_NV.main(user);
-            break;
+                TraCuuSanPham_NV.main(user);
+                break;
             default:
-            SanPham_KhongTruyCap_NV.main(user);
-            break;
+                SanPham_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLSPBtnActionPerformed
 
@@ -663,14 +664,14 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         switch (checkChucVu()) {
             case 1:
             case 2:
-            TraCuuKhachHang.main(user);
-            break;
+                TraCuuKhachHang.main(user);
+                break;
             case 3:
-            TraCuuKhachHang_NV.main(user);
-            break;
+                TraCuuKhachHang_NV.main(user);
+                break;
             default:
-            KhachHang_KhongTruyCap_NV.main(user);
-            break;
+                KhachHang_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLKHBtnActionPerformed
 
@@ -689,14 +690,14 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         hide();
         switch (checkChucVu()) {
             case 1:
-            TraCuuKhuyenMai_QL.main(user);
-            break;
+                TraCuuKhuyenMai_QL.main(user);
+                break;
             case 2:
-            TraCuuKhuyenMai_NV.main(user);
-            break;
+                TraCuuKhuyenMai_NV.main(user);
+                break;
             default:
-            KhuyenMai_KhongTruyCap_NV.main(user);
-            break;
+                KhuyenMai_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLKMBtnActionPerformed
 
@@ -706,11 +707,11 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         switch (checkChucVu()) {
             case 1:
             case 4:
-            TraCuuNhapHang.main(user);
-            break;
+                TraCuuNhapHang.main(user);
+                break;
             default:
-            NhapHang_KhongTruyCap_NV.main(user);
-            break;
+                NhapHang_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLNHBtnActionPerformed
 
@@ -720,14 +721,14 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         switch (checkChucVu()) {
             case 1:
             case 2:
-            TraCuuHoaDon.main(user);
-            break;
+                TraCuuHoaDon.main(user);
+                break;
             case 3:
-            TraCuuHoaDon_NV.main(user);
-            break;
+                TraCuuHoaDon_NV.main(user);
+                break;
             default:
-            HoaDon_KhongTruyCap_NV.main(user);
-            break;
+                HoaDon_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLHDBtnActionPerformed
 
@@ -813,7 +814,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
         int nam = b;
         Hashtable map = new Hashtable();
         JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoDoanhThuThang.jrxml");
-        
+
         map.put("nam", nam);
         try {
             Connection con = ConnectionUtils.getMyConnection();
@@ -823,11 +824,11 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void LayReportDoanhThuNam(int a) throws SQLException, JRException {
         Hashtable map = new Hashtable();
         JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoDoanhThuTheoNam.jrxml");
-        
+
         try {
             Connection con = ConnectionUtils.getMyConnection();
             JasperPrint p = JasperFillManager.fillReport(report, map, con);
@@ -836,29 +837,32 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void LayReportTienNhapThang(int a, int b) throws SQLException, JRException {
         int nam = b;
+//        HashMap map = new HashMap();
         Hashtable map = new Hashtable();
-        
+        JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoTienNhapTheoThang.jrxml");
         map.put("nam", nam);
+//        String localDir = System.getProperty("user.dir");
+//
+//        MyreportViewer viewer = new MyreportViewer(localDir + "\\src\\report\\BaoCaoTienNhapTheoThang.jrxml", map);
+//        viewer.setVisible(true);
         try {
             Connection con = ConnectionUtils.getMyConnection();
-            InputStream url = getClass().getResourceAsStream("/report/BaoCaoTienNhapTheoThang.jasper");
-            JasperDesign ds = JRXmlLoader.load(url);
-
-            JasperReport report = JasperCompileManager.compileReport(ds);
-            JasperPrint p = JasperFillManager.fillReport(url, map, con);
+            JasperPrint p = JasperFillManager.fillReport(report, map, con);
             JasperViewer.viewReport(p, false);
+
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void LayReportTienNhapNam(int a) throws SQLException, JRException {
         Hashtable map = new Hashtable();
         JasperReport report = JasperCompileManager.compileReport("src\\report\\BaoCaoTienNhapNam.jrxml");
-        
+
         try {
             Connection con = ConnectionUtils.getMyConnection();
             JasperPrint p = JasperFillManager.fillReport(report, map, con);
@@ -867,11 +871,11 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void loadDoanhThuTheoThang() {
         int thang = Integer.parseInt(cbbThangDS.getSelectedItem().toString());
         int nam = Integer.parseInt(cbbNamDS.getSelectedItem().toString());
-        DoanhThu dt = new DoanhThu(thang, nam,0);
+        DoanhThu dt = new DoanhThu(thang, nam, 0);
         try {
             double doanhThuTheoThang = DoanhThuBUS.getDoanhSoTheoThang(dt);
             doanhThuThang.setText(String.valueOf(doanhThuTheoThang / 1000000) + "M");
@@ -879,7 +883,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void loadDoanhThuTheoNam() {
         int nam = Integer.parseInt(cbbNamDS.getSelectedItem().toString());
         DoanhThu dt = new DoanhThu(0, nam, 0);
@@ -890,7 +894,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void loadTienNhapTheoThang() {
         int thang = Integer.parseInt(cbbThangNH.getSelectedItem().toString());
         int nam = Integer.parseInt(cbbNamNH.getSelectedItem().toString());
@@ -902,7 +906,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void loadTienNhapTheoNam() {
         int nam = Integer.parseInt(cbbNamNH.getSelectedItem().toString());
         DoanhThu dt = new DoanhThu(0, nam, 0);
@@ -913,30 +917,31 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             Logger.getLogger(BaoCaoDoanhThu_QL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void loadThangDoanhSo() {
         ArrayList<Integer> arr = new ArrayList<Integer>();
         arr = DoanhThuBUS.getThangDoanhSo();
         cbbThangDS.setModel(new DefaultComboBoxModel(arr.toArray()));
     }
-    
+
     public void loadNamDoanhSo() {
         ArrayList<Integer> arr = new ArrayList<Integer>();
         arr = DoanhThuBUS.getNamDoanhSo();
         cbbNamDS.setModel(new DefaultComboBoxModel(arr.toArray()));
     }
+
     public void loadThangNhapHang() {
         ArrayList<Integer> arr = new ArrayList<Integer>();
         arr = DoanhThuBUS.getThangNhapHang();
         cbbThangNH.setModel(new DefaultComboBoxModel(arr.toArray()));
     }
-    
+
     public void loadNamNhapHang() {
         ArrayList<Integer> arr = new ArrayList<Integer>();
         arr = DoanhThuBUS.getNamNhapHang();
         cbbNamNH.setModel(new DefaultComboBoxModel(arr.toArray()));
     }
-    
+
     /**
      * @param args the command line arguments
      */

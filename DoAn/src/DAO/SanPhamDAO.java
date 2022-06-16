@@ -32,7 +32,7 @@ public class SanPhamDAO {
         }
 
         String SQL = "{? = call INSERT_SANPHAM(?, ?, ?, ?, ?, ?, ?)}";
-        
+
         CallableStatement ps = con.prepareCall(SQL);
         ps.registerOutParameter(1, java.sql.Types.INTEGER);
         ps.setString(2, sp.getTenSP());
@@ -49,14 +49,13 @@ public class SanPhamDAO {
         return check > 0;
     }
 
-    public static boolean update(SanPham sp) throws SQLException{
+    public static boolean update(SanPham sp) throws SQLException {
         try {
             Connection con = ConnectionUtils.getMyConnection();
             CallableStatement ps = null;
-            con.setAutoCommit(false);
             try {
                 String SQL = "{? = call UPDATE_SANPHAM(?, ?, ?, ?, ?, ?, ?, ?)}";
-                
+
                 ps = con.prepareCall(SQL);
                 ps.registerOutParameter(1, java.sql.Types.INTEGER);
                 ps.setInt(2, sp.getMaSP());
@@ -68,14 +67,12 @@ public class SanPhamDAO {
                 ps.setString(8, sp.getGhiChu());
                 ps.setString(9, sp.getAnhSP());
                 ps.executeUpdate();
-                con.commit();
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                con.rollback();
             }
             int check = ps.getInt(1);
             con.close();
-            
+
             return check > 0;
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,34 +88,30 @@ public class SanPhamDAO {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         CallableStatement ps = null;
-        con.setAutoCommit(false);
         try {
             String SQL = "{? = call DELETE_SANPHAM(?)}";
             ps = con.prepareCall(SQL);
             ps.registerOutParameter(1, java.sql.Types.INTEGER);
             ps.setString(2, value);
             ps.executeUpdate();
-            con.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
-            con.rollback();
         }
         int check = ps.getInt(1);
         con.close();
         return check > 0;
     }
 
-    public static ArrayList<SanPham> getSanPhamAll()  {
+    public static ArrayList<SanPham> getSanPhamAll() {
         ArrayList<SanPham> arr = new ArrayList<SanPham>();
-        String SQL = "{ call GET_SANPHAM_ALL(?) }";
+        String SQL = "SELECT * FROM SANPHAM ORDER BY MASP";
 
         Connection con = null;
+        Statement ps = null;
         try {
             con = ConnectionUtils.getMyConnection();
-            CallableStatement ps = con.prepareCall(SQL);
-            ps.registerOutParameter(1, OracleTypes.CURSOR);
-            ps.execute();
-            ResultSet rs = (ResultSet) ps.getObject(1);
+            ps = con.createStatement();
+            ResultSet rs = ps.executeQuery(SQL);
             while (rs.next()) {
                 SanPham sp = new SanPham();
                 sp.setMaSP(rs.getInt("MASP"));
@@ -130,7 +123,7 @@ public class SanPhamDAO {
                 sp.setGhiChu(rs.getString("GHICHU"));
                 arr.add(sp);
             }
-            con.close();
+//            con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
@@ -226,11 +219,11 @@ public class SanPhamDAO {
 
         return arr;
     }
-    
+
     public static String getAnhSP(int value) {
         String anhSP = null;
         String SQL = "{ call GET_SANPHAM_MASP(?, ?) }";
-        
+
         try {
             Connection con = null;
             try {
@@ -255,7 +248,36 @@ public class SanPhamDAO {
 
         return anhSP;
     }
-    
+
+    public static String getTenSP(int value) {
+        String tenSP = null;
+        String SQL = "{ call GET_SANPHAM_MASP(?, ?) }";
+
+        try {
+            Connection con = null;
+            try {
+                con = ConnectionUtils.getMyConnection();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            CallableStatement ps = con.prepareCall(SQL);
+            ps.setInt(1, value);
+            ps.registerOutParameter(2, OracleTypes.CURSOR);
+            ps.execute();
+            ResultSet rs = (ResultSet) ps.getObject(2);
+            if (rs.next()) {
+                tenSP = rs.getString("TENSP");
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return tenSP;
+    }
+
     public static ArrayList<String> getTenLSP() {
         ArrayList<String> arr = new ArrayList<String>();
         String SQL = "{ call GET_LOAISANPHAM_ALL(?) }";
@@ -284,7 +306,7 @@ public class SanPhamDAO {
 
         return arr;
     }
-    
+
     public static int getMaLSP(String value) {
         String SQL = "{ call GET_LOAISANPHAM_TENLOAISP(?, ?) }";
         int maSP = 0;
@@ -312,7 +334,7 @@ public class SanPhamDAO {
 
         return maSP;
     }
-    
+
     public static String getTenLSP(int value) {
         String SQL = "{ call GET_LOAISANPHAM_MALOAISP(?, ?) }";
         String tenSP = null;
@@ -340,7 +362,7 @@ public class SanPhamDAO {
 
         return tenSP;
     }
-    
+
     public static int getMaSP(String value) {
         String SQL = "{ call GET_SANPHAM_TENSP(?, ?) }";
         int maSP = 0;
@@ -368,7 +390,7 @@ public class SanPhamDAO {
 
         return maSP;
     }
-    
+
     public static ArrayList<String> getTenSP() {
         ArrayList<String> arr = new ArrayList<String>();
         String SQL = "{ call GET_SANPHAM_ALL(?) }";
@@ -397,7 +419,7 @@ public class SanPhamDAO {
 
         return arr;
     }
-    
+
     public static int getSoLuong(String value) {
         String SQL = "{ call GET_SANPHAM_SOLUONG(?, ?) }";
         int Soluong = 0;
@@ -425,8 +447,8 @@ public class SanPhamDAO {
 
         return Soluong;
     }
-    
-    public static ArrayList<SanPham> getSanPhamHoaDon(String value)  {
+
+    public static ArrayList<SanPham> getSanPhamHoaDon(String value) {
         ArrayList<SanPham> arr = new ArrayList<SanPham>();
         String SQL = "{ call GET_SANPHAM_HOADON(?, ?) }";
 

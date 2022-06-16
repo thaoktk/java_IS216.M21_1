@@ -7,7 +7,6 @@ package BUS;
 
 import DAO.DoiTacDAO;
 import DTO.DoiTac;
-import DTO.KhuyenMai;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -42,5 +41,9 @@ public class DoiTacBUS {
     
     public static int getMaDT(String value) {
         return DoiTacDAO.getMaDT(value);
+    }
+    
+    public static String getTenDT(String value) {
+        return DoiTacDAO.getTenDT(value);
     }
 }

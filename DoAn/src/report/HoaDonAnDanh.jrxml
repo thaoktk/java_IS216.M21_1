@@ -193,7 +193,7 @@ where hd.sohd = $P{sohd}]]>
 		<band height="95">
 			<image>
 				<reportElement x="158" y="36" width="238" height="59" uuid="44244ffb-431b-40b7-90db-724cf0db8393"/>
-				<imageExpression><![CDATA["D:\\Downloads\\java\\DoAn\\src\\ImageText\\tag\\LỜI KẾT.png"]]></imageExpression>
+				<imageExpression><![CDATA["src\\ImageText\\tag\\LỜI KẾT.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageFooter>

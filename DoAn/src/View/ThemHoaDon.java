@@ -898,14 +898,11 @@ public class ThemHoaDon extends javax.swing.JFrame {
     public void LayReportNull(int a) throws SQLException, JRException {
         int sohd = a;
         Hashtable map = new Hashtable();
+        JasperReport report = JasperCompileManager.compileReport("src\\report\\HoaDonAnDanh.jrxml");
         
         map.put("sohd", sohd);
         try {
             Connection con = ConnectionUtils.getMyConnection();
-            InputStream url = getClass().getResourceAsStream("/report/HoaDonAnDanh.jrxml");
-            JasperDesign ds = JRXmlLoader.load(url);
-            
-        JasperReport report = JasperCompileManager.compileReport(ds);
             JasperPrint p = JasperFillManager.fillReport(report, map, con);
             JasperViewer.viewReport(p, false);
         } catch (ClassNotFoundException ex) {

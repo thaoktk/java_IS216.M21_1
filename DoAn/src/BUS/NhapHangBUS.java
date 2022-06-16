@@ -36,4 +36,11 @@ public class NhapHangBUS {
         return NhapHangDAO.getMaPN();
     }
     
+    public static ArrayList<NhapHang> getSanPhamNhapHang(String value) {
+        return NhapHangDAO.getSanPhamNhapHang(value);
+    }
+    
+    public static ArrayList<NhapHang> getSPNhapHangAll(String value) {
+        return NhapHangDAO.getSPNhapHangAll(value);
+    }
 }

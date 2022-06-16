@@ -262,7 +262,7 @@ public class SuaKhachHang extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
 
-        cbbLoaiKH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Binh thuong", "Than thiet", "Vip" }));
+        cbbLoaiKH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Moi", "Than thiet", "Vip" }));
         cbbLoaiKH.setBackground(new java.awt.Color(249, 255, 254));
         cbbLoaiKH.setEnabled(false);
         cbbLoaiKH.setFocusable(false);

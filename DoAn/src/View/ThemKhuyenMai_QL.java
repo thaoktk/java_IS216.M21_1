@@ -12,6 +12,7 @@ import Connection.ConnectionUtils;
 import DTO.KhachHang;
 import DTO.KhuyenMai;
 import static View.TraCuuNhanVien_QL.isNumeric;
+import com.github.lgooddatepicker.components.TimePicker;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -456,7 +457,7 @@ public class ThemKhuyenMai_QL extends javax.swing.JFrame {
             return 4;
         }
     }
-    
+
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         hide();
@@ -591,6 +592,7 @@ public class ThemKhuyenMai_QL extends javax.swing.JFrame {
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
         String tenKM = txtTenKM.getText();
         String phanTram = txtPhanTram.getText();
         String ngbd = "", ngkt = "";
@@ -606,12 +608,21 @@ public class ThemKhuyenMai_QL extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Tên KM không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (Integer.parseInt(txtPhanTram.getText()) <= 0) {
+            JOptionPane.showMessageDialog(this, "Phần trăm không được nhỏ hơn 0!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (dateTimePickerNgBD.getDateTimePermissive() != null && dateTimePickerNgKT.getDateTimePermissive() != null) {
             ngbd = dateTimePickerNgBD.getDateTimePermissive().format(dateFormat);
             ngkt = dateTimePickerNgKT.getDateTimePermissive().format(dateFormat);
+            String time = dateTimePickerNgKT.getDateTimePermissive().format(timeFormat);
+            if (ngbd.equals(ngkt) && time.equals("00:00:00")) {
+                JOptionPane.showMessageDialog(this, "Giờ kết thúc không được bằng giờ bắt đầu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
 
-        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận",JOptionPane.YES_NO_OPTION );
+        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;
         }

@@ -69,4 +69,8 @@ public class SanPhamBUS {
     public static ArrayList<SanPham> getSanPhamHoaDon(String value) {
         return SanPhamDAO.getSanPhamHoaDon(value);
     }
+    
+    public static String getTenSP(int value) {
+        return SanPhamDAO.getTenSP(value);
+    }
 }

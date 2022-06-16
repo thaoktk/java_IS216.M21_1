@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="676b7def-77ef-440a-b80c-f2375b1d5169">
 	<property name="ireport.zoom" value="1.610510000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="246"/>
+	<property name="ireport.y" value="154"/>
 	<parameter name="sohd" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -198,7 +198,7 @@ where hd.sohd = $P{sohd}]]>
 		<band height="90" splitType="Stretch">
 			<image>
 				<reportElement x="158" y="18" width="238" height="72" uuid="62e0ed48-8bd3-448b-93f0-38f2de229a07"/>
-				<imageExpression><![CDATA["D:\\Downloads\\java\\DoAn\\src\\ImageText\\tag\\LỜI KẾT.png"]]></imageExpression>
+				<imageExpression><![CDATA["src\\ImageText\\tag\\LỜI KẾT.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageFooter>
