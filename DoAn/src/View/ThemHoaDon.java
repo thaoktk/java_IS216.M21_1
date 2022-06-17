@@ -51,7 +51,8 @@ public class ThemHoaDon extends javax.swing.JFrame {
     String slSan = null;
     Integer maKH = null;
     long triGia = 0;
-    public ThemHoaDon(String a, Integer maKH) throws HeadlessException{
+
+    public ThemHoaDon(String a, Integer maKH) throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
         this.user = a;
@@ -73,6 +74,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
             return 4;
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -102,6 +104,11 @@ public class ThemHoaDon extends javax.swing.JFrame {
         tongTienHoaDon = new javax.swing.JLabel();
         DelKM = new javax.swing.JButton();
         DelSP = new javax.swing.JButton();
+        cbb_search = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        Find = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Thêm hóa đơn");
@@ -387,6 +394,41 @@ public class ThemHoaDon extends javax.swing.JFrame {
             }
         });
 
+        cbb_search.setBackground(new java.awt.Color(249, 255, 254));
+        cbb_search.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cbb_search.setForeground(new java.awt.Color(0, 0, 0));
+        cbb_search.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã SP", "Tên SP", "Màu sắc", "Tên loại SP" }));
+        cbb_search.setFocusable(false);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Tìm kiếm SP theo");
+
+        txtSearch.setBackground(new java.awt.Color(249, 255, 254));
+        txtSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtSearch.setForeground(new java.awt.Color(0, 0, 0));
+        txtSearch.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtSearch.setCaretColor(new java.awt.Color(0, 0, 0));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Nhập vào");
+
+        Find.setBackground(new java.awt.Color(196, 100, 96));
+        Find.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Find.setForeground(new java.awt.Color(255, 255, 255));
+        Find.setText("Tìm");
+        Find.setBorder(null);
+        Find.setBorderPainted(false);
+        Find.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Find.setFocusPainted(false);
+        Find.setRequestFocusEnabled(false);
+        Find.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FindActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -403,35 +445,48 @@ public class ThemHoaDon extends javax.swing.JFrame {
                             .addComponent(InHD, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addGap(21, 21, 21)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addGap(797, 797, 797)
-                                    .addComponent(jLabel2))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(AddKM, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addGap(128, 128, 128)
-                                            .addComponent(jLabel3)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(SLMua, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(90, 90, 90)
-                                            .addComponent(AddSP, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addGap(42, 42, 42)
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 797, Short.MAX_VALUE)
+                            .addComponent(jLabel2)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(DelKM, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(DelSP, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(AddKM, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(128, 128, 128)
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(SLMua, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(90, 90, 90)
+                                        .addComponent(AddSP, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(42, 42, 42)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(cbb_search, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(32, 32, 32)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(DelKM, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(42, 42, 42)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(DelSP, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(24, 24, 24))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Find, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -440,11 +495,22 @@ public class ThemHoaDon extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(4, 4, 4)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtSearch)
+                            .addComponent(cbb_search, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Find, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(SLMua, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -458,7 +524,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(DelKM, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DelSP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(InHD, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tongTienHoaDon)
@@ -466,7 +532,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1090, 660));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1090, 750));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -481,7 +547,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
         // TODO add your handling code here:
         int rowSelected = TableKhuyenMai.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) TableKhuyenMai.getModel();
-        
+
         String ngbd = "", ngkt = "";
         if (model.getValueAt(rowSelected, 3) != null || model.getValueAt(rowSelected, 4) != null) {
             ngbd = model.getValueAt(rowSelected, 3).toString();
@@ -492,14 +558,14 @@ public class ThemHoaDon extends javax.swing.JFrame {
         String tenKM = model.getValueAt(rowSelected, 1).toString();
         String phanTram = model.getValueAt(rowSelected, 2).toString();
         float phanTramKM = Float.parseFloat(phanTram);
-        Object [] row = {maKM, tenKM, phanTramKM, ngbd, ngkt};
+        Object[] row = {maKM, tenKM, phanTramKM, ngbd, ngkt};
         rowKM = row;
     }//GEN-LAST:event_TableKhuyenMaiMouseClicked
 
     private void AddKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddKMActionPerformed
         // TODO add your handling code here:
-        if (rowKM == null){
-            JOptionPane.showMessageDialog(this,"Bạn chưa chọn khuyến mãi nào!","Lỗi",JOptionPane.ERROR_MESSAGE);
+        if (rowKM == null) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn khuyến mãi nào!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int rowSelected = TableKhuyenMai.getSelectedRow();
@@ -521,20 +587,20 @@ public class ThemHoaDon extends javax.swing.JFrame {
                 return;
             }
         }
-        
+
         if (model.getValueAt(rowSelected, 1).toString().equals("Khuyến mãi cho đơn hàng trên 5 triệu")) {
-            if (triGia < 5000000){
+            if (triGia < 5000000) {
                 JOptionPane.showMessageDialog(this, "Chưa đạt giá trị đơn hàng tối thiểu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-        } else if (model.getValueAt(rowSelected, 1).toString().equals("Khuyến mãi cho đơn hàng trên 10 triệu")){
-            if (triGia < 10000000){
+        } else if (model.getValueAt(rowSelected, 1).toString().equals("Khuyến mãi cho đơn hàng trên 10 triệu")) {
+            if (triGia < 10000000) {
                 JOptionPane.showMessageDialog(this, "Chưa đạt giá trị đơn hàng tối thiểu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
 
-        Object [] rowCheck = null;
+        Object[] rowCheck = null;
         for (int i = 0; i < arrKhuyenMai.size(); i++) {
             rowCheck = (Object[]) arrKhuyenMai.get(i);
             int maKMCheck = Integer.parseInt(rowCheck[0].toString());
@@ -543,11 +609,11 @@ public class ThemHoaDon extends javax.swing.JFrame {
                 return;
             }
         }
-        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm khuyến mãi này?", "Xác nhận",JOptionPane.YES_NO_OPTION );
+        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm khuyến mãi này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;
         }
-        
+
         arrKhuyenMai.add(rowKM);
         themKhuyenMai();
         loadKhuyenMaiAll();
@@ -565,25 +631,25 @@ public class ThemHoaDon extends javax.swing.JFrame {
         String mauSac = (String) model.getValueAt(rowSelected, 4);
         slSan = model.getValueAt(rowSelected, 5).toString();
         String maSP = model.getValueAt(rowSelected, 0).toString();
-        Object [] row = {maSP, tenSP, gia, maLSP, mauSac, slSan};
+        Object[] row = {maSP, tenSP, gia, maLSP, mauSac, slSan};
         rowSP = row;
-        
+
     }//GEN-LAST:event_TableSanPhamMouseClicked
 
     private void AddSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddSPActionPerformed
         // TODO add your handling code here:
-        
-        if (rowSP == null){
-            JOptionPane.showMessageDialog(this,"Bạn chưa chọn sản phẩm nào!","Lỗi",JOptionPane.ERROR_MESSAGE);
+
+        if (rowSP == null) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm nào!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         int rowSelected = TableSanPham.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) TableSanPham.getModel();
         String ma = model.getValueAt(rowSelected, 0).toString();
         int maSPAdd = Integer.parseInt(ma);
-        
-        Object [] rowCheck = null;
+
+        Object[] rowCheck = null;
         for (int i = 0; i < arrSanPham.size(); i++) {
             rowCheck = (Object[]) arrSanPham.get(i);
             int maSPCheck = Integer.parseInt(rowCheck[0].toString());
@@ -592,41 +658,40 @@ public class ThemHoaDon extends javax.swing.JFrame {
                 return;
             }
         }
-        
+
         if (SLMua.getText().equals("")) {
-            JOptionPane.showMessageDialog(this,"Số lượng mua không được để trống!","Lỗi",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Số lượng mua không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         if (!isNumeric(SLMua.getText())) {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        String decimalPattern = "([0-9]*)\\.([0-9]*)"; 
+
+        String decimalPattern = "([0-9]*)\\.([0-9]*)";
         if (Pattern.matches(decimalPattern, SLMua.getText())) {
             JOptionPane.showMessageDialog(this, "Số không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
-        } 
-        
+        }
+
         int slSanSP = Integer.parseInt(slSan);
         int slMuaSP = Integer.parseInt(SLMua.getText());
         if (slMuaSP > slSanSP) {
-            JOptionPane.showMessageDialog(this,"Số lượng mua không được nhiều hơn số lượng có sẵn!","Lỗi",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Số lượng mua không được nhiều hơn số lượng có sẵn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         if (slMuaSP <= 0) {
-            JOptionPane.showMessageDialog(this,"Số lượng mua không hợp lệ!","Lỗi",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Số lượng mua không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        
-        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm sản phẩm này?", "Xác nhận",JOptionPane.YES_NO_OPTION );
+
+        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm sản phẩm này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;
         }
-        
+
         rowSP[5] = SLMua.getText();
         arrSanPham.add(rowSP);
         themSanPham();
@@ -640,11 +705,11 @@ public class ThemHoaDon extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) KhuyenMaiThem.getModel();
 
         if (rowSelected == -1) {
-            JOptionPane.showMessageDialog(this,"Bạn chưa chọn khuyến mãi để xóa!","Lỗi",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn khuyến mãi để xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận",JOptionPane.YES_NO_OPTION );
+        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;
         }
@@ -660,11 +725,11 @@ public class ThemHoaDon extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) SanPhamThem.getModel();
 
         if (rowSelected == -1) {
-            JOptionPane.showMessageDialog(this,"Bạn chưa chọn sản phẩm để xóa!","Lỗi",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm để xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận",JOptionPane.YES_NO_OPTION );
+        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;
         }
@@ -688,25 +753,25 @@ public class ThemHoaDon extends javax.swing.JFrame {
         arrKhuyenMai.clear();
         arrSanPham.clear();
     }
-    
+
     private void InHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InHDActionPerformed
         // TODO add your handling code here:
         if (arrSanPham.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Bạn chưa thêm sản phẩm để tạo hóa đơn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn tạo hóa đơn?", "Xác nhận",JOptionPane.YES_NO_OPTION );
+
+        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn tạo hóa đơn?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;
         }
-        
+
         try {
             int soHD = 0;
             int maNV = Integer.parseInt(user);
             HoaDon hd = new HoaDon(soHD, maNV, maKH, 0, 0, 0, null, 0, 0, 0, null);
             HoaDonBUS bus = new HoaDonBUS();
-            
+
             if (bus.insertHD(hd)) {
                 if (bus.getSoHD() != 0) {
                     soHD = bus.getSoHD();
@@ -741,7 +806,6 @@ public class ThemHoaDon extends javax.swing.JFrame {
                             }
                         }
                     }
-                    
 
                     if (hoadonCTHD) {
                         JOptionPane.showMessageDialog(this, "Đã tạo hóa đơn thành công!");
@@ -772,6 +836,49 @@ public class ThemHoaDon extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_InHDActionPerformed
 
+    private void FindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindActionPerformed
+        // TODO add your handling code here:
+        String search = txtSearch.getText();
+        if (search.equals("")) {
+            loadSanPhamAll();
+        } else {
+            FindSanPham();
+        }
+    }//GEN-LAST:event_FindActionPerformed
+    public void FindSanPham() {
+        DefaultTableModel SearchTable = (DefaultTableModel) TableSanPham.getModel();
+        String option = (String) cbb_search.getSelectedItem();
+        String search = txtSearch.getText();
+        SearchTable.setRowCount(0);
+
+        if (option.equals("Mã SP")) {
+            if (!isNumeric(txtSearch.getText())) {
+                JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        ArrayList<SanPham> arr = new ArrayList<SanPham>();
+        arr = SanPhamBUS.timSanPham(option, search);
+        SanPham dt = new SanPham();
+        for (int i = 0; i < arr.size(); i++) {
+            dt = arr.get(i);
+            int maSP = dt.getMaSP();
+            String tenSP = dt.getTenSP();
+            long gia = dt.getGiaSP();
+            int maloaiSP = dt.getMaLoaiSP();
+            String tenloaiSP = SanPhamBUS.getTenLSP(maloaiSP);
+            String mausac = dt.getMauSac();
+            int slsan = dt.getSlsan();
+            String ghichu = dt.getGhiChu();
+            Object[] row = {maSP, tenSP, gia, tenloaiSP, mausac, slsan, ghichu};
+            SearchTable.addRow(row);
+        }
+        if (arr.size() <= 0) {
+            JOptionPane.showMessageDialog(this, "Thông tin tìm kiếm không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     public void themKhuyenMai() {
         String[] header = {"Mã KM", "Tên khuyến mãi", "Phần trăm", "Ngày bắt đầu", "Ngày kết thúc"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
@@ -782,7 +889,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
         }
         KhuyenMaiThem.setModel(dtm);
     }
-    
+
     public void themSanPham() {
         String[] header = {"Mã SP", "Tên sản phẩm", "Giá", "Mã loại SP", "Màu sắc", "SL mua"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
@@ -793,7 +900,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
         }
         SanPhamThem.setModel(dtm);
     }
-    
+
     public void loadKhuyenMaiAll() {
         String[] header = {"Mã KM", "Tên khuyến mãi", "Phần trăm", "Ngày bắt đầu", "Ngày kết thúc"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
@@ -811,9 +918,9 @@ public class ThemHoaDon extends javax.swing.JFrame {
             dtm.addRow(row);
         }
         TableKhuyenMai.setModel(dtm);
-        
+
     }
-    
+
     public void loadSanPhamAll() {
         String[] header = {"Mã SP", "Tên sản phẩm", "Giá", "Mã loại SP", "Màu sắc", "SL sẵn", "Ghi chú"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
@@ -834,11 +941,11 @@ public class ThemHoaDon extends javax.swing.JFrame {
         }
         TableSanPham.setModel(dtm);
     }
-    
+
     public void loadTongTien() {
         long tongTien = 0, triGiaHoaDon = 0;
         float chietKhau = 0;
-        
+
         Object[] rowSPHD = null, rowKMHD = null;
         if (arrSanPham.size() > 0) {
             for (int i = 0; i < arrSanPham.size(); i++) {
@@ -860,7 +967,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
             int checkLoaiKH = KhachHangBUS.getLoaiKH(maKHKhacNull);
 
             switch (checkLoaiKH) {
-                case 1: 
+                case 1:
                     chietKhau = (chietKhau + 0);
                     break;
                 case 2:
@@ -875,16 +982,16 @@ public class ThemHoaDon extends javax.swing.JFrame {
         } else {
             triGiaHoaDon = (long) (triGiaHoaDon + (tongTien - tongTien * chietKhau));
         }
-        
+
         triGia = triGiaHoaDon;
         tongTienHoaDon.setText(String.valueOf(triGia) + " VNĐ");
     }
-    
+
     public void LayReportKhacNull(int a) throws SQLException, JRException {
         int sohd = a;
         Hashtable map = new Hashtable();
         JasperReport report = JasperCompileManager.compileReport("src\\report\\HoaDon.jrxml");
-        
+
         map.put("sohd", sohd);
         try {
             Connection con = ConnectionUtils.getMyConnection();
@@ -894,12 +1001,12 @@ public class ThemHoaDon extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    
+
     public void LayReportNull(int a) throws SQLException, JRException {
         int sohd = a;
         Hashtable map = new Hashtable();
         JasperReport report = JasperCompileManager.compileReport("src\\report\\HoaDonAnDanh.jrxml");
-        
+
         map.put("sohd", sohd);
         try {
             Connection con = ConnectionUtils.getMyConnection();
@@ -909,6 +1016,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -949,21 +1057,26 @@ public class ThemHoaDon extends javax.swing.JFrame {
     private javax.swing.JButton AddSP;
     private javax.swing.JButton DelKM;
     private javax.swing.JButton DelSP;
+    private javax.swing.JButton Find;
     private javax.swing.JButton InHD;
     private javax.swing.JTable KhuyenMaiThem;
     private javax.swing.JTextField SLMua;
     private javax.swing.JTable SanPhamThem;
     private javax.swing.JTable TableKhuyenMai;
     private javax.swing.JTable TableSanPham;
+    private javax.swing.JComboBox<String> cbb_search;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel tongTienHoaDon;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

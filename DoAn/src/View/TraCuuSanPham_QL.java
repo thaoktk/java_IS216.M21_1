@@ -731,7 +731,7 @@ public class TraCuuSanPham_QL extends javax.swing.JFrame {
         String search = txtSearch.getText();
         SearchTable.setRowCount(0);
 
-        if (option.equals("Mã SP") || option.equals("Mã loại SP")) {
+        if (option.equals("Mã SP")) {
             if (!isNumeric(txtSearch.getText())) {
                 JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
