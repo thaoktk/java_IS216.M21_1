@@ -35,3 +35,5 @@ INSERT INTO LOAISANPHAM VALUES(SEQ8_MALOAISP.NEXTVAL, N'Cài áo', NULL);
 
 COMMIT;
 --THÀNH CÔNG
+
+select * from sanpham where maloaisp not in (16, 17, 18, 20, 24, 25);
