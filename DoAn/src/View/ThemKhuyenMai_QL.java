@@ -608,8 +608,8 @@ public class ThemKhuyenMai_QL extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Tên KM không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (Integer.parseInt(txtPhanTram.getText()) <= 0) {
-            JOptionPane.showMessageDialog(this, "Phần trăm không được nhỏ hơn 0!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        if (Float.parseFloat(phanTram) <= 0) {
+            JOptionPane.showMessageDialog(this, "Phần trăm phải lớn hơn 0!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (dateTimePickerNgBD.getDateTimePermissive() != null && dateTimePickerNgKT.getDateTimePermissive() != null) {

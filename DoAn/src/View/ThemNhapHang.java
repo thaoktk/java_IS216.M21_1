@@ -581,6 +581,15 @@ public class ThemNhapHang extends javax.swing.JFrame {
         // TODO add your handling code here:
         String slnhap = txtSLNhap.getText();
         String tenNCC = null;
+        Object[] rowCheck = null;
+        for (int i = 0; i < arrObj.size(); i++) {
+            rowCheck = (Object[]) arrObj.get(i);
+            String tenSPCheck = rowCheck[1].toString();
+            if (tenSP.equals(tenSPCheck)) {
+                JOptionPane.showMessageDialog(this, "Bạn đã thêm sản phẩm này rồi!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
         if (cbbTenNCC.isEnabled()) {
             tenNCC = cbbTenNCC.getSelectedItem().toString();
         }
@@ -610,16 +619,6 @@ public class ThemNhapHang extends javax.swing.JFrame {
         if (tenSP == null) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm nào!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
-        }
-
-        Object[] rowCheck = null;
-        for (int i = 0; i < arrObj.size(); i++) {
-            rowCheck = (Object[]) arrObj.get(i);
-            String tenSPCheck = rowCheck[2].toString();
-            if (tenSP.equals(tenSPCheck)) {
-                JOptionPane.showMessageDialog(this, "Bạn đã thêm sản phẩm này rồi!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
         }
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
