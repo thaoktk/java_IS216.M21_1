@@ -26,6 +26,7 @@ public class SuaKhuyenMai_QL extends javax.swing.JFrame {
      */
     String user;
     int maKMSave;
+
     public SuaKhuyenMai_QL(String a) throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
@@ -357,10 +358,11 @@ public class SuaKhuyenMai_QL extends javax.swing.JFrame {
     public static boolean isNumeric(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");
     }
-    
+
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         // TODO add your handling code here:
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
         String tenKM = txtTenKM.getText();
         String phanTram = txtPhanTram.getText();
         String ngbd = "", ngkt = "";
@@ -376,17 +378,30 @@ public class SuaKhuyenMai_QL extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Tên KM không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (Float.parseFloat(phanTram) <= 0) {
+            JOptionPane.showMessageDialog(this, "Phần trăm phải lớn hơn 0!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (dateTimePickerNgBD.getDateTimePermissive() != null && dateTimePickerNgKT.getDateTimePermissive() != null) {
             ngbd = dateTimePickerNgBD.getDateTimePermissive().format(dateFormat);
             ngkt = dateTimePickerNgKT.getDateTimePermissive().format(dateFormat);
+            String time = dateTimePickerNgKT.getDateTimePermissive().format(timeFormat);
+            if (ngbd.equals(ngkt) && time.equals("00:00:00")) {
+                JOptionPane.showMessageDialog(this, "Giờ kết thúc không được bằng giờ bắt đầu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (dateTimePickerNgBD.getDateTimePermissive().isBefore(LocalDateTime.now())) {
+                JOptionPane.showMessageDialog(this, "Ngày khuyến mãi không được nhỏ hơn ngày hiện tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
-        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn cập nhật?", "Xác nhận",JOptionPane.YES_NO_OPTION );
+        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn cập nhật?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;
         }
         try {
             float phanTramKM = Float.parseFloat(phanTram);
-            
+
             LocalDateTime ngBD = null, ngKT = null;
             if (!ngbd.equals("") || !ngkt.equals("")) {
                 ngBD = LocalDateTime.parse(ngbd, dateFormat);

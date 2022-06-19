@@ -308,7 +308,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Tổng tiền:");
 

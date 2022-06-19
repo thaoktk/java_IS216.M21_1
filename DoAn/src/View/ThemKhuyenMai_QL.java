@@ -620,6 +620,10 @@ public class ThemKhuyenMai_QL extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Giờ kết thúc không được bằng giờ bắt đầu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            if (dateTimePickerNgBD.getDateTimePermissive().isBefore(LocalDateTime.now())) {
+                JOptionPane.showMessageDialog(this, "Ngày khuyến mãi không được nhỏ hơn ngày hiện tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
 
         int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận", JOptionPane.YES_NO_OPTION);
