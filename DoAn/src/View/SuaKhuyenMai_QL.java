@@ -9,6 +9,7 @@ import BUS.KhuyenMaiBUS;
 import BUS.NhanVienBUS;
 import DTO.KhuyenMai;
 import java.awt.HeadlessException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -390,7 +391,8 @@ public class SuaKhuyenMai_QL extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Giờ kết thúc không được bằng giờ bắt đầu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (dateTimePickerNgBD.getDateTimePermissive().isBefore(LocalDateTime.now())) {
+            LocalDate datecheck = dateTimePickerNgBD.getDateTimePermissive().toLocalDate();
+            if (datecheck.isBefore(LocalDate.now())) {
                 JOptionPane.showMessageDialog(this, "Ngày khuyến mãi không được nhỏ hơn ngày hiện tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }

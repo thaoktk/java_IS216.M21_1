@@ -577,7 +577,7 @@
               <StringArray count="3">
                 <StringItem index="0" value="Moi"/>
                 <StringItem index="1" value="Than thiet"/>
-                <StringItem index="2" value="Vip"/>
+                <StringItem index="2" value="VIP"/>
               </StringArray>
             </Property>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">

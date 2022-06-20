@@ -5,23 +5,14 @@
  */
 package View;
 
-import BUS.KhachHangBUS;
 import BUS.KhuyenMaiBUS;
 import BUS.NhanVienBUS;
-import Connection.ConnectionUtils;
-import DTO.KhachHang;
 import DTO.KhuyenMai;
 import static View.TraCuuNhanVien_QL.isNumeric;
-import com.github.lgooddatepicker.components.TimePicker;
 import java.awt.HeadlessException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -620,7 +611,8 @@ public class ThemKhuyenMai_QL extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Giờ kết thúc không được bằng giờ bắt đầu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (dateTimePickerNgBD.getDateTimePermissive().isBefore(LocalDateTime.now())) {
+            LocalDate datecheck = dateTimePickerNgBD.getDateTimePermissive().toLocalDate();
+            if (datecheck.isBefore(LocalDate.now())) {
                 JOptionPane.showMessageDialog(this, "Ngày khuyến mãi không được nhỏ hơn ngày hiện tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }

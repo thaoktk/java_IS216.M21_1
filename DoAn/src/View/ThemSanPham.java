@@ -730,7 +730,7 @@ public class ThemSanPham extends javax.swing.JFrame {
         String slsan = txtSLsan.getText();
         String gia = txtGia.getText();
         String tenloaiSP = cbb_MaLSP.getSelectedItem().toString();
-        if (tenSP.equals("") || slsan.equals("") || gia.equals("") || tenloaiSP.equals("") || file == null) {
+        if (tenSP.equals("") || gia.equals("") || tenloaiSP.equals("") || file == null) {
             JOptionPane.showMessageDialog(this, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -760,7 +760,10 @@ public class ThemSanPham extends javax.swing.JFrame {
             SanPhamBUS bus = new SanPhamBUS();
             int ma = 0;
             int maLSP = bus.getMaLSP(tenloaiSP);
-            int slSanSP = Integer.parseInt(slsan);
+            int slSanSP = 0;
+            if (!slsan.equals("")) {
+                slSanSP = Integer.parseInt(slsan);
+            }
             long giaSP = Long.parseLong(gia);
             String anh = file.getAbsolutePath();
             SanPham dt = new SanPham(ma, maLSP, slSanSP, tenSP, mausac, ghichu, anh, giaSP);

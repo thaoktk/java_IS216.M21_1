@@ -821,7 +821,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             JasperPrint p = JasperFillManager.fillReport(report, map, con);
             JasperViewer.viewReport(p, false);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -834,7 +834,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             JasperPrint p = JasperFillManager.fillReport(report, map, con);
             JasperViewer.viewReport(p, false);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -854,7 +854,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             JasperViewer.viewReport(p, false);
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -867,7 +867,7 @@ public class BaoCaoDoanhThu_QL extends javax.swing.JFrame {
             JasperPrint p = JasperFillManager.fillReport(report, map, con);
             JasperViewer.viewReport(p, false);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ThemNhapHang.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
