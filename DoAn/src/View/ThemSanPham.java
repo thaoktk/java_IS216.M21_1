@@ -37,7 +37,7 @@ public class ThemSanPham extends javax.swing.JFrame {
      */
     String user;
     File file = null;
-    
+
     public ThemSanPham(String a) throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
@@ -543,7 +543,7 @@ public class ThemSanPham extends javax.swing.JFrame {
             return 4;
         }
     }
-    
+
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         hide();
@@ -566,14 +566,14 @@ public class ThemSanPham extends javax.swing.JFrame {
         switch (checkChucVu()) {
             case 1:
             case 2:
-            TraCuuKhachHang.main(user);
-            break;
+                TraCuuKhachHang.main(user);
+                break;
             case 3:
-            TraCuuKhachHang_NV.main(user);
-            break;
+                TraCuuKhachHang_NV.main(user);
+                break;
             default:
-            KhachHang_KhongTruyCap_NV.main(user);
-            break;
+                KhachHang_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLKHBtnActionPerformed
 
@@ -592,14 +592,14 @@ public class ThemSanPham extends javax.swing.JFrame {
         hide();
         switch (checkChucVu()) {
             case 1:
-            TraCuuKhuyenMai_QL.main(user);
-            break;
+                TraCuuKhuyenMai_QL.main(user);
+                break;
             case 2:
-            TraCuuKhuyenMai_NV.main(user);
-            break;
+                TraCuuKhuyenMai_NV.main(user);
+                break;
             default:
-            KhuyenMai_KhongTruyCap_NV.main(user);
-            break;
+                KhuyenMai_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLKMBtnActionPerformed
 
@@ -609,11 +609,11 @@ public class ThemSanPham extends javax.swing.JFrame {
         switch (checkChucVu()) {
             case 1:
             case 4:
-            TraCuuNhapHang.main(user);
-            break;
+                TraCuuNhapHang.main(user);
+                break;
             default:
-            NhapHang_KhongTruyCap_NV.main(user);
-            break;
+                NhapHang_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLNHBtnActionPerformed
 
@@ -623,14 +623,14 @@ public class ThemSanPham extends javax.swing.JFrame {
         switch (checkChucVu()) {
             case 1:
             case 2:
-            TraCuuHoaDon.main(user);
-            break;
+                TraCuuHoaDon.main(user);
+                break;
             case 3:
-            TraCuuHoaDon_NV.main(user);
-            break;
+                TraCuuHoaDon_NV.main(user);
+                break;
             default:
-            HoaDon_KhongTruyCap_NV.main(user);
-            break;
+                HoaDon_KhongTruyCap_NV.main(user);
+                break;
         }
     }//GEN-LAST:event_QLHDBtnActionPerformed
 
@@ -665,8 +665,8 @@ public class ThemSanPham extends javax.swing.JFrame {
         hide();
         if (checkChucVu() == 1 || checkChucVu() == 4) {
             TraCuuSanPham_QL.main(user);
-        } 
-        
+        }
+
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void showAnh(File file) {
@@ -681,7 +681,7 @@ public class ThemSanPham extends javax.swing.JFrame {
         }
 
     }
-    
+
     private void openFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
         // TODO add your handling code here:
         JFileChooser fc = new JFileChooser();
@@ -690,21 +690,18 @@ public class ThemSanPham extends javax.swing.JFrame {
         } catch (URISyntaxException ex) {
             ex.printStackTrace();
         }
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg","gif","png");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "gif", "png");
         fc.addChoosableFileFilter(filter);
         fc.setDialogTitle("Chọn ảnh sản phẩm");
         int result = fc.showOpenDialog(null);
-        if(result == JFileChooser.APPROVE_OPTION){
+        if (result == JFileChooser.APPROVE_OPTION) {
             file = fc.getSelectedFile();
             try {
-                if (ImageIO.read(file) != null)
-                {
+                if (ImageIO.read(file) != null) {
                     showAnh(file);
-                }
-                else
-                {
+                } else {
                     file = null;
-                    JOptionPane.showMessageDialog(this,"Không phải ảnh","Lỗi",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Không phải ảnh", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -721,7 +718,7 @@ public class ThemSanPham extends javax.swing.JFrame {
         cbb_MaLSP.setSelectedItem(null);
         showAnh(null);
     }
-    
+
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
         String tenSP = txtTenSP.getText();
@@ -734,25 +731,31 @@ public class ThemSanPham extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (!isNumeric(txtSLsan.getText()) || !isNumeric(txtGia.getText())) {
+        if (!isNumeric(txtGia.getText())) {
             JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
+        }
+        if (!slsan.equals("")) {
+            if (!isNumeric(slsan)) {
+                JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
         if (isNumeric(tenSP)) {
             JOptionPane.showMessageDialog(this, "Tên SP không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String decimalPattern = "([0-9]*)\\.([0-9]*)"; 
+        String decimalPattern = "([0-9]*)\\.([0-9]*)";
         if (Pattern.matches(decimalPattern, slsan) || Pattern.matches(decimalPattern, gia)) {
             JOptionPane.showMessageDialog(this, "Số không được là kiểu thập phân", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
-        } 
+        }
         if (Integer.parseInt(txtGia.getText()) <= 0) {
             JOptionPane.showMessageDialog(this, "Thông tin không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận",JOptionPane.YES_NO_OPTION );
+
+        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
             return;
         }
@@ -787,6 +790,7 @@ public class ThemSanPham extends javax.swing.JFrame {
         arr = SanPhamBUS.getTenLSP();
         cbb_MaLSP.setModel(new DefaultComboBoxModel(arr.toArray()));
     }
+
     /**
      * @param args the command line arguments
      */
