@@ -11,11 +11,11 @@ package DTO;
  */
 public class SanPham {
     private int maSP, maLoaiSP, slsan;
-    private String tenSP, mauSac, ghiChu, anhSP;
+    private String tenSP, mauSac, ghiChu, anhSP, tenLSP;
     private long giaSP;
 //    private byte[] hinh;
 
-    public SanPham(int maSP, int maLoaiSP, int slsan, String tenSP, String mauSac, String ghiChu, String anhSP, long giaSP) {
+    public SanPham(int maSP, int maLoaiSP, int slsan, String tenSP, String mauSac, String ghiChu, String anhSP, long giaSP, String tenLSP) {
         this.maSP = maSP;
         this.maLoaiSP = maLoaiSP;
         this.slsan = slsan;
@@ -24,6 +24,7 @@ public class SanPham {
         this.ghiChu = ghiChu;
         this.anhSP = anhSP;
         this.giaSP = giaSP;
+        this.tenLSP = tenLSP;
     }
 
 
@@ -36,6 +37,7 @@ public class SanPham {
         this.ghiChu = "";
         this.anhSP = "";
         this.giaSP = 0;
+        this.tenLSP = "";
     }
 
     public String getAnhSP() {
@@ -44,6 +46,10 @@ public class SanPham {
 
     public int getMaSP() {
         return maSP;
+    }
+
+    public String getTenLSP() {
+        return tenLSP;
     }
 
     public int getMaLoaiSP() {
@@ -92,6 +98,10 @@ public class SanPham {
 
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
+    }
+
+    public void setTenLSP(String tenLSP) {
+        this.tenLSP = tenLSP;
     }
 
     public void setGiaSP(long giaSP) {

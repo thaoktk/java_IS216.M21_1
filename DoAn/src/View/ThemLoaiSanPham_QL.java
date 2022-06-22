@@ -32,6 +32,7 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
      * Creates new form ThemLoaiSanPham_QL
      */
     String user;
+    String maLSP;
     public ThemLoaiSanPham_QL(String a)throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
@@ -73,6 +74,9 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        Del = new javax.swing.JButton();
+        save = new javax.swing.JButton();
+        reset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Thêm loại sản phẩm");
@@ -405,7 +409,55 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.setShowGrid(true);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+
+        Del.setBackground(new java.awt.Color(249, 255, 254));
+        Del.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Del.setForeground(new java.awt.Color(196, 100, 96));
+        Del.setText("Xóa");
+        Del.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
+        Del.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Del.setFocusPainted(false);
+        Del.setRequestFocusEnabled(false);
+        Del.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DelActionPerformed(evt);
+            }
+        });
+
+        save.setBackground(new java.awt.Color(249, 255, 254));
+        save.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        save.setForeground(new java.awt.Color(196, 100, 96));
+        save.setText("Sửa");
+        save.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(196, 100, 96)));
+        save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        save.setFocusPainted(false);
+        save.setRequestFocusEnabled(false);
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
+
+        reset.setBackground(new java.awt.Color(196, 100, 96));
+        reset.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        reset.setForeground(new java.awt.Color(255, 255, 255));
+        reset.setText("Reset");
+        reset.setBorder(null);
+        reset.setBorderPainted(false);
+        reset.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        reset.setFocusPainted(false);
+        reset.setRequestFocusEnabled(false);
+        reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -415,24 +467,27 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(17, 17, 17)
-                            .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(411, 411, 411)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(txtTenLSP, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(txtGhichu, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(411, 411, 411)
-                                .addComponent(jLabel4))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(txtTenLSP, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(45, 45, 45)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13)
-                                    .addComponent(txtGhichu, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Del, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(12, 12, 12)
+                        .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -453,9 +508,12 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(txtGhichu, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(36, 36, 36)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Del, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -645,6 +703,82 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_AddActionPerformed
 
+    private void DelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelActionPerformed
+        // TODO add your handling code here:
+        if (maLSP == null) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn loại sản phẩm để xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận",JOptionPane.YES_NO_OPTION );
+        if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
+            return;
+        }
+        try {
+            LoaiSanPhamBUS bus = new LoaiSanPhamBUS();
+
+            if (bus.delete(maLSP)) {
+                JOptionPane.showMessageDialog(this, "Đã xóa thành công!");
+                loadLoaiSanPhamAll();
+            } else {
+                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_DelActionPerformed
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        // TODO add your handling code here:
+        String tenLSP = txtTenLSP.getText();
+        String ghichu = txtGhichu.getText();
+        if (tenLSP.equals("")) {
+            JOptionPane.showMessageDialog(this, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (isNumeric(tenLSP)) {
+            JOptionPane.showMessageDialog(this, "Tên LSP không được là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int reply = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn cập nhật?", "Xác nhận",JOptionPane.YES_NO_OPTION );
+        if (reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION) {
+            return;
+        }
+        try {
+            int ma = Integer.parseInt(maLSP);
+            LoaiSanPham dt = new LoaiSanPham(ma, tenLSP, ghichu);
+            LoaiSanPhamBUS bus = new LoaiSanPhamBUS();
+
+            if (bus.update(dt)) {
+                JOptionPane.showMessageDialog(this, "Đã cập nhật thành công!");
+                clearLSP();
+                loadLoaiSanPhamAll();
+            } else {
+                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }//GEN-LAST:event_saveActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int rowSelected = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        txtTenLSP.setText(model.getValueAt(rowSelected, 1).toString());
+        if (model.getValueAt(rowSelected, 2) != null) {
+            txtGhichu.setText(model.getValueAt(rowSelected, 2).toString());
+        }
+        maLSP = model.getValueAt(rowSelected, 0).toString();
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
+        // TODO add your handling code here:
+        clearLSP();
+    }//GEN-LAST:event_resetActionPerformed
+
     public void loadLoaiSanPhamAll() {
         String[] header = {"Mã loại SP", "Tên loại sản phẩm",  "Ghi chú"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
@@ -700,6 +834,7 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
     private javax.swing.JButton Add;
     private javax.swing.JButton Back;
     private javax.swing.JButton ChamCongBtn;
+    private javax.swing.JButton Del;
     private javax.swing.JButton QLDSBtn;
     private javax.swing.JButton QLDTBtn;
     private javax.swing.JButton QLHDBtn;
@@ -720,6 +855,8 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton reset;
+    private javax.swing.JButton save;
     private javax.swing.JTextField txtGhichu;
     private javax.swing.JTextField txtTenLSP;
     // End of variables declaration//GEN-END:variables

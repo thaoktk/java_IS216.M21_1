@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import oracle.jdbc.OracleTypes;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -38,6 +39,36 @@ public class LoaiSanPhamDAO {
         con.close();
 
         return check > 0;
+    }
+    
+    public static boolean update(LoaiSanPham lsp) throws SQLException {
+        Connection con = null;
+        try {
+            con = ConnectionUtils.getMyConnection();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
+        String SQL = "UPDATE LOAISANPHAM SET TENLOAISP = ?, GHICHU = ? WHERE MALOAISP = ?";
+        PreparedStatement ps = con.prepareStatement(SQL);
+        ps.setString(1, lsp.getTenLoaiSP());
+        ps.setString(2, lsp.getGhiChu());
+        ps.setInt(3, lsp.getMaLoaiSP());
+        return ps.executeUpdate() > 0;
+    }
+    
+    public static boolean delete(String value) throws SQLException {
+        Connection con = null;
+        try {
+            con = ConnectionUtils.getMyConnection();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
+        String SQL = "DELETE FROM LOAISANPHAM WHERE MALOAISP = ?";
+        PreparedStatement ps = con.prepareStatement(SQL);
+        ps.setString(1, value);
+        return ps.executeUpdate() > 0;
     }
     
     public static ArrayList<LoaiSanPham> getLoaiSanPhamAll() {

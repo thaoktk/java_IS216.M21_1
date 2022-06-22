@@ -769,7 +769,7 @@ public class ThemSanPham extends javax.swing.JFrame {
             }
             long giaSP = Long.parseLong(gia);
             String anh = file.getAbsolutePath();
-            SanPham dt = new SanPham(ma, maLSP, slSanSP, tenSP, mausac, ghichu, anh, giaSP);
+            SanPham dt = new SanPham(ma, maLSP, slSanSP, tenSP, mausac, ghichu, anh, giaSP, tenloaiSP);
 
             if (bus.insertSP(dt)) {
                 JOptionPane.showMessageDialog(this, "Đã thêm thành công!");

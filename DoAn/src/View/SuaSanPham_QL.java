@@ -568,7 +568,7 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
                 anh = bus.getAnhSP(maSPSave);
             }
             int maloaiSP = bus.getMaLSP(tenloaiSP);
-            SanPham dt = new SanPham(maSPSave, maloaiSP, slSanSP, tenSP, mausac, ghichu, anh, giaSP);
+            SanPham dt = new SanPham(maSPSave, maloaiSP, slSanSP, tenSP, mausac, ghichu, anh, giaSP,tenloaiSP);
 
             if (bus.updateSP(dt)) {
                 JOptionPane.showMessageDialog(this, "Đã cập nhật thành công!");
@@ -594,7 +594,6 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
         cbbMaLSP.setSelectedItem(null);
         txtAnh.setText("");
     }
-    
     public void FindSanPham() {
         DefaultTableModel SearchTable = (DefaultTableModel) jTable1.getModel();
         String option = (String) cbb_search.getSelectedItem();
@@ -639,8 +638,7 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             int maSP = dt.getMaSP();
             String tenSP = dt.getTenSP();
             long gia = dt.getGiaSP();
-            int maloaiSP = dt.getMaLoaiSP();
-            String tenloaiSP = SanPhamBUS.getTenLSP(maloaiSP);
+            String tenloaiSP = dt.getTenLSP();
             String mausac = dt.getMauSac();
             int slsan = dt.getSlsan();
             String ghichu = dt.getGhiChu();
@@ -648,7 +646,6 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             dtm.addRow(row);
         }
         jTable1.setModel(dtm);
-
     }
     
     public void loaiLoaiSP() {

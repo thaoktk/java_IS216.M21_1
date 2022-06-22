@@ -104,7 +104,7 @@ public class SanPhamDAO {
 
     public static ArrayList<SanPham> getSanPhamAll() {
         ArrayList<SanPham> arr = new ArrayList<SanPham>();
-        String SQL = "SELECT * FROM SANPHAM ORDER BY MASP";
+        String SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP ORDER BY MASP";
 
         Connection con = null;
         Statement ps = null;
@@ -117,13 +117,13 @@ public class SanPhamDAO {
                 sp.setMaSP(rs.getInt("MASP"));
                 sp.setTenSP(rs.getString("TENSP"));
                 sp.setGiaSP(rs.getLong("GIA"));
-                sp.setMaLoaiSP(rs.getInt("MALOAISP"));
+                sp.setTenLSP(rs.getString("TENLOAISP"));
                 sp.setMauSac(rs.getString("MAUSAC"));
                 sp.setSlsan(rs.getInt("SLSAN"));
                 sp.setGhiChu(rs.getString("GHICHU"));
                 arr.add(sp);
             }
-//            con.close();
+            con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
@@ -183,16 +183,16 @@ public class SanPhamDAO {
             String SQL = null;
             switch (option) {
                 case "Mã SP":
-                    SQL = "{ call GET_SANPHAM_MASP(?, ?) }";
+                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP WHERE MASP=? ORDER BY MASP";
                     break;
                 case "Tên SP":
-                    SQL = "{ call GET_SANPHAM_TENSP(?, ?) }";
+                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP WHERE TENSP=? ORDER BY MASP";
                     break;
                 case "Màu sắc":
-                    SQL = "{ call GET_SANPHAM_MAUSAC(?, ?) }";
+                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP WHERE MAUSAC=? ORDER BY MASP";
                     break;
                 case "Tên loại SP":
-                    SQL = "{ call GET_SANPHAM_TENLOAISP(?, ?) }";
+                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP WHERE LSP.TENLOAISP=? ORDER BY MASP";
                     break;
             }
 

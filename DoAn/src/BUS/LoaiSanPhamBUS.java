@@ -26,4 +26,12 @@ public class LoaiSanPhamBUS {
     public static ArrayList<Integer> getMaLoaiSanPhamAll() {
         return LoaiSanPhamDAO.getMaLoaiSanPhamAll();
     }
+    
+    public static boolean update(LoaiSanPham lsp) throws SQLException {
+        return LoaiSanPhamDAO.update(lsp);
+    }
+    
+    public static boolean delete(String value) throws SQLException {
+        return LoaiSanPhamDAO.delete(value);
+    }
 }
