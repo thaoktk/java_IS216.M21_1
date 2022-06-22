@@ -65,10 +65,19 @@ public class LoaiSanPhamDAO {
             ex.printStackTrace();
         }
         
-        String SQL = "DELETE FROM LOAISANPHAM WHERE MALOAISP = ?";
-        PreparedStatement ps = con.prepareStatement(SQL);
-        ps.setString(1, value);
-        return ps.executeUpdate() > 0;
+        CallableStatement ps = null;
+        try {
+            String SQL = "{? = call DELETE_LOAISANPHAM(?)}";
+            ps = con.prepareCall(SQL);
+            ps.registerOutParameter(1, java.sql.Types.INTEGER);
+            ps.setString(2, value);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        int check = ps.getInt(1);
+        con.close();
+        return check > 0;
     }
     
     public static ArrayList<LoaiSanPham> getLoaiSanPhamAll() {

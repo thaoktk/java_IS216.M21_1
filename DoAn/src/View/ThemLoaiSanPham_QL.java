@@ -5,20 +5,11 @@
  */
 package View;
 
-import BUS.DoiTacBUS;
 import BUS.LoaiSanPhamBUS;
 import BUS.NhanVienBUS;
-import BUS.SanPhamBUS;
-import Connection.ConnectionUtils;
 import DTO.LoaiSanPham;
 import java.awt.HeadlessException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -32,7 +23,7 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
      * Creates new form ThemLoaiSanPham_QL
      */
     String user;
-    String maLSP;
+    String maLSP = null;
     public ThemLoaiSanPham_QL(String a)throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
@@ -730,6 +721,10 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         // TODO add your handling code here:
+        if (maLSP == null) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn loại sản phẩm để cập nhật!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String tenLSP = txtTenLSP.getText();
         String ghichu = txtGhichu.getText();
         if (tenLSP.equals("")) {

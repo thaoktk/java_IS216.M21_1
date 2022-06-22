@@ -678,7 +678,7 @@ public class XoaSanPham_QL extends javax.swing.JFrame {
         String search = txtSearch.getText();
         SearchTable.setRowCount(0);
 
-        if (option.equals("Mã SP") || option.equals("Mã loại SP")) {
+        if (option.equals("Mã SP")) {
             if (!isNumeric(txtSearch.getText())) {
                 JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -693,8 +693,7 @@ public class XoaSanPham_QL extends javax.swing.JFrame {
             int maSP = dt.getMaSP();
             String tenSP = dt.getTenSP();
             long gia = dt.getGiaSP();
-            int maloaiSP = dt.getMaLoaiSP();
-            String tenloaiSP = SanPhamBUS.getTenLSP(maloaiSP);
+            String tenloaiSP = dt.getTenLSP();
             String mausac = dt.getMauSac();
             int slsan = dt.getSlsan();
             String ghichu = dt.getGhiChu();

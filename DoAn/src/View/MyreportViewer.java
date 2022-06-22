@@ -10,7 +10,6 @@ import java.awt.Container;
 import java.sql.SQLException;
 import java.util.HashMap;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.*;

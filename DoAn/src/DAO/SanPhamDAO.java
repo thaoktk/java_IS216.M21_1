@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.jdbc.OracleTypes;
-
+import java.sql.PreparedStatement;
 /**
  *
  * @author asus
@@ -183,30 +183,29 @@ public class SanPhamDAO {
             String SQL = null;
             switch (option) {
                 case "Mã SP":
-                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP WHERE MASP=? ORDER BY MASP";
+                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP AND MASP=? ORDER BY MASP";
                     break;
                 case "Tên SP":
-                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP WHERE TENSP=? ORDER BY MASP";
+                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP AND TENSP=? ORDER BY MASP";
                     break;
                 case "Màu sắc":
-                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP WHERE MAUSAC=? ORDER BY MASP";
+                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP AND MAUSAC=? ORDER BY MASP";
                     break;
                 case "Tên loại SP":
-                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP WHERE LSP.TENLOAISP=? ORDER BY MASP";
+                    SQL = "SELECT SP.*, LSP.TENLOAISP FROM SANPHAM SP, LOAISANPHAM LSP WHERE SP.MALOAISP = LSP.MALOAISP AND LSP.TENLOAISP=? ORDER BY MASP";
                     break;
             }
 
-            CallableStatement ps = con.prepareCall(SQL);
+            PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, value);
-            ps.registerOutParameter(2, OracleTypes.CURSOR);
             ps.execute();
-            ResultSet rs = (ResultSet) ps.getObject(2);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 SanPham temp = new SanPham();
                 temp.setMaSP(rs.getInt("MASP"));
                 temp.setTenSP(rs.getString("TENSP"));
                 temp.setGiaSP(rs.getLong("GIA"));
-                temp.setMaLoaiSP(rs.getInt("MALOAISP"));
+                temp.setTenLSP(rs.getString("TENLOAISP"));
                 temp.setMauSac(rs.getString("MAUSAC"));
                 temp.setSlsan(rs.getInt("SLSAN"));
                 temp.setGhiChu(rs.getString("GHICHU"));

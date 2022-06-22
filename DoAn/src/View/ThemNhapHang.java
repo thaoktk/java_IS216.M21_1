@@ -186,7 +186,7 @@ public class ThemNhapHang extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã NCC", "Tên SP", "SL nhập", "Giá nhập"
+                "Tên NCC", "Tên SP", "SL nhập", "Giá nhập"
             }
         ) {
             Class[] types = new Class [] {

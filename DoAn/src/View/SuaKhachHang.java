@@ -33,7 +33,7 @@ public class SuaKhachHang extends javax.swing.JFrame {
      * Creates new form SuaKhachHang
      */
     String user;
-    int maKHSave;
+    int maKHSave = -1;
     public SuaKhachHang(String a) throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
@@ -514,6 +514,10 @@ public class SuaKhachHang extends javax.swing.JFrame {
     
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         // TODO add your handling code here:
+        if (maKHSave == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn khách hàng để cập nhật!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String hoten = txtHoten.getText();
         String diaChi = txtDiachi.getText();
         String sdt = txtSDT.getText();

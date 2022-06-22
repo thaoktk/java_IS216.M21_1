@@ -7,15 +7,11 @@ package View;
 
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
-import Connection.ConnectionUtils;
 import DTO.SanPham;
-import static View.SuaNhanVien_QL.isNumeric;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +34,7 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
      */
     String user;
     File file = null;
-    int maSPSave;
+    int maSPSave = -1;
     public SuaSanPham_QL(String a) throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
@@ -524,6 +520,10 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
     
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         // TODO add your handling code here:
+        if (maSPSave == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm để cập nhật!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String tenSP = txtTenSP.getText();
         String ghichu = txtGhichu.getText();
         String mausac = txtMausac.getText();
@@ -600,7 +600,7 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
         String search = txtSearch.getText();
         SearchTable.setRowCount(0);
 
-        if (option.equals("Mã SP") || option.equals("Mã loại SP")) {
+        if (option.equals("Mã SP")) {
             if (!isNumeric(txtSearch.getText())) {
                 JOptionPane.showMessageDialog(this, "Hãy nhập vào 1 số", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -615,8 +615,7 @@ public class SuaSanPham_QL extends javax.swing.JFrame {
             int maSP = dt.getMaSP();
             String tenSP = dt.getTenSP();
             long gia = dt.getGiaSP();
-            int maloaiSP = dt.getMaLoaiSP();
-            String tenloaiSP = SanPhamBUS.getTenLSP(maloaiSP);
+            String tenloaiSP = dt.getTenLSP();
             String mausac = dt.getMauSac();
             int slsan = dt.getSlsan();
             String ghichu = dt.getGhiChu();

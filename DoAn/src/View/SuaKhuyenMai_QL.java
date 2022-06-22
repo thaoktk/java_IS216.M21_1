@@ -26,7 +26,7 @@ public class SuaKhuyenMai_QL extends javax.swing.JFrame {
      * Creates new form SuaKhuyenMai_QL
      */
     String user;
-    int maKMSave;
+    int maKMSave = -1;
 
     public SuaKhuyenMai_QL(String a) throws HeadlessException {
         initComponents();
@@ -362,6 +362,10 @@ public class SuaKhuyenMai_QL extends javax.swing.JFrame {
 
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         // TODO add your handling code here:
+        if (maKMSave == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn khuyến mãi để cập nhật!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
         String tenKM = txtTenKM.getText();

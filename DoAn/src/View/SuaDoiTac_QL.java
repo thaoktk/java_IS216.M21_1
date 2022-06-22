@@ -24,7 +24,7 @@ public class SuaDoiTac_QL extends javax.swing.JFrame {
      * Creates new form SuaDoiTac_QL
      */
     String user;
-    int maDTSave;
+    int maDTSave = -1;
     public SuaDoiTac_QL(String a) throws HeadlessException{
         initComponents();
         setLocationRelativeTo(null);
@@ -375,6 +375,10 @@ public class SuaDoiTac_QL extends javax.swing.JFrame {
     
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         // TODO add your handling code here:
+        if (maDTSave == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn đối tác để cập nhật!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String tenNCC = txtTenNCC.getText();
         String diaChi = txtDiachi.getText();
         String sdt = txtSDT.getText();

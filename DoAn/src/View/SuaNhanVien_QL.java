@@ -7,7 +7,6 @@ package View;
 
 import BUS.NhanVienBUS;
 import DTO.NhanVien;
-import static View.TraCuuNhanVien_QL.isNumeric;
 import java.awt.HeadlessException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -34,7 +33,7 @@ public class SuaNhanVien_QL extends javax.swing.JFrame {
      * Creates new form SuaNhanVien_QL
      */
     String user;
-    int maNVSave;
+    int maNVSave = -1;
     public SuaNhanVien_QL(String a) throws HeadlessException {
         initComponents();
         setLocationRelativeTo(null);
@@ -432,9 +431,9 @@ public class SuaNhanVien_QL extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Save, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Save, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25))
         );
 
@@ -558,6 +557,10 @@ public class SuaNhanVien_QL extends javax.swing.JFrame {
     
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         // TODO add your handling code here:
+        if (maNVSave == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn nhân viên để cập nhật!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String hoten = txtHoTen.getText();
         String diaChi = txtDiaChi.getText();
         String cmnd = txtCMND.getText();
