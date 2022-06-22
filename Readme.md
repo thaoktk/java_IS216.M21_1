@@ -77,6 +77,7 @@
     * itext-2.1.7.jar
     * org-jruby-jruby.jar
     * org-jdesktop-layout.jar
+    * jasper-compiler-jdt.jar
 - Các plugin đã sử dụng để tạo report:
     * ${distro.zipfilename.extensions}.nbm
     * iReport-5.5.0.nbm
