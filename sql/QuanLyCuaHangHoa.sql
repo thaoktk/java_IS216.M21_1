@@ -423,27 +423,6 @@ BEGIN
 END;
 /
 
---So luong ban ra tai mot thoi diem cua san pham trong CTHD phai nho hon hoac bang so luong co san cua san pham do tai thoi diem do, 
---neu nhu ban thanh cong thi so luong san cua san pham do cung thay doi.
-SET DEFINE OFF;
-CREATE OR REPLACE TRIGGER TRIGGER_SOLUONGBAN_CTHD
-AFTER INSERT ON CTHD
-FOR EACH ROW
-DECLARE
-    var_soluongsan SANPHAM.SLSAN%TYPE;
-BEGIN
-    SELECT SLSAN INTO var_soluongsan
-    FROM SANPHAM
-    WHERE MASP = :NEW.MASP;
-    
-    IF(:NEW.SOLUONG > var_soluongsan) THEN
-        RAISE_APPLICATION_ERROR(-20000, 'San pham khong du so luong co san!');
-    ELSIF(:NEW.SOLUONG <= 0) THEN
-        RAISE_APPLICATION_ERROR(-20000, 'Loi nhap so luong!');
-    END IF;
-END;
-/
-
 --tri gia cua mot hoa don thay doi khi tong tien hoac chiet khau cua hoa don do thay doi.
 SET DEFINE OFF;
 CREATE OR REPLACE TRIGGER TRIGGER_THAYDOITIEN_HOADON
@@ -1156,6 +1135,21 @@ CREATE OR REPLACE FUNCTION DELETE_NHACUNGCAP(VAR_KHOACHINH NUMBER)RETURN NUMBER
 AS
 BEGIN
     DELETE FROM NHACUNGCAP WHERE MANCC = VAR_KHOACHINH;
+    IF (SQL%ROWCOUNT = 0) THEN
+        RETURN 0;
+    END IF;
+    COMMIT;
+    RETURN 1;
+EXCEPTION
+    WHEN OTHERS THEN
+        RETURN 0;
+END;
+/
+--Xóa dòng dữ liệu bảng LOAISANPHAM
+CREATE OR REPLACE FUNCTION DELETE_LOAISANPHAM(VAR_KHOACHINH NUMBER)RETURN NUMBER
+AS
+BEGIN
+    DELETE FROM LOAISANPHAM WHERE MALOAISP = VAR_KHOACHINH;
     IF (SQL%ROWCOUNT = 0) THEN
         RETURN 0;
     END IF;
