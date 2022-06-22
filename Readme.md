@@ -11,12 +11,12 @@
 
 - Người quản lý:
 
-    * Quản lý sản phẩm, xem chi tiết sản phẩm, thêm loại sản phẩm.
-    * Quản lý nhân viên, tính lương cho từng nhân viên.
-    * Quản lý nhập hàng vào kho, in phiếu nhập.
+    * Quản lý sản phẩm, xem chi tiết sản phẩm, quản lý loại sản phẩm.
+    * Quản lý nhân viên, tính lương cho từng nhân viên, tra cứu lương.
+    * Quản lý nhập hàng vào kho, xem chi tiết phiếu nhập, in phiếu nhập.
     * Quản lý khách hàng.
     * Chấm công và tra cứu chấm công.
-    * Tạo, tra cứu hóa đơn và in hóa đơn.
+    * Tạo, tra cứu hóa đơn, xem chi tiết hóa đơn và in hóa đơn.
     * Quản lý đối tác (nhà cung cấp).
     * Quản lý các khuyến mãi.
     * Báo cáo, thống kê doanh thu và số tiền nhập hàng.
@@ -39,7 +39,7 @@
 - Nhân viên kho:
 
     * Quản lý nhập hàng vào kho, in phiếu nhập.
-    * Thêm sản phẩm mới.
+    * Quản lý sản phẩm, xem chi tiết sản phẩm.
     * Chấm công.
 
 - Chức năng nâng cao đã làm: chấm công, tính lương nhân viên.
@@ -77,6 +77,7 @@
     * itext-2.1.7.jar
     * org-jruby-jruby.jar
     * org-jdesktop-layout.jar
+    * jasper-compiler-jdt.jar
 - Các plugin đã sử dụng để tạo report:
     * ${distro.zipfilename.extensions}.nbm
     * iReport-5.5.0.nbm
@@ -86,16 +87,16 @@
 
 ## CÁC BƯỚC CHẠY PHẦN MỀM
 
-B1: Clone project về máy, file java nằm trong folder DoAn, có chia các View và mô hình 3 lớp
+B1: Clone project về máy, file java nằm trong folder DoAn, mở netbean và chạy trực tiếp, có chia các View và mô hình 3 lớp
 
 B2: Cài đặt hệ quản trị cơ sở dữ liệu Oracle 19C
 
     + https://www.oracle.com/database/technologies/oracle19c-windows-downloads.html
     
-B3: Setup database, tạo user trên sqlplus (tên user: c##QLCH_HOA, mật khẩu: Admin123), tạo các table -> chạy trigger, procedure, function -> insert dữ liệu -> commit (làm đúng thứ tự)
+B3: Setup database, tạo user trên sqlplus (tên user: c##QLCH_HOA, mật khẩu: Admin123), tạo các table, sequence, chạy sesion ngày tháng -> chạy trigger, procedure, function -> insert dữ liệu -> commit (làm đúng thứ tự)
 
-B4: Cài đặt các thư viện và plugin đã neu ở trên, chạy chương trình
-    + Tài khoản để đăng nhập vào chương trình:
+B4: Cài đặt các thư viện và plugin đã nêu ở trên, chạy chương trình
+    + Tài khoản để đăng nhập vào chương trình (tên đăng nhập: mã nhân viên, mật khẩu: cmnd của từng nhân viên), ví dụ: 
 
 
 	Thu ngân:
