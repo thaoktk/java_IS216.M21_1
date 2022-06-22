@@ -87,7 +87,7 @@
 
 ## CÁC BƯỚC CHẠY PHẦN MỀM
 
-B1: Clone project về máy, file java nằm trong folder DoAn, có chia các View và mô hình 3 lớp
+B1: Clone project về máy, file java nằm trong folder DoAn, mở netbean và chạy trực tiếp, có chia các View và mô hình 3 lớp
 
 B2: Cài đặt hệ quản trị cơ sở dữ liệu Oracle 19C
 
