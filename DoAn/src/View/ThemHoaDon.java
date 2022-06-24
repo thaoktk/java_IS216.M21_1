@@ -866,8 +866,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
             int maSP = dt.getMaSP();
             String tenSP = dt.getTenSP();
             long gia = dt.getGiaSP();
-            int maloaiSP = dt.getMaLoaiSP();
-            String tenloaiSP = SanPhamBUS.getTenLSP(maloaiSP);
+            String tenloaiSP = dt.getTenLSP();
             String mausac = dt.getMauSac();
             int slsan = dt.getSlsan();
             String ghichu = dt.getGhiChu();
@@ -922,7 +921,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
     }
 
     public void loadSanPhamAll() {
-        String[] header = {"Mã SP", "Tên sản phẩm", "Giá", "Mã loại SP", "Màu sắc", "SL sẵn", "Ghi chú"};
+        String[] header = {"Mã SP", "Tên sản phẩm", "Giá", "Tên loại SP", "Màu sắc", "SL sẵn", "Ghi chú"};
         DefaultTableModel dtm = new DefaultTableModel(header, 0);
         ArrayList<SanPham> arr = new ArrayList<SanPham>();
         arr = SanPhamBUS.getSanPhamAll();
@@ -932,11 +931,11 @@ public class ThemHoaDon extends javax.swing.JFrame {
             int maSP = dt.getMaSP();
             String tenSP = dt.getTenSP();
             long gia = dt.getGiaSP();
-            int maloaiSP = dt.getMaLoaiSP();
+            String tenloaiSP = dt.getTenLSP();
             String mausac = dt.getMauSac();
             int slsan = dt.getSlsan();
             String ghichu = dt.getGhiChu();
-            Object[] row = {maSP, tenSP, gia, maloaiSP, mausac, slsan, ghichu};
+            Object[] row = {maSP, tenSP, gia, tenloaiSP, mausac, slsan, ghichu};
             dtm.addRow(row);
         }
         TableSanPham.setModel(dtm);

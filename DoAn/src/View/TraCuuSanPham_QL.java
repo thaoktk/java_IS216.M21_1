@@ -196,7 +196,7 @@ public class TraCuuSanPham_QL extends javax.swing.JFrame {
         Add.setBackground(new java.awt.Color(196, 100, 96));
         Add.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Add.setForeground(new java.awt.Color(255, 255, 255));
-        Add.setText("Thêm SP");
+        Add.setText("Thêm");
         Add.setBorder(null);
         Add.setBorderPainted(false);
         Add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

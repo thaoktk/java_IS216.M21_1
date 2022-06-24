@@ -765,6 +765,8 @@ public class ThemLoaiSanPham_QL extends javax.swing.JFrame {
         txtTenLSP.setText(model.getValueAt(rowSelected, 1).toString());
         if (model.getValueAt(rowSelected, 2) != null) {
             txtGhichu.setText(model.getValueAt(rowSelected, 2).toString());
+        } else {
+            txtGhichu.setText("");
         }
         maLSP = model.getValueAt(rowSelected, 0).toString();
     }//GEN-LAST:event_jTable1MouseClicked
